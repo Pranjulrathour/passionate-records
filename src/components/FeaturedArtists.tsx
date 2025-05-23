@@ -1,7 +1,12 @@
 
 import { Music2, Instagram, Youtube } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const FeaturedArtists = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   // Mock data - in production this would come from Supabase
   const artists = [
     {
@@ -33,94 +38,227 @@ const FeaturedArtists = () => {
     }
   ];
 
-  return (
-    <section className="py-20 bg-passionate-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="font-syncopate font-bold text-4xl sm:text-5xl text-passionate-white mb-4 tracking-wider">
-            FEATURED
-            <span className="text-passionate-red"> ARTISTS</span>
-          </h2>
-          <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
-          <p className="text-xl text-passionate-white/70 max-w-2xl mx-auto">
-            Meet the visionaries redefining India's music landscape
-          </p>
-        </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.9
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  return (
+    <section className="py-20 bg-passionate-black relative overflow-hidden" ref={ref}>
+      {/* Background decorative elements */}
+      <motion.div 
+        className="absolute top-10 right-10 w-64 h-64 border border-passionate-red/20 rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div 
+        className="absolute bottom-10 left-10 w-32 h-32 border border-passionate-red/20 rounded-full"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h2 
+            className="font-syncopate font-bold text-4xl sm:text-5xl text-passionate-white mb-4 tracking-wider"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            FEATURED
+            <motion.span 
+              className="text-passionate-red"
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            > ARTISTS</motion.span>
+          </motion.h2>
+          <motion.div 
+            className="w-24 h-1 bg-passionate-red mx-auto mb-6"
+            initial={{ width: 0 }}
+            animate={isInView ? { width: 96 } : { width: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
+          <motion.p 
+            className="text-xl text-passionate-white/70 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            Meet the visionaries redefining India's music landscape
+          </motion.p>
+        </motion.div>
+
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {artists.map((artist, index) => (
-            <div
+            <motion.div
               key={artist.id}
-              className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden animate-slide-up"
-              style={{ animationDelay: `${index * 200}ms` }}
+              variants={cardVariants}
+              className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden relative"
+              whileHover={{ 
+                y: -10,
+                boxShadow: "0 20px 40px rgba(255, 0, 0, 0.2)"
+              }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               {/* Artist Image */}
               <div className="relative overflow-hidden">
-                <img
+                <motion.img
                   src={artist.image}
                   alt={artist.name}
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-64 object-cover"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
                 />
-                <div className="absolute inset-0 bg-passionate-black/20 group-hover:bg-passionate-red/20 transition-all duration-500"></div>
+                <motion.div 
+                  className="absolute inset-0 bg-passionate-black/20"
+                  whileHover={{ backgroundColor: "rgba(255, 0, 0, 0.2)" }}
+                  transition={{ duration: 0.3 }}
+                />
                 
                 {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-passionate-red/90 rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                <motion.div 
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div 
+                    className="bg-passionate-red/90 rounded-full p-4"
+                    initial={{ scale: 0.5, rotate: 0 }}
+                    whileHover={{ scale: 1, rotate: 360 }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                  >
                     <Music2 className="h-8 w-8 text-passionate-white" />
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
 
               {/* Artist Info */}
               <div className="p-6">
-                <div className="mb-2">
+                <motion.div 
+                  className="mb-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                >
                   <span className="text-xs font-syncopate tracking-wider text-passionate-red">
                     {artist.genre}
                   </span>
-                </div>
+                </motion.div>
                 
-                <h3 className="font-syncopate font-bold text-xl text-passionate-white mb-3 tracking-wider">
+                <motion.h3 
+                  className="font-syncopate font-bold text-xl text-passionate-white mb-3 tracking-wider"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.4 }}
+                >
                   {artist.name}
-                </h3>
+                </motion.h3>
                 
-                <p className="text-passionate-white/70 mb-4 leading-relaxed">
+                <motion.p 
+                  className="text-passionate-white/70 mb-4 leading-relaxed"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.5 }}
+                >
                   {artist.description}
-                </p>
+                </motion.p>
 
                 {/* Social Links */}
-                <div className="flex items-center space-x-4">
-                  <a
+                <motion.div 
+                  className="flex items-center space-x-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.6 }}
+                >
+                  <motion.a
                     href={`https://instagram.com/${artist.instagram.replace('@', '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                    whileHover={{ scale: 1.2, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <Instagram className="h-5 w-5" />
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
                     href={`https://youtube.com/@${artist.youtube}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                    whileHover={{ scale: 1.2, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <Youtube className="h-5 w-5" />
-                  </a>
-                </div>
+                  </motion.a>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* View All Artists Button */}
-        <div className="text-center mt-12 animate-fade-in">
-          <a
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <motion.a
             href="/artists"
-            className="inline-flex items-center space-x-3 bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 tracking-wider transition-all duration-300 red-glow"
+            className="inline-flex items-center space-x-3 bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 tracking-wider transition-all duration-300 red-glow relative overflow-hidden"
+            whileHover={{ scale: 1.05, y: -3 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <span>VIEW ALL ARTISTS</span>
-            <Music2 className="h-5 w-5" />
-          </a>
-        </div>
+            <motion.div
+              className="absolute inset-0 bg-passionate-red"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "0%" }}
+              transition={{ duration: 0.3 }}
+            />
+            <span className="relative z-10">VIEW ALL ARTISTS</span>
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              className="relative z-10"
+            >
+              <Music2 className="h-5 w-5" />
+            </motion.div>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
