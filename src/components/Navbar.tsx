@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Music } from 'lucide-react';
+import { Menu, X, Disc3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -35,10 +35,10 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-2 group">
               <motion.div
                 animate={{ rotate: [0, 360] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 whileHover={{ scale: 1.2 }}
               >
-                <Music className="h-8 w-8 text-passionate-red" />
+                <Disc3 className="h-8 w-8 text-passionate-red" />
               </motion.div>
               <motion.span 
                 className="font-syncopate font-bold text-xl text-passionate-white tracking-wider"

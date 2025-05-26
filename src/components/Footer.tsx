@@ -1,5 +1,5 @@
 
-import { Music, Instagram, Youtube, Twitter, Mail, Phone } from 'lucide-react';
+import { Music, Instagram, Youtube, Twitter, Mail, Phone, Disc3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -10,21 +10,25 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center space-x-3 mb-6">
-              <Music className="h-8 w-8 text-passionate-red" />
+              <Disc3 className="h-8 w-8 text-passionate-red" />
               <span className="font-syncopate font-bold text-2xl text-passionate-white tracking-wider">
                 PASSIONATE RECORDS
               </span>
             </Link>
             
             <p className="text-passionate-white/70 mb-6 leading-relaxed max-w-md">
-              India's premier indie music label. We discover, develop, and promote the most passionate artists in the underground scene.
+              India's premier underground music label. We discover, develop, and promote the most passionate artists 
+              across electronic, hip-hop, experimental, and avant-garde genres.
             </p>
 
             {/* Newsletter Signup */}
             <div className="mb-6">
               <h4 className="font-syncopate font-bold text-passionate-white mb-3 tracking-wider">
-                STAY UPDATED
+                STAY IN THE LOOP
               </h4>
+              <p className="text-passionate-white/60 text-sm mb-3">
+                Get the latest releases, artist news, and exclusive content.
+              </p>
               <div className="flex">
                 <input
                   type="email"
@@ -41,7 +45,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="font-syncopate font-bold text-passionate-white mb-6 tracking-wider">
-              QUICK LINKS
+              EXPLORE
             </h4>
             <ul className="space-y-3">
               {[
@@ -54,13 +58,28 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-passionate-white/70 hover:text-passionate-red transition-colors duration-300"
+                    className="text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-sm"
                   >
                     {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
+            
+            <div className="mt-6">
+              <h5 className="font-syncopate font-bold text-passionate-white text-sm mb-3 tracking-wider">
+                GENRES
+              </h5>
+              <ul className="space-y-2">
+                {['Electronic', 'Hip-Hop', 'Experimental', 'Ambient', 'Dubstep'].map((genre) => (
+                  <li key={genre}>
+                    <span className="text-passionate-white/50 text-xs hover:text-passionate-red transition-colors cursor-pointer">
+                      {genre}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Contact & Social */}
@@ -73,46 +92,55 @@ const Footer = () => {
             <div className="space-y-3 mb-6">
               <a
                 href="mailto:info@passionaterecords.com"
-                className="flex items-center space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300"
+                className="flex items-center space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-sm"
               >
                 <Mail className="h-4 w-4" />
                 <span>info@passionaterecords.com</span>
               </a>
               <a
                 href="tel:+919876543210"
-                className="flex items-center space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300"
+                className="flex items-center space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-sm"
               >
                 <Phone className="h-4 w-4" />
                 <span>+91 98765 43210</span>
               </a>
+              <div className="text-passionate-white/50 text-xs">
+                <p>Mumbai, India</p>
+                <p>Mon-Fri 10AM-6PM IST</p>
+              </div>
             </div>
 
             {/* Social Links */}
-            <div className="flex space-x-4">
-              <a
-                href="https://instagram.com/passionaterecords"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
-              >
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a
-                href="https://youtube.com/@passionaterecords"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
-              >
-                <Youtube className="h-6 w-6" />
-              </a>
-              <a
-                href="https://twitter.com/passionate_rec"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
-              >
-                <Twitter className="h-6 w-6" />
-              </a>
+            <div>
+              <h5 className="font-syncopate font-bold text-passionate-white text-sm mb-3 tracking-wider">
+                FOLLOW US
+              </h5>
+              <div className="flex space-x-4">
+                <a
+                  href="https://instagram.com/passionaterecords"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                >
+                  <Instagram className="h-6 w-6" />
+                </a>
+                <a
+                  href="https://youtube.com/@passionaterecords"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                >
+                  <Youtube className="h-6 w-6" />
+                </a>
+                <a
+                  href="https://twitter.com/passionate_rec"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                >
+                  <Twitter className="h-6 w-6" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -123,7 +151,7 @@ const Footer = () => {
             © 2024 Passionate Records. All rights reserved.
           </p>
           <p className="text-passionate-white/50 text-sm mt-4 md:mt-0">
-            Made with ❤️ for the underground music scene
+            Amplifying underground voices since 2024 ❤️
           </p>
         </div>
       </div>
