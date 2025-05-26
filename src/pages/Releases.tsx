@@ -17,7 +17,7 @@ const Releases = () => {
           </h1>
           <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
           <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto animate-fade-in">
-            Fresh sounds from our underground collective. Experience the passion, feel the beat.
+            FRESH SOUNDS FROM OUR UNDERGROUND COLLECTIVE. EXPERIENCE THE PASSION, FEEL THE BEAT.
           </p>
         </div>
       </section>
@@ -31,9 +31,9 @@ const Releases = () => {
               NEW MUSIC DROPPING SOON
             </h2>
             <p className="text-passionate-white/70 text-lg mb-8 leading-relaxed">
-              We're currently working with our talented roster of underground artists to bring you the freshest sounds. 
-              Our debut releases featuring electronic, hip-hop, and experimental tracks will drop soon. 
-              Subscribe to stay updated on release dates and exclusive previews.
+              WE'RE CURRENTLY WORKING WITH OUR TALENTED ROSTER OF UNDERGROUND ARTISTS TO BRING YOU THE FRESHEST SOUNDS. 
+              OUR DEBUT RELEASES FEATURING ELECTRONIC, HIP-HOP, AND EXPERIMENTAL TRACKS WILL DROP SOON. 
+              SUBSCRIBE TO STAY UPDATED ON RELEASE DATES AND EXCLUSIVE PREVIEWS.
             </p>
             
             {/* Features */}
@@ -44,7 +44,7 @@ const Releases = () => {
                   HIGH QUALITY AUDIO
                 </h3>
                 <p className="text-passionate-white/60 text-sm">
-                  All releases in lossless quality
+                  ALL RELEASES IN LOSSLESS QUALITY
                 </p>
               </div>
               <div className="text-center">
@@ -53,7 +53,7 @@ const Releases = () => {
                   EXCLUSIVE CONTENT
                 </h3>
                 <p className="text-passionate-white/60 text-sm">
-                  Behind-the-scenes and artist interviews
+                  BEHIND-THE-SCENES AND ARTIST INTERVIEWS
                 </p>
               </div>
               <div className="text-center">
@@ -62,7 +62,7 @@ const Releases = () => {
                   REGULAR DROPS
                 </h3>
                 <p className="text-passionate-white/60 text-sm">
-                  New releases every month
+                  NEW RELEASES EVERY MONTH
                 </p>
               </div>
             </div>

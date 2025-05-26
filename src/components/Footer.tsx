@@ -17,8 +17,8 @@ const Footer = () => {
             </Link>
             
             <p className="text-passionate-white/70 mb-6 leading-relaxed max-w-md">
-              India's premier underground music label. We discover, develop, and promote the most passionate artists 
-              across electronic, hip-hop, experimental, and avant-garde genres.
+              INDIA'S PREMIER UNDERGROUND MUSIC LABEL. WE DISCOVER, DEVELOP, AND PROMOTE THE MOST PASSIONATE ARTISTS 
+              ACROSS ELECTRONIC, HIP-HOP, EXPERIMENTAL, AND AVANT-GARDE GENRES.
             </p>
 
             {/* Newsletter Signup */}
@@ -27,13 +27,13 @@ const Footer = () => {
                 STAY IN THE LOOP
               </h4>
               <p className="text-passionate-white/60 text-sm mb-3">
-                Get the latest releases, artist news, and exclusive content.
+                GET THE LATEST RELEASES, ARTIST NEWS, AND EXCLUSIVE CONTENT.
               </p>
               <div className="flex">
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 bg-passionate-gray/20 border border-passionate-gray text-passionate-white px-4 py-3 focus:outline-none focus:border-passionate-red transition-colors"
+                  placeholder="ENTER YOUR EMAIL"
+                  className="flex-1 bg-passionate-gray/20 border border-passionate-gray text-passionate-white px-4 py-3 focus:outline-none focus:border-passionate-red transition-colors placeholder:text-passionate-white/40"
                 />
                 <button className="bg-passionate-red hover:bg-passionate-red-dark text-passionate-white px-6 py-3 font-syncopate font-bold text-sm tracking-wider transition-colors">
                   SUBSCRIBE
@@ -71,7 +71,7 @@ const Footer = () => {
                 GENRES
               </h5>
               <ul className="space-y-2">
-                {['Electronic', 'Hip-Hop', 'Experimental', 'Ambient', 'Dubstep'].map((genre) => (
+                {['ELECTRONIC', 'HIP-HOP', 'EXPERIMENTAL', 'AMBIENT', 'DUBSTEP'].map((genre) => (
                   <li key={genre}>
                     <span className="text-passionate-white/50 text-xs hover:text-passionate-red transition-colors cursor-pointer">
                       {genre}
@@ -95,7 +95,7 @@ const Footer = () => {
                 className="flex items-center space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-sm"
               >
                 <Mail className="h-4 w-4" />
-                <span>info@passionaterecords.com</span>
+                <span>INFO@PASSIONATERECORDS.COM</span>
               </a>
               <a
                 href="tel:+919876543210"
@@ -105,8 +105,8 @@ const Footer = () => {
                 <span>+91 98765 43210</span>
               </a>
               <div className="text-passionate-white/50 text-xs">
-                <p>Mumbai, India</p>
-                <p>Mon-Fri 10AM-6PM IST</p>
+                <p>MUMBAI, INDIA</p>
+                <p>MON-FRI 10AM-6PM IST</p>
               </div>
             </div>
 
@@ -148,10 +148,10 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-passionate-gray mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-passionate-white/50 text-sm">
-            © 2024 Passionate Records. All rights reserved.
+            © 2024 PASSIONATE RECORDS. ALL RIGHTS RESERVED.
           </p>
           <p className="text-passionate-white/50 text-sm mt-4 md:mt-0">
-            Amplifying underground voices since 2024 ❤️
+            AMPLIFYING UNDERGROUND VOICES SINCE 2024 ❤️
           </p>
         </div>
       </div>

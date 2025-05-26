@@ -18,42 +18,42 @@ const Hero = () => {
   const featuredTracks = [
     {
       id: 1,
-      title: "Midnight Echoes",
-      artist: "Neon Pulse",
+      title: "MIDNIGHT ECHOES",
+      artist: "NEON PULSE",
       image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=500&fit=crop&crop=center",
-      category: "Electronic",
+      category: "ELECTRONIC",
       duration: "3:45"
     },
     {
       id: 2,
-      title: "Urban Rhythm",
-      artist: "Street Beats",
+      title: "URBAN RHYTHM",
+      artist: "STREET BEATS",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop&crop=center",
-      category: "Hip Hop",
+      category: "HIP HOP",
       duration: "4:12"
     },
     {
       id: 3,
-      title: "Digital Dreams",
-      artist: "Cyber Symphony",
+      title: "DIGITAL DREAMS",
+      artist: "CYBER SYMPHONY",
       image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=500&fit=crop&crop=center",
-      category: "Ambient",
+      category: "AMBIENT",
       duration: "5:33"
     },
     {
       id: 4,
-      title: "Bass Drop",
-      artist: "Thunder Wave",
+      title: "BASS DROP",
+      artist: "THUNDER WAVE",
       image: "https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=400&h=500&fit=crop&crop=center",
-      category: "Dubstep",
+      category: "DUBSTEP",
       duration: "3:28"
     },
     {
       id: 5,
-      title: "Melodic Flow",
-      artist: "Harmony Labs",
+      title: "MELODIC FLOW",
+      artist: "HARMONY LABS",
       image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=500&fit=crop&crop=center",
-      category: "Experimental",
+      category: "EXPERIMENTAL",
       duration: "4:56"
     }
   ];
@@ -61,7 +61,7 @@ const Hero = () => {
   return (
     <motion.section 
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-passionate-black via-passionate-black to-passionate-gray overflow-hidden px-4 sm:px-6 lg:px-8"
+      className="relative min-h-[120vh] flex flex-col items-center justify-center bg-gradient-to-br from-passionate-black via-passionate-black to-passionate-gray overflow-hidden px-4 sm:px-6 lg:px-8 pt-20 pb-20"
       style={{ y, opacity }}
     >
       {/* Background musical elements */}
@@ -94,40 +94,41 @@ const Hero = () => {
         </motion.div>
       ))}
 
-      <div className="relative z-10 text-center max-w-7xl mx-auto w-full">
+      <div className="relative z-10 text-center max-w-7xl mx-auto w-full flex flex-col min-h-[100vh] justify-center">
         {/* Main Content - Fixed text alignment */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16"
+          className="mb-16 flex-1 flex flex-col justify-center"
         >
           <motion.h1 
-            className="font-syncopate font-bold text-4xl sm:text-6xl lg:text-7xl text-passionate-white mb-6 tracking-tight text-center"
+            className="font-syncopate font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-passionate-white mb-8 tracking-tight text-center leading-tight"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            Welcome to <span className="text-passionate-red">Passionate</span> Records
+            WELCOME TO <span className="text-passionate-red block sm:inline">PASSIONATE</span>{' '}
+            <span className="block">RECORDS</span>
           </motion.h1>
           
           <motion.h2 
-            className="font-syncopate font-medium text-xl sm:text-2xl lg:text-3xl text-passionate-white/80 mb-8 tracking-wide text-center"
+            className="font-syncopate font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl text-passionate-white/80 mb-8 tracking-wide text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Underground Music Label & Artists Collective
+            UNDERGROUND MUSIC LABEL & ARTISTS COLLECTIVE
           </motion.h2>
 
           <motion.p
-            className="text-base sm:text-lg lg:text-xl text-passionate-white/60 max-w-3xl mx-auto leading-relaxed mb-12 text-center"
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-passionate-white/60 max-w-4xl mx-auto leading-relaxed mb-12 text-center px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Discover cutting-edge music from emerging artists. From electronic beats to experimental sounds, 
-            we champion authentic voices in the underground music scene. Join our passionate community of music lovers.
+            DISCOVER CUTTING-EDGE MUSIC FROM EMERGING ARTISTS. FROM ELECTRONIC BEATS TO EXPERIMENTAL SOUNDS, 
+            WE CHAMPION AUTHENTIC VOICES IN THE UNDERGROUND MUSIC SCENE. JOIN OUR PASSIONATE COMMUNITY OF MUSIC LOVERS.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -146,7 +147,7 @@ const Hero = () => {
                 className="bg-passionate-red hover:bg-passionate-red-dark text-passionate-white font-medium px-8 py-4 rounded-xl transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base shadow-lg hover:shadow-xl"
               >
                 <Headphones className="h-4 w-4" />
-                <span>Submit Your Music</span>
+                <span>SUBMIT YOUR MUSIC</span>
               </Link>
             </motion.div>
 
@@ -158,7 +159,7 @@ const Hero = () => {
                 to="/artists"
                 className="bg-transparent hover:bg-passionate-white/5 text-passionate-white font-medium px-8 py-4 rounded-xl border border-passionate-white/20 hover:border-passionate-white/40 transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base"
               >
-                <span>Explore Artists</span>
+                <span>EXPLORE ARTISTS</span>
                 <Play className="h-4 w-4" />
               </Link>
             </motion.div>
