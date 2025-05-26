@@ -14,14 +14,53 @@ const Hero = () => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  // Featured music cards data
+  const featuredCards = [
+    {
+      id: 1,
+      title: "Neon Dreams",
+      artist: "SynthWave",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&crop=faces",
+      genre: "Electronic"
+    },
+    {
+      id: 2,
+      title: "Urban Pulse",
+      artist: "BeatMaster",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=faces",
+      genre: "Hip-Hop"
+    },
+    {
+      id: 3,
+      title: "Midnight Vibes",
+      artist: "Eclipse",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&crop=entropy",
+      genre: "Ambient"
+    },
+    {
+      id: 4,
+      title: "Fire Flow",
+      artist: "RedLine",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=entropy",
+      genre: "Trap"
+    },
+    {
+      id: 5,
+      title: "Digital Soul",
+      artist: "VoidSpace",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&crop=face",
+      genre: "Future Bass"
+    }
+  ];
+
   return (
     <motion.section 
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center passionate-gradient overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center passionate-gradient overflow-hidden px-4 sm:px-6 lg:px-8"
       style={{ y, opacity }}
     >
       {/* Enhanced Background Pattern with Motion */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-10">
         <motion.div 
           className="absolute top-20 left-10 w-32 h-32 border border-passionate-red rounded-full"
           animate={{ 
@@ -72,112 +111,199 @@ const Hero = () => {
         />
       ))}
 
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-        {/* Enhanced Main Heading with Stagger Animation */}
+      <div className="relative z-10 text-center max-w-6xl mx-auto">
+        {/* Main Heading */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
+          className="mb-8"
         >
           <motion.h1 
-            className="font-syncopate font-bold text-4xl sm:text-6xl lg:text-8xl text-passionate-white mb-6 tracking-wider text-shadow"
+            className="font-syncopate font-bold text-3xl sm:text-5xl lg:text-6xl text-passionate-white mb-4 tracking-wider text-shadow"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <motion.span
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              FEEL THE
-            </motion.span>
-            <motion.span 
-              className="block text-passionate-red"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              BEAT
-            </motion.span>
+            Welcome to <span className="text-passionate-red">Passionate</span>:
           </motion.h1>
           
           <motion.h2 
-            className="font-syncopate font-bold text-2xl sm:text-4xl lg:text-5xl text-passionate-white mb-8 tracking-wider text-shadow"
+            className="font-syncopate font-bold text-xl sm:text-3xl lg:text-4xl text-passionate-white/90 mb-6 tracking-wider"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            transition={{ duration: 1, delay: 0.3 }}
           >
-            LIVE THE PASSION
+            Your Underground Music Gateway
           </motion.h2>
         </motion.div>
 
-        {/* Enhanced Subtitle */}
+        {/* Subtitle */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mb-8"
         >
-          <p className="text-lg sm:text-xl lg:text-2xl text-passionate-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-            India's premier indie music label. Where underground artists become legends and passion becomes profession.
+          <p className="text-base sm:text-lg lg:text-xl text-passionate-white/70 max-w-3xl mx-auto leading-relaxed">
+            Unleash your creativity and reach masterpieces with AI at Passionate. Share your digital artworks with friends and the world in this simple online gallery where passion meets art.
           </p>
         </motion.div>
 
-        {/* Enhanced CTA Buttons with Advanced Hover Effects */}
+        {/* CTA Buttons */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
+          transition={{ duration: 1, delay: 0.7 }}
         >
           <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <Link
-              to="/artists"
-              className="group bg-passionate-red hover:bg-passionate-red-dark text-passionate-white font-syncopate font-bold px-8 py-4 rounded-none border-2 border-passionate-red hover:border-passionate-red-dark transition-all duration-300 flex items-center space-x-3 red-glow tracking-wider relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
-                whileHover={{ translateX: "200%" }}
-                transition={{ duration: 0.6 }}
-              />
-              <span className="relative z-10">EXPLORE ARTISTS</span>
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <ArrowRight className="h-5 w-5" />
-              </motion.div>
-            </Link>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <Link
               to="/submit-demo"
-              className="group bg-transparent hover:bg-passionate-red/10 text-passionate-white font-syncopate font-bold px-8 py-4 rounded-none border-2 border-passionate-white hover:border-passionate-red transition-all duration-300 flex items-center space-x-3 tracking-wider relative overflow-hidden"
+              className="bg-passionate-red hover:bg-passionate-red-dark text-passionate-white font-syncopate font-bold px-6 py-3 rounded-lg transition-all duration-300 flex items-center space-x-3 red-glow tracking-wider text-sm"
             >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-passionate-red/10 to-transparent -translate-x-full"
-                whileHover={{ translateX: "200%" }}
-                transition={{ duration: 0.6 }}
-              />
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <Play className="h-5 w-5 relative z-10" />
-              </motion.div>
-              <span className="relative z-10">SUBMIT YOUR DEMO</span>
+              <span>Create Artwork</span>
             </Link>
           </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Link
+              to="/artists"
+              className="bg-transparent hover:bg-passionate-red/10 text-passionate-white font-syncopate font-bold px-6 py-3 rounded-lg border border-passionate-white/30 hover:border-passionate-red transition-all duration-300 flex items-center space-x-3 tracking-wider text-sm"
+            >
+              <span>Discover Gallery</span>
+              <Play className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Featured Music Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.9 }}
+          className="relative"
+        >
+          <div className="flex justify-center items-center">
+            <div className="relative w-full max-w-5xl">
+              {/* Center card */}
+              <motion.div
+                className="relative z-30 mx-auto w-64 h-80 bg-passionate-gray rounded-2xl overflow-hidden border border-passionate-white/10"
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="relative h-full">
+                  <img 
+                    src={featuredCards[2].image} 
+                    alt={featuredCards[2].title}
+                    className="w-full h-3/4 object-cover"
+                  />
+                  <div className="absolute top-4 right-4">
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-8 h-8 bg-passionate-black/50 rounded-full flex items-center justify-center"
+                    >
+                      <Play className="h-4 w-4 text-passionate-white" />
+                    </motion.button>
+                  </div>
+                  <div className="p-4 bg-passionate-black/90">
+                    <h3 className="font-syncopate font-bold text-passionate-white text-sm mb-1">
+                      {featuredCards[2].title}
+                    </h3>
+                    <p className="text-passionate-white/70 text-xs">{featuredCards[2].artist}</p>
+                    <span className="inline-block mt-2 px-2 py-1 bg-passionate-red/20 text-passionate-red text-xs rounded">
+                      {featuredCards[2].genre}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Left cards */}
+              <motion.div
+                className="absolute left-0 top-8 z-20 w-56 h-72 bg-passionate-gray rounded-2xl overflow-hidden border border-passionate-white/10 opacity-80"
+                style={{ transform: 'translateX(-50%) rotateY(15deg)' }}
+                whileHover={{ scale: 1.02, x: -10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <img 
+                  src={featuredCards[1].image} 
+                  alt={featuredCards[1].title}
+                  className="w-full h-3/4 object-cover"
+                />
+                <div className="p-3 bg-passionate-black/90">
+                  <h3 className="font-syncopate font-bold text-passionate-white text-xs mb-1">
+                    {featuredCards[1].title}
+                  </h3>
+                  <p className="text-passionate-white/70 text-xs">{featuredCards[1].artist}</p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute left-0 top-16 z-10 w-48 h-64 bg-passionate-gray rounded-2xl overflow-hidden border border-passionate-white/10 opacity-60"
+                style={{ transform: 'translateX(-70%) rotateY(25deg)' }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <img 
+                  src={featuredCards[0].image} 
+                  alt={featuredCards[0].title}
+                  className="w-full h-3/4 object-cover"
+                />
+                <div className="p-3 bg-passionate-black/90">
+                  <h3 className="font-syncopate font-bold text-passionate-white text-xs">
+                    {featuredCards[0].title}
+                  </h3>
+                </div>
+              </motion.div>
+
+              {/* Right cards */}
+              <motion.div
+                className="absolute right-0 top-8 z-20 w-56 h-72 bg-passionate-gray rounded-2xl overflow-hidden border border-passionate-white/10 opacity-80"
+                style={{ transform: 'translateX(50%) rotateY(-15deg)' }}
+                whileHover={{ scale: 1.02, x: 10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <img 
+                  src={featuredCards[3].image} 
+                  alt={featuredCards[3].title}
+                  className="w-full h-3/4 object-cover"
+                />
+                <div className="p-3 bg-passionate-black/90">
+                  <h3 className="font-syncopate font-bold text-passionate-white text-xs mb-1">
+                    {featuredCards[3].title}
+                  </h3>
+                  <p className="text-passionate-white/70 text-xs">{featuredCards[3].artist}</p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute right-0 top-16 z-10 w-48 h-64 bg-passionate-gray rounded-2xl overflow-hidden border border-passionate-white/10 opacity-60"
+                style={{ transform: 'translateX(70%) rotateY(-25deg)' }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <img 
+                  src={featuredCards[4].image} 
+                  alt={featuredCards[4].title}
+                  className="w-full h-3/4 object-cover"
+                />
+                <div className="p-3 bg-passionate-black/90">
+                  <h3 className="font-syncopate font-bold text-passionate-white text-xs">
+                    {featuredCards[4].title}
+                  </h3>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Enhanced Scroll Indicator */}
@@ -188,7 +314,7 @@ const Hero = () => {
           transition={{ duration: 1, delay: 1.5 }}
         >
           <motion.div 
-            className="w-6 h-10 border-2 border-passionate-white rounded-full flex justify-center cursor-pointer"
+            className="w-6 h-10 border-2 border-passionate-white/50 rounded-full flex justify-center cursor-pointer"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
             whileHover={{ scale: 1.1 }}
