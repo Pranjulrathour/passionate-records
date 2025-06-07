@@ -7,6 +7,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Artists from "./pages/Artists";
 import Releases from "./pages/Releases";
+import Events from "./pages/Events";
+import Projects from "./pages/Projects";
+import Services from "./pages/Services";
+import WhyUs from "./pages/WhyUs";
+import ArtistEnrollment from "./pages/ArtistEnrollment";
 import SubmitDemo from "./pages/SubmitDemo";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -23,6 +28,11 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/releases" element={<Releases />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/why-us" element={<WhyUs />} />
+          <Route path="/artist-enrollment" element={<ArtistEnrollment />} />
           <Route path="/submit-demo" element={<SubmitDemo />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

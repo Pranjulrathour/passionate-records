@@ -1,22 +1,36 @@
-
 import { Music2, Instagram, Youtube } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const FeaturedArtists = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { data: artists, isLoading } = useQuery({
+    queryKey: ['featured-artists'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('artists')
+        .select('*')
+        .eq('is_featured', true)
+        .limit(3);
+      
+      if (error) throw error;
+      return data;
+    }
+  });
 
   // Mock data - in production this would come from Supabase
-  const artists = [
+  const displayArtists = artists && artists.length > 0 ? artists : [
     {
-      id: 1,
-      name: "ARJUN BEATS",
-      genre: "TRAP / HIP-HOP",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop",
-      description: "Mumbai's trap king with over 2M Spotify streams",
-      instagram: "@arjunbeats",
-      youtube: "ArjunBeatsOfficial"
+      id: '1',
+      name: 'ALEX THUNDER',
+      stage_name: 'ALEX THUNDER',
+      genre: 'ELECTRONIC',
+      bio: 'ELECTRONIC MUSIC PRODUCER WITH A PASSION FOR CREATING IMMERSIVE SOUNDSCAPES.',
+      image_url: '/placeholder.svg',
+      instagram_handle: '@alexthunder',
+      youtube_handle: '@alexthundermusic',
+      spotify_url: 'https://open.spotify.com/artist/alexthunder'
     },
     {
       id: 2,
@@ -37,6 +51,9 @@ const FeaturedArtists = () => {
       youtube: "DelhiDreamsRock"
     }
   ];
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,7 +84,7 @@ const FeaturedArtists = () => {
   };
 
   return (
-    <section className="py-20 bg-passionate-black relative overflow-hidden" ref={ref}>
+    <section className="py-20 bg-passionate-gray/5 relative overflow-hidden" ref={ref}>
       {/* Background decorative elements */}
       <motion.div 
         className="absolute top-10 right-10 w-64 h-64 border border-passionate-red/20 rounded-full"
@@ -117,16 +134,16 @@ const FeaturedArtists = () => {
         </motion.div>
 
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {artists.map((artist, index) => (
+          {displayArtists.map((artist) => (
             <motion.div
               key={artist.id}
               variants={cardVariants}
-              className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden relative"
+              className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-300 overflow-hidden relative"
               whileHover={{ 
                 y: -10,
                 boxShadow: "0 20px 40px rgba(255, 0, 0, 0.2)"
@@ -136,7 +153,7 @@ const FeaturedArtists = () => {
               {/* Artist Image */}
               <div className="relative overflow-hidden">
                 <motion.img
-                  src={artist.image}
+                  src={artist.image_url}
                   alt={artist.name}
                   className="w-full h-64 object-cover"
                   whileHover={{ scale: 1.1 }}
@@ -194,7 +211,7 @@ const FeaturedArtists = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 + 0.5 }}
                 >
-                  {artist.description}
+                  {artist.bio}
                 </motion.p>
 
                 {/* Social Links */}
@@ -205,7 +222,7 @@ const FeaturedArtists = () => {
                   transition={{ delay: index * 0.1 + 0.6 }}
                 >
                   <motion.a
-                    href={`https://instagram.com/${artist.instagram.replace('@', '')}`}
+                    href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
@@ -215,7 +232,7 @@ const FeaturedArtists = () => {
                     <Instagram className="h-5 w-5" />
                   </motion.a>
                   <motion.a
-                    href={`https://youtube.com/@${artist.youtube}`}
+                    href={`https://youtube.com/@${artist.youtube_handle}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"

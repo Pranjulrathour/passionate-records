@@ -9,7 +9,269 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      artist_enrollments: {
+        Row: {
+          created_at: string
+          email: string
+          expertise: string | null
+          full_name: string
+          genre: Database["public"]["Enums"]["genre_type"] | null
+          id: string
+          instagram_handle: string | null
+          message: string | null
+          phone: string | null
+          portfolio_url: string | null
+          spotify_url: string | null
+          stage_name: string | null
+          status: string | null
+          youtube_handle: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expertise?: string | null
+          full_name: string
+          genre?: Database["public"]["Enums"]["genre_type"] | null
+          id?: string
+          instagram_handle?: string | null
+          message?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          spotify_url?: string | null
+          stage_name?: string | null
+          status?: string | null
+          youtube_handle?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expertise?: string | null
+          full_name?: string
+          genre?: Database["public"]["Enums"]["genre_type"] | null
+          id?: string
+          instagram_handle?: string | null
+          message?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          spotify_url?: string | null
+          stage_name?: string | null
+          status?: string | null
+          youtube_handle?: string | null
+        }
+        Relationships: []
+      }
+      artists: {
+        Row: {
+          bio: string | null
+          created_at: string
+          genre: Database["public"]["Enums"]["genre_type"] | null
+          id: string
+          image_url: string | null
+          instagram_handle: string | null
+          is_featured: boolean | null
+          location: string | null
+          name: string
+          spotify_url: string | null
+          stage_name: string | null
+          updated_at: string
+          youtube_handle: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          genre?: Database["public"]["Enums"]["genre_type"] | null
+          id?: string
+          image_url?: string | null
+          instagram_handle?: string | null
+          is_featured?: boolean | null
+          location?: string | null
+          name: string
+          spotify_url?: string | null
+          stage_name?: string | null
+          updated_at?: string
+          youtube_handle?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          genre?: Database["public"]["Enums"]["genre_type"] | null
+          id?: string
+          image_url?: string | null
+          instagram_handle?: string | null
+          is_featured?: boolean | null
+          location?: string | null
+          name?: string
+          spotify_url?: string | null
+          stage_name?: string | null
+          updated_at?: string
+          youtube_handle?: string | null
+        }
+        Relationships: []
+      }
+      blogs: {
+        Row: {
+          author: string | null
+          content: string
+          created_at: string
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string
+          published: boolean | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          published?: boolean | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          published?: boolean | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          created_at: string
+          date_time: string
+          description: string | null
+          event_type: Database["public"]["Enums"]["event_type"] | null
+          id: string
+          image_url: string | null
+          ticket_url: string | null
+          title: string
+          updated_at: string
+          venue: string
+        }
+        Insert: {
+          created_at?: string
+          date_time: string
+          description?: string | null
+          event_type?: Database["public"]["Enums"]["event_type"] | null
+          id?: string
+          image_url?: string | null
+          ticket_url?: string | null
+          title: string
+          updated_at?: string
+          venue: string
+        }
+        Update: {
+          created_at?: string
+          date_time?: string
+          description?: string | null
+          event_type?: Database["public"]["Enums"]["event_type"] | null
+          id?: string
+          image_url?: string | null
+          ticket_url?: string | null
+          title?: string
+          updated_at?: string
+          venue?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          artist_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          project_type: string | null
+          release_date: string | null
+          status: Database["public"]["Enums"]["project_status"] | null
+          teaser_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          artist_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          project_type?: string | null
+          release_date?: string | null
+          status?: Database["public"]["Enums"]["project_status"] | null
+          teaser_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          artist_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          project_type?: string | null
+          release_date?: string | null
+          status?: Database["public"]["Enums"]["project_status"] | null
+          teaser_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_artist_id_fkey"
+            columns: ["artist_id"]
+            isOneToOne: false
+            referencedRelation: "artists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      upcoming_albums: {
+        Row: {
+          album_art_url: string | null
+          artist_name: string
+          created_at: string
+          description: string | null
+          genre: Database["public"]["Enums"]["genre_type"] | null
+          id: string
+          release_date: string | null
+          teaser_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          album_art_url?: string | null
+          artist_name: string
+          created_at?: string
+          description?: string | null
+          genre?: Database["public"]["Enums"]["genre_type"] | null
+          id?: string
+          release_date?: string | null
+          teaser_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          album_art_url?: string | null
+          artist_name?: string
+          created_at?: string
+          description?: string | null
+          genre?: Database["public"]["Enums"]["genre_type"] | null
+          id?: string
+          release_date?: string | null
+          teaser_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +280,26 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      event_type:
+        | "CONCERT"
+        | "GIG"
+        | "ALBUM_LAUNCH"
+        | "MUSIC_VIDEO_PREMIERE"
+        | "OTHER"
+      genre_type:
+        | "HIP_HOP"
+        | "RAP"
+        | "ELECTRONIC"
+        | "INDIE_POP"
+        | "ALTERNATIVE_ROCK"
+        | "TRAP"
+        | "SYNTHWAVE"
+        | "PUNK_ROCK"
+        | "EXPERIMENTAL"
+        | "RNB"
+        | "SOUL"
+        | "OTHER"
+      project_status: "UPCOMING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +414,29 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      event_type: [
+        "CONCERT",
+        "GIG",
+        "ALBUM_LAUNCH",
+        "MUSIC_VIDEO_PREMIERE",
+        "OTHER",
+      ],
+      genre_type: [
+        "HIP_HOP",
+        "RAP",
+        "ELECTRONIC",
+        "INDIE_POP",
+        "ALTERNATIVE_ROCK",
+        "TRAP",
+        "SYNTHWAVE",
+        "PUNK_ROCK",
+        "EXPERIMENTAL",
+        "RNB",
+        "SOUL",
+        "OTHER",
+      ],
+      project_status: ["UPCOMING", "IN_PROGRESS", "COMPLETED", "CANCELLED"],
+    },
   },
 } as const

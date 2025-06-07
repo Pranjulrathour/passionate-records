@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Disc3 } from 'lucide-react';
@@ -9,11 +8,14 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: 'HOME', path: '/' },
-    { name: 'ARTISTS', path: '/artists' },
-    { name: 'RELEASES', path: '/releases' },
-    { name: 'SUBMIT DEMO', path: '/submit-demo' },
-    { name: 'CONTACT', path: '/contact' },
+    { name: 'HOME', href: '/' },
+    { name: 'ARTISTS', href: '/artists' },
+    { name: 'RELEASES', href: '/releases' },
+    { name: 'EVENTS', href: '/events' },
+    { name: 'PROJECTS', href: '/projects' },
+    { name: 'SERVICES', href: '/services' },
+    { name: 'WHY US', href: '/why-us' },
+    { name: 'CONTACT', href: '/contact' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -60,9 +62,9 @@ const Navbar = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Link
-                  to={item.path}
+                  to={item.href}
                   className={`font-syncopate text-sm tracking-wider transition-all duration-300 hover:text-passionate-red relative ${
-                    isActive(item.path) 
+                    isActive(item.href) 
                       ? 'text-passionate-red' 
                       : 'text-passionate-white'
                   }`}
@@ -73,7 +75,7 @@ const Navbar = () => {
                   >
                     {item.name}
                   </motion.span>
-                  {isActive(item.path) && (
+                  {isActive(item.href) && (
                     <motion.div
                       className="absolute -bottom-1 left-0 right-0 h-0.5 bg-passionate-red"
                       layoutId="activeTab"
@@ -82,7 +84,7 @@ const Navbar = () => {
                       transition={{ duration: 0.3 }}
                     />
                   )}
-                  {!isActive(item.path) && (
+                  {!isActive(item.href) && (
                     <motion.div
                       className="absolute -bottom-1 left-0 right-0 h-0.5 bg-passionate-red"
                       initial={{ scaleX: 0 }}
@@ -154,10 +156,10 @@ const Navbar = () => {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     <Link
-                      to={item.path}
+                      to={item.href}
                       onClick={() => setIsOpen(false)}
                       className={`block px-3 py-2 font-syncopate text-sm tracking-wider transition-all duration-300 hover:text-passionate-red hover:bg-passionate-gray/20 ${
-                        isActive(item.path) ? 'text-passionate-red bg-passionate-gray/10' : 'text-passionate-white'
+                        isActive(item.href) ? 'text-passionate-red bg-passionate-gray/10' : 'text-passionate-white'
                       }`}
                     >
                       <motion.span
