@@ -1,3 +1,4 @@
+
 import { Music2, Instagram, Youtube } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -33,22 +34,26 @@ const FeaturedArtists = () => {
       spotify_url: 'https://open.spotify.com/artist/alexthunder'
     },
     {
-      id: 2,
+      id: '2',
       name: "MAYA VOICE",
-      genre: "INDIE POP",
-      image: "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?w=400&h=400&fit=crop",
-      description: "Soulful indie pop sensation from Bangalore",
-      instagram: "@mayavoicemusic",
-      youtube: "MayaVoiceOfficial"
+      stage_name: "MAYA VOICE",
+      genre: "INDIE_POP",
+      bio: "Soulful indie pop sensation from Bangalore",
+      image_url: "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?w=400&h=400&fit=crop",
+      instagram_handle: "@mayavoicemusic",
+      youtube_handle: "@MayaVoiceOfficial",
+      spotify_url: 'https://open.spotify.com/artist/mayavoice'
     },
     {
-      id: 3,
+      id: '3',
       name: "DELHI DREAMS",
-      genre: "ALTERNATIVE ROCK",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
-      description: "Underground rock collective changing the game",
-      instagram: "@delhidreamsband",
-      youtube: "DelhiDreamsRock"
+      stage_name: "DELHI DREAMS",
+      genre: "ALTERNATIVE_ROCK",
+      bio: "Underground rock collective changing the game",
+      image_url: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
+      instagram_handle: "@delhidreamsband",
+      youtube_handle: "@DelhiDreamsRock",
+      spotify_url: 'https://open.spotify.com/artist/delhidreams'
     }
   ];
 
@@ -139,7 +144,7 @@ const FeaturedArtists = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {displayArtists.map((artist) => (
+          {displayArtists.map((artist, index) => (
             <motion.div
               key={artist.id}
               variants={cardVariants}
@@ -222,7 +227,7 @@ const FeaturedArtists = () => {
                   transition={{ delay: index * 0.1 + 0.6 }}
                 >
                   <motion.a
-                    href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
+                    href={`https://instagram.com/${artist.instagram_handle?.replace('@', '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
@@ -232,7 +237,7 @@ const FeaturedArtists = () => {
                     <Instagram className="h-5 w-5" />
                   </motion.a>
                   <motion.a
-                    href={`https://youtube.com/@${artist.youtube_handle}`}
+                    href={`https://youtube.com/@${artist.youtube_handle?.replace('@', '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
