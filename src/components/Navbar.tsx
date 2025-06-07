@@ -40,9 +40,16 @@ const Navbar = () => {
           >
             <Link 
               to="/" 
-              className="font-syncopate font-bold text-2xl text-passionate-white hover:text-passionate-red transition-colors duration-300"
+              className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-300"
             >
-              PASSIONATE<span className="text-passionate-red">RECORDS</span>
+              <img 
+                src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
+                alt="Passionate Records Logo" 
+                className="h-12 w-12"
+              />
+              <span className="font-syncopate font-bold text-xl text-passionate-white tracking-wider">
+                PASSIONATE<span className="text-passionate-red">RECORDS</span>
+              </span>
             </Link>
           </motion.div>
 

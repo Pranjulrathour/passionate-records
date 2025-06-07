@@ -17,17 +17,29 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Get initial session
+    const getInitialSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        await fetchUserProfile(session.user.id);
+      }
+      setLoading(false);
+    };
+
+    getInitialSession();
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
+        console.log('Auth event:', event, session?.user?.email);
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile
-          setTimeout(() => {
-            fetchUserProfile(session.user.id);
-          }, 0);
+          await fetchUserProfile(session.user.id);
         } else {
           setProfile(null);
         }
@@ -35,29 +47,24 @@ export const useAuth = () => {
       }
     );
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        fetchUserProfile(session.user.id);
-      }
-      setLoading(false);
-    });
-
     return () => subscription.unsubscribe();
   }, []);
 
   const fetchUserProfile = async (userId: string) => {
     try {
+      console.log('Fetching profile for user:', userId);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return;
+      }
+      
+      console.log('Profile data:', data);
       setProfile(data);
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -66,9 +73,12 @@ export const useAuth = () => {
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    setProfile(null);
   };
 
   const isAdmin = profile?.role === 'admin';
+  
+  console.log('Auth state:', { user: user?.email, profile, isAdmin, loading });
 
   return {
     user,

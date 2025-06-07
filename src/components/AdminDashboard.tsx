@@ -11,18 +11,48 @@ import EnrollmentManagement from '@/components/admin/EnrollmentManagement';
 import ProjectManagement from '@/components/admin/ProjectManagement';
 
 const AdminDashboard = () => {
-  const { profile, signOut, isAdmin } = useAuth();
+  const { profile, signOut, isAdmin, loading, user } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-passionate-black flex items-center justify-center">
+        <div className="text-passionate-white font-syncopate text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-passionate-black flex items-center justify-center">
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <CardTitle className="text-passionate-white font-syncopate">Authentication Required</CardTitle>
+            <CardDescription className="text-passionate-white/70">
+              Please sign in to access the admin dashboard.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
 
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-passionate-black flex items-center justify-center">
-        <Card className="bg-passionate-gray/20 border-passionate-gray">
+        <Card className="bg-passionate-gray/20 border-passionate-gray max-w-md">
           <CardHeader>
             <CardTitle className="text-passionate-white font-syncopate">Access Denied</CardTitle>
             <CardDescription className="text-passionate-white/70">
               You don't have admin privileges to access this dashboard.
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <div className="space-y-2 text-sm text-passionate-white/60">
+              <p>User: {user.email}</p>
+              <p>Role: {profile?.role || 'user'}</p>
+              <p>If you should have admin access, please contact the system administrator.</p>
+            </div>
+          </CardContent>
         </Card>
       </div>
     );
@@ -32,11 +62,18 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-passionate-black">
       <div className="border-b border-passionate-gray">
         <div className="flex h-16 items-center px-4 lg:px-8">
-          <h1 className="text-xl font-syncopate text-passionate-white">
-            PASSIONATE RECORDS - ADMIN DASHBOARD
-          </h1>
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
+              alt="Passionate Records Logo" 
+              className="h-8 w-8"
+            />
+            <h1 className="text-xl font-syncopate text-passionate-white">
+              PASSIONATE RECORDS - ADMIN DASHBOARD
+            </h1>
+          </div>
           <div className="ml-auto flex items-center space-x-4">
-            <span className="text-passionate-white/70">Welcome, {profile?.full_name}</span>
+            <span className="text-passionate-white/70">Welcome, {profile?.full_name || user.email}</span>
             <Button
               onClick={signOut}
               variant="outline"

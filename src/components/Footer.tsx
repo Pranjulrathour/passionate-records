@@ -1,5 +1,5 @@
 
-import { Music, Instagram, Youtube, Twitter, Mail, Phone, Disc3 } from 'lucide-react';
+import { Music, Instagram, Youtube, Twitter, Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -9,8 +9,12 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center space-x-3 mb-6">
-              <Disc3 className="h-8 w-8 text-passionate-red" />
+            <Link to="/" className="flex items-center space-x-3 mb-6 hover:opacity-80 transition-opacity">
+              <img 
+                src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
+                alt="Passionate Records Logo" 
+                className="h-10 w-10"
+              />
               <span className="font-syncopate font-bold text-2xl text-passionate-white tracking-wider">
                 PASSIONATE RECORDS
               </span>
