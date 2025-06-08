@@ -1,9 +1,29 @@
-
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Play, Calendar, ExternalLink } from 'lucide-react';
 
 const LatestReleases = () => {
+  const queryClient = useQueryClient();
+
+  // Set up real-time subscription
+  useEffect(() => {
+    const channel = supabase
+      .channel('latest-releases-realtime')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'projects'
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
   const { data: releases, isLoading } = useQuery({
     queryKey: ['latest-releases'],
     queryFn: async () => {
@@ -22,7 +42,9 @@ const LatestReleases = () => {
       
       if (error) throw error;
       return data;
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 30000, // 30 seconds
   });
 
   if (isLoading) {

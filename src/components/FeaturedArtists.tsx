@@ -1,9 +1,29 @@
-
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Instagram, Youtube, ExternalLink } from 'lucide-react';
 
 const FeaturedArtists = () => {
+  const queryClient = useQueryClient();
+
+  // Set up real-time subscription
+  useEffect(() => {
+    const channel = supabase
+      .channel('featured-artists-realtime')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'artists'
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['featured-artists'] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
   const { data: featuredArtists, isLoading } = useQuery({
     queryKey: ['featured-artists'],
     queryFn: async () => {
@@ -16,7 +36,9 @@ const FeaturedArtists = () => {
       
       if (error) throw error;
       return data;
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 30000, // 30 seconds
   });
 
   if (isLoading) {
