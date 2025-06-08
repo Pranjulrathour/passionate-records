@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Music, Calendar, FileText, Settings, LogOut } from 'lucide-react';
+import { Users, Music, Calendar, FileText, Settings, LogOut, Loader2 } from 'lucide-react';
 import ArtistManagement from '@/components/admin/ArtistManagement';
 import EventManagement from '@/components/admin/EventManagement';
 import EnrollmentManagement from '@/components/admin/EnrollmentManagement';
@@ -13,10 +13,15 @@ import ProjectManagement from '@/components/admin/ProjectManagement';
 const AdminDashboard = () => {
   const { profile, signOut, isAdmin, loading, user } = useAuth();
 
+  console.log('AdminDashboard render:', { profile, isAdmin, loading, user });
+
   if (loading) {
     return (
       <div className="min-h-screen bg-passionate-black flex items-center justify-center">
-        <div className="text-passionate-white font-syncopate text-xl">Loading...</div>
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="h-8 w-8 text-passionate-red animate-spin" />
+          <div className="text-passionate-white font-syncopate text-xl">Loading Dashboard...</div>
+        </div>
       </div>
     );
   }
@@ -24,13 +29,21 @@ const AdminDashboard = () => {
   if (!user) {
     return (
       <div className="min-h-screen bg-passionate-black flex items-center justify-center">
-        <Card className="bg-passionate-gray/20 border-passionate-gray">
+        <Card className="bg-passionate-gray/20 border-passionate-gray max-w-md">
           <CardHeader>
             <CardTitle className="text-passionate-white font-syncopate">Authentication Required</CardTitle>
             <CardDescription className="text-passionate-white/70">
               Please sign in to access the admin dashboard.
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={() => window.location.href = '/auth'}
+              className="w-full bg-passionate-red hover:bg-passionate-red-dark"
+            >
+              Go to Sign In
+            </Button>
+          </CardContent>
         </Card>
       </div>
     );
@@ -47,11 +60,18 @@ const AdminDashboard = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 text-sm text-passionate-white/60">
+            <div className="space-y-2 text-sm text-passionate-white/60 mb-4">
               <p>User: {user.email}</p>
               <p>Role: {profile?.role || 'user'}</p>
               <p>If you should have admin access, please contact the system administrator.</p>
             </div>
+            <Button 
+              onClick={() => window.location.href = '/'}
+              variant="outline"
+              className="w-full border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white"
+            >
+              Return to Home
+            </Button>
           </CardContent>
         </Card>
       </div>

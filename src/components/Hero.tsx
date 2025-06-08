@@ -2,7 +2,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Play, Music2, Headphones } from 'lucide-react';
+import { Heart, Play, Music2, Headphones, Volume2, Radio } from 'lucide-react';
+import InteractiveCard from './InteractiveCard';
 
 const Hero = () => {
   const ref = useRef(null);
@@ -61,17 +62,48 @@ const Hero = () => {
   return (
     <motion.section 
       ref={ref}
-      className="relative min-h-[120vh] flex flex-col items-center justify-center bg-gradient-to-br from-passionate-black via-passionate-black to-passionate-gray overflow-hidden px-4 sm:px-6 lg:px-8 pt-20 pb-20"
+      className="relative min-h-screen flex flex-col bg-gradient-to-br from-passionate-black via-passionate-black to-passionate-gray/20 overflow-hidden"
       style={{ y, opacity }}
     >
-      {/* Background musical elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-passionate-red rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-passionate-red rounded-full blur-3xl"></div>
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0">
+        {/* Animated Background Circles */}
+        <motion.div 
+          className="absolute top-20 left-20 w-96 h-96 bg-passionate-red/10 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-20 w-96 h-96 bg-passionate-red/5 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0]
+          }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="h-full w-full" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(255,0,0) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
       </div>
 
-      {/* Floating musical notes */}
-      {[...Array(6)].map((_, i) => (
+      {/* Floating Sound Waves */}
+      {[...Array(8)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute"
@@ -80,185 +112,169 @@ const Hero = () => {
             top: `${Math.random() * 100}%`,
           }}
           animate={{
-            y: [0, -50, 0],
-            opacity: [0, 0.6, 0],
-            scale: [0, 1, 0],
+            y: [0, -30, 0],
+            opacity: [0, 0.8, 0],
+            scale: [0.5, 1, 0.5],
           }}
           transition={{
-            duration: 4 + Math.random() * 2,
+            duration: 3 + Math.random() * 2,
             repeat: Infinity,
             delay: Math.random() * 3,
           }}
         >
-          <Music2 className="w-4 h-4 text-passionate-red/40" />
+          {i % 3 === 0 ? (
+            <Volume2 className="w-4 h-4 text-passionate-red/30" />
+          ) : i % 3 === 1 ? (
+            <Radio className="w-4 h-4 text-passionate-red/30" />
+          ) : (
+            <Music2 className="w-4 h-4 text-passionate-red/30" />
+          )}
         </motion.div>
       ))}
 
-      <div className="relative z-10 text-center max-w-7xl mx-auto w-full flex flex-col min-h-[100vh] justify-center">
-        {/* Main Content - Fixed text alignment */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16 flex-1 flex flex-col justify-center"
-        >
-          <motion.h1 
-            className="font-syncopate font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-passionate-white mb-8 tracking-tight text-center leading-tight"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            WELCOME TO <span className="text-passionate-red block sm:inline">PASSIONATE</span>{' '}
-            <span className="block">RECORDS</span>
-          </motion.h1>
-          
-          <motion.h2 
-            className="font-syncopate font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl text-passionate-white/80 mb-8 tracking-wide text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            UNDERGROUND MUSIC LABEL & ARTISTS COLLECTIVE
-          </motion.h2>
-
-          <motion.p
-            className="text-sm sm:text-base md:text-lg lg:text-xl text-passionate-white/60 max-w-4xl mx-auto leading-relaxed mb-12 text-center px-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            DISCOVER CUTTING-EDGE MUSIC FROM EMERGING ARTISTS. FROM ELECTRONIC BEATS TO EXPERIMENTAL SOUNDS, 
-            WE CHAMPION AUTHENTIC VOICES IN THE UNDERGROUND MUSIC SCENE. JOIN OUR PASSIONATE COMMUNITY OF MUSIC LOVERS.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/submit-demo"
-                className="bg-passionate-red hover:bg-passionate-red-dark text-passionate-white font-medium px-8 py-4 rounded-xl transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base shadow-lg hover:shadow-xl"
-              >
-                <Headphones className="h-4 w-4" />
-                <span>SUBMIT YOUR MUSIC</span>
-              </Link>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/artists"
-                className="bg-transparent hover:bg-passionate-white/5 text-passionate-white font-medium px-8 py-4 rounded-xl border border-passionate-white/20 hover:border-passionate-white/40 transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base"
-              >
-                <span>EXPLORE ARTISTS</span>
-                <Play className="h-4 w-4" />
-              </Link>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* Featured Tracks Showcase */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="relative perspective-1000"
-        >
-          <div className="flex justify-center items-end space-x-2 sm:space-x-4 lg:space-x-6">
-            {featuredTracks.map((track, index) => {
-              const isCenter = index === 2;
-              const isSecondary = index === 1 || index === 3;
-              
-              return (
-                <motion.div
-                  key={track.id}
-                  className={`
-                    relative bg-passionate-gray/20 backdrop-blur-sm rounded-2xl overflow-hidden border border-passionate-white/10
-                    ${isCenter ? 'w-48 h-64 sm:w-56 sm:h-72 lg:w-64 lg:h-80 z-30' : ''}
-                    ${isSecondary ? 'w-40 h-52 sm:w-48 sm:h-60 lg:w-52 lg:h-68 z-20' : ''}
-                    ${!isCenter && !isSecondary ? 'w-32 h-44 sm:w-40 sm:h-52 lg:w-44 lg:h-56 z-10' : ''}
-                    ${!isCenter ? 'opacity-70' : 'opacity-100'}
-                  `}
-                  style={{
-                    transform: isCenter ? 'none' : 
-                             index < 2 ? `rotateY(${15 - index * 5}deg) translateX(${index * 10}px)` :
-                             `rotateY(${-15 + (index - 4) * 5}deg) translateX(${(index - 4) * -10}px)`
-                  }}
-                  whileHover={{ 
-                    scale: isCenter ? 1.05 : 1.02,
-                    y: isCenter ? -10 : -5,
-                    opacity: 1
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <div className="relative h-full group cursor-pointer">
-                    <img 
-                      src={track.image} 
-                      alt={track.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-passionate-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    {/* Play button for center track */}
-                    {isCenter && (
-                      <motion.button
-                        className="absolute top-4 right-4 w-8 h-8 bg-passionate-red/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Play className="h-4 w-4 text-passionate-white fill-passionate-white" />
-                      </motion.button>
-                    )}
-                    
-                    {/* Track info overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="font-syncopate font-bold text-passionate-white text-xs sm:text-sm mb-1">
-                        {track.title}
-                      </h3>
-                      <p className="text-passionate-white/70 text-xs mb-1">{track.artist}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="inline-block px-2 py-1 bg-passionate-red/20 text-passionate-red text-xs rounded-md">
-                          {track.category}
-                        </span>
-                        <span className="text-passionate-white/50 text-xs">{track.duration}</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-          
-          {/* Featured tracks label */}
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col justify-center text-center py-20">
           <motion.div
-            className="text-center mt-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-16"
           >
-            <p className="text-passionate-white/40 text-sm font-syncopate tracking-wider">
-              FEATURED RELEASES
-            </p>
-          </motion.div>
-        </motion.div>
+            {/* Logo and Brand */}
+            <motion.div
+              className="flex items-center justify-center mb-8"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <motion.img 
+                src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
+                alt="Passionate Records Logo" 
+                className="h-16 w-16 mr-4"
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
+              />
+              <motion.h1 
+                className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white tracking-tight"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <span className="text-passionate-red">PASSIONATE</span>{' '}
+                <span className="block sm:inline">RECORDS</span>
+              </motion.h1>
+            </motion.div>
+            
+            <motion.h2 
+              className="font-syncopate font-medium text-lg sm:text-xl md:text-2xl text-passionate-white/80 mb-6 tracking-wide"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              UNDERGROUND MUSIC LABEL & ARTISTS COLLECTIVE
+            </motion.h2>
 
-        {/* Scroll indicator */}
+            <motion.p
+              className="text-sm sm:text-base md:text-lg text-passionate-white/60 max-w-3xl mx-auto leading-relaxed mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              DISCOVER CUTTING-EDGE MUSIC FROM EMERGING ARTISTS. FROM ELECTRONIC BEATS TO EXPERIMENTAL SOUNDS, 
+              WE CHAMPION AUTHENTIC VOICES IN THE UNDERGROUND MUSIC SCENE.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 0, 0, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/submit-demo"
+                  className="bg-passionate-red hover:bg-passionate-red-dark text-passionate-white font-medium px-8 py-4 rounded-xl transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base shadow-lg"
+                >
+                  <Headphones className="h-4 w-4" />
+                  <span>SUBMIT YOUR MUSIC</span>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/artists"
+                  className="bg-transparent hover:bg-passionate-white/5 text-passionate-white font-medium px-8 py-4 rounded-xl border border-passionate-white/20 hover:border-passionate-red transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base"
+                >
+                  <span>EXPLORE ARTISTS</span>
+                  <Play className="h-4 w-4" />
+                </Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Interactive Cards Showcase */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="relative"
+          >
+            <motion.h3
+              className="font-syncopate font-bold text-2xl sm:text-3xl text-passionate-white mb-8 tracking-wider"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.4 }}
+            >
+              FEATURED <span className="text-passionate-red">RELEASES</span>
+            </motion.h3>
+
+            {/* Cards Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 max-w-7xl mx-auto">
+              {featuredTracks.map((track, index) => (
+                <InteractiveCard
+                  key={track.id}
+                  title={track.title}
+                  artist={track.artist}
+                  image={track.image}
+                  category={track.category}
+                  duration={track.duration}
+                  index={index}
+                />
+              ))}
+            </div>
+
+            {/* View All Button */}
+            <motion.div
+              className="mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.8 }}
+            >
+              <motion.button
+                className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-3 rounded-xl transition-all duration-300"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 0, 0, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                VIEW ALL RELEASES
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
         <motion.div 
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
+          transition={{ duration: 1, delay: 2 }}
         >
           <motion.div 
             className="w-5 h-8 border border-passionate-white/30 rounded-full flex justify-center cursor-pointer"
@@ -266,7 +282,7 @@ const Hero = () => {
             transition={{ duration: 2, repeat: Infinity }}
           >
             <motion.div 
-              className="w-1 h-2 bg-passionate-white/50 rounded-full mt-2"
+              className="w-1 h-2 bg-passionate-red rounded-full mt-2"
               animate={{ opacity: [0.3, 1, 0.3] }}
               transition={{ duration: 2, repeat: Infinity }}
             />

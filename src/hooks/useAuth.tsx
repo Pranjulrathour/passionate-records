@@ -19,14 +19,26 @@ export const useAuth = () => {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        await fetchUserProfile(session.user.id);
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+          console.error('Error getting session:', error);
+          setLoading(false);
+          return;
+        }
+        
+        console.log('Initial session:', session?.user?.email);
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          await fetchUserProfile(session.user.id);
+        }
+      } catch (error) {
+        console.error('Error in getInitialSession:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     getInitialSession();
@@ -61,6 +73,20 @@ export const useAuth = () => {
 
       if (error) {
         console.error('Error fetching profile:', error);
+        // If profile doesn't exist, create a basic one
+        if (error.code === 'PGRST116') {
+          console.log('Profile not found, creating basic profile');
+          const { data: userData } = await supabase.auth.getUser();
+          if (userData.user) {
+            const newProfile = {
+              id: userData.user.id,
+              email: userData.user.email,
+              full_name: userData.user.user_metadata?.full_name || null,
+              role: 'user'
+            };
+            setProfile(newProfile);
+          }
+        }
         return;
       }
       
@@ -78,7 +104,13 @@ export const useAuth = () => {
 
   const isAdmin = profile?.role === 'admin';
   
-  console.log('Auth state:', { user: user?.email, profile, isAdmin, loading });
+  console.log('Auth state:', { 
+    user: user?.email, 
+    profile: profile?.role, 
+    isAdmin, 
+    loading,
+    profileExists: !!profile 
+  });
 
   return {
     user,
