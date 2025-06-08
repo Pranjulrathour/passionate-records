@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Instagram, Youtube, Music } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const ArtistManagement = () => {
@@ -42,6 +42,7 @@ const ArtistManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-artists'] });
       queryClient.invalidateQueries({ queryKey: ['featured-artists'] });
+      queryClient.invalidateQueries({ queryKey: ['artists'] });
       setShowAddForm(false);
       toast({ title: "Artist created successfully!" });
     },
@@ -62,6 +63,7 @@ const ArtistManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-artists'] });
       queryClient.invalidateQueries({ queryKey: ['featured-artists'] });
+      queryClient.invalidateQueries({ queryKey: ['artists'] });
       setEditingArtist(null);
       toast({ title: "Artist updated successfully!" });
     },
@@ -82,6 +84,7 @@ const ArtistManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-artists'] });
       queryClient.invalidateQueries({ queryKey: ['featured-artists'] });
+      queryClient.invalidateQueries({ queryKey: ['artists'] });
       toast({ title: "Artist deleted successfully!" });
     },
     onError: (error: any) => {
@@ -114,18 +117,22 @@ const ArtistManagement = () => {
           <CardTitle className="text-passionate-white font-syncopate">
             {artist ? 'Edit Artist' : 'Add New Artist'}
           </CardTitle>
+          <CardDescription className="text-passionate-white/70">
+            {artist ? 'Update artist information and social media links' : 'Create a new artist profile with complete social media integration'}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="name" className="text-passionate-white">Name</Label>
+                <Label htmlFor="name" className="text-passionate-white">Real Name *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
                   required
+                  placeholder="Enter artist's real name"
                 />
               </div>
               <div>
@@ -135,24 +142,26 @@ const ArtistManagement = () => {
                   value={formData.stage_name || ''}
                   onChange={(e) => setFormData({ ...formData, stage_name: e.target.value })}
                   className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                  placeholder="Enter stage name"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="bio" className="text-passionate-white">Bio</Label>
+              <Label htmlFor="bio" className="text-passionate-white">Artist Biography</Label>
               <Textarea
                 id="bio"
                 value={formData.bio || ''}
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                rows={3}
+                rows={4}
+                placeholder="Tell us about the artist's background, style, and journey..."
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="genre" className="text-passionate-white">Genre</Label>
+                <Label htmlFor="genre" className="text-passionate-white">Music Genre *</Label>
                 <Select value={formData.genre} onValueChange={(value) => setFormData({ ...formData, genre: value })}>
                   <SelectTrigger className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
                     <SelectValue />
@@ -180,67 +189,98 @@ const ArtistManagement = () => {
                   value={formData.location || ''}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                  placeholder="City, Country"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="image_url" className="text-passionate-white">Image URL</Label>
+              <Label htmlFor="image_url" className="text-passionate-white">Profile Image URL</Label>
               <Input
                 id="image_url"
                 value={formData.image_url || ''}
                 onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
                 className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                placeholder="https://example.com/image.jpg"
+                placeholder="https://example.com/artist-photo.jpg"
               />
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <Label htmlFor="instagram_handle" className="text-passionate-white">Instagram</Label>
-                <Input
-                  id="instagram_handle"
-                  value={formData.instagram_handle || ''}
-                  onChange={(e) => setFormData({ ...formData, instagram_handle: e.target.value })}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="@username"
-                />
-              </div>
-              <div>
-                <Label htmlFor="youtube_handle" className="text-passionate-white">YouTube</Label>
-                <Input
-                  id="youtube_handle"
-                  value={formData.youtube_handle || ''}
-                  onChange={(e) => setFormData({ ...formData, youtube_handle: e.target.value })}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="@channel"
-                />
-              </div>
-              <div>
-                <Label htmlFor="spotify_url" className="text-passionate-white">Spotify URL</Label>
-                <Input
-                  id="spotify_url"
-                  value={formData.spotify_url || ''}
-                  onChange={(e) => setFormData({ ...formData, spotify_url: e.target.value })}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="https://open.spotify.com/artist/..."
-                />
+            {/* Social Media Integration Section */}
+            <div className="space-y-4">
+              <h4 className="text-passionate-white font-syncopate text-lg">Social Media Integration</h4>
+              
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <Label htmlFor="instagram_handle" className="text-passionate-white flex items-center">
+                    <Instagram className="h-4 w-4 mr-2 text-pink-500" />
+                    Instagram Handle
+                  </Label>
+                  <Input
+                    id="instagram_handle"
+                    value={formData.instagram_handle || ''}
+                    onChange={(e) => setFormData({ ...formData, instagram_handle: e.target.value })}
+                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                    placeholder="@username (include the @ symbol)"
+                  />
+                  <p className="text-passionate-white/50 text-xs mt-1">
+                    Format: @username - This will create a direct link to their Instagram profile
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="youtube_handle" className="text-passionate-white flex items-center">
+                    <Youtube className="h-4 w-4 mr-2 text-red-500" />
+                    YouTube Channel Handle
+                  </Label>
+                  <Input
+                    id="youtube_handle"
+                    value={formData.youtube_handle || ''}
+                    onChange={(e) => setFormData({ ...formData, youtube_handle: e.target.value })}
+                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                    placeholder="@channelname or channel name"
+                  />
+                  <p className="text-passionate-white/50 text-xs mt-1">
+                    Format: @channelname or just the channel name - This will link to their YouTube channel
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="spotify_url" className="text-passionate-white flex items-center">
+                    <Music className="h-4 w-4 mr-2 text-green-500" />
+                    Spotify Artist Profile URL
+                  </Label>
+                  <Input
+                    id="spotify_url"
+                    value={formData.spotify_url || ''}
+                    onChange={(e) => setFormData({ ...formData, spotify_url: e.target.value })}
+                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                    placeholder="https://open.spotify.com/artist/..."
+                  />
+                  <p className="text-passionate-white/50 text-xs mt-1">
+                    Full Spotify artist profile URL - This will link directly to their Spotify page
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-4 bg-passionate-red/10 rounded-lg border border-passionate-red/30">
               <Switch
                 id="is_featured"
                 checked={formData.is_featured || false}
                 onCheckedChange={(checked) => setFormData({ ...formData, is_featured: checked })}
               />
-              <Label htmlFor="is_featured" className="text-passionate-white">Featured Artist</Label>
+              <div>
+                <Label htmlFor="is_featured" className="text-passionate-white font-medium">Featured Artist</Label>
+                <p className="text-passionate-white/70 text-sm">
+                  Featured artists appear on the homepage and get priority placement
+                </p>
+              </div>
             </div>
 
             <div className="flex space-x-2">
               <Button type="submit" className="bg-passionate-red hover:bg-passionate-red/80">
                 <Save className="h-4 w-4 mr-2" />
-                Save
+                Save Artist
               </Button>
               <Button type="button" onClick={onCancel} variant="outline">
                 <X className="h-4 w-4 mr-2" />
@@ -303,8 +343,40 @@ const ArtistManagement = () => {
                       {artist.name} {artist.stage_name && `(${artist.stage_name})`}
                     </h3>
                     <p className="text-passionate-white/70">{artist.genre} • {artist.location}</p>
+                    <div className="flex items-center space-x-3 mt-2">
+                      {artist.instagram_handle && (
+                        <a
+                          href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-pink-500 hover:text-pink-400"
+                        >
+                          <Instagram className="h-4 w-4" />
+                        </a>
+                      )}
+                      {artist.youtube_handle && (
+                        <a
+                          href={`https://youtube.com/@${artist.youtube_handle.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-red-500 hover:text-red-400"
+                        >
+                          <Youtube className="h-4 w-4" />
+                        </a>
+                      )}
+                      {artist.spotify_url && (
+                        <a
+                          href={artist.spotify_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-500 hover:text-green-400"
+                        >
+                          <Music className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
                     {artist.is_featured && (
-                      <span className="inline-block px-2 py-1 text-xs bg-passionate-red text-passionate-white rounded">
+                      <span className="inline-block px-2 py-1 text-xs bg-passionate-red text-passionate-white rounded mt-2">
                         Featured
                       </span>
                     )}

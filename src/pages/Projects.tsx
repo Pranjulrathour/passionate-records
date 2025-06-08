@@ -1,26 +1,9 @@
 
-import { useQuery } from '@tanstack/react-query';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Calendar, Play, ExternalLink, Clock } from 'lucide-react';
+import { Calendar, Play, ExternalLink } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { format } from 'date-fns';
-
-interface Project {
-  id: string;
-  title: string;
-  description?: string;
-  project_type?: string;
-  status: string;
-  image_url?: string;
-  teaser_url?: string;
-  release_date?: string;
-  artist_id?: string;
-  artists?: {
-    name: string;
-    stage_name?: string;
-  };
-}
 
 const Projects = () => {
   const { data: projects, isLoading } = useQuery({
@@ -35,22 +18,26 @@ const Projects = () => {
             stage_name
           )
         `)
-        .order('release_date', { ascending: true });
+        .order('created_at', { ascending: false });
       
       if (error) throw error;
-      return data as Project[];
+      return data;
     }
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'UPCOMING': return 'bg-passionate-red/20 text-passionate-red';
-      case 'IN_PROGRESS': return 'bg-yellow-500/20 text-yellow-500';
-      case 'COMPLETED': return 'bg-green-500/20 text-green-500';
-      case 'CANCELLED': return 'bg-gray-500/20 text-gray-500';
-      default: return 'bg-passionate-red/20 text-passionate-red';
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-passionate-black">
+        <Navbar />
+        <div className="pt-24 pb-12 passionate-gradient">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="text-passionate-white font-syncopate text-xl">Loading Projects...</div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-passionate-black">
@@ -60,12 +47,12 @@ const Projects = () => {
       <section className="pt-24 pb-12 passionate-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-syncopate font-bold text-5xl sm:text-6xl text-passionate-white mb-6 tracking-wider animate-slide-up">
-            UPCOMING
+            OUR
             <span className="text-passionate-red"> PROJECTS</span>
           </h1>
           <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
           <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto animate-fade-in">
-            WITNESS THE CREATION OF MUSICAL MAGIC. FROM ALBUMS TO COLLABORATIONS.
+            Explore our latest musical endeavors, from groundbreaking albums to innovative collaborations that push the boundaries of underground music.
           </p>
         </div>
       </section>
@@ -73,101 +60,112 @@ const Projects = () => {
       {/* Projects Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {isLoading ? (
+          {projects && projects.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-passionate-gray/20 border border-passionate-gray rounded-2xl p-6 animate-pulse">
-                  <div className="h-48 bg-passionate-gray/40 rounded-xl mb-4"></div>
-                  <div className="h-6 bg-passionate-gray/40 rounded mb-2"></div>
-                  <div className="h-4 bg-passionate-gray/40 rounded mb-4"></div>
-                </div>
-              ))}
-            </div>
-          ) : projects && projects.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
-                <div key={project.id} className="bg-passionate-gray/20 border border-passionate-gray rounded-2xl overflow-hidden hover:border-passionate-red transition-all duration-300 group">
-                  {project.image_url && (
-                    <div className="h-48 overflow-hidden relative">
-                      <img 
-                        src={project.image_url} 
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      {project.teaser_url && (
-                        <div className="absolute inset-0 bg-passionate-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <a
-                            href={project.teaser_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-passionate-red hover:bg-passionate-red-dark text-passionate-white p-3 rounded-full transition-colors duration-300"
-                          >
-                            <Play className="h-6 w-6" />
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-syncopate tracking-wider ${getStatusColor(project.status)}`}>
-                        {project.status.replace('_', ' ')}
-                      </span>
-                      {project.project_type && (
-                        <span className="text-passionate-white/60 text-xs font-syncopate tracking-wider">
-                          {project.project_type.toUpperCase()}
-                        </span>
-                      )}
-                    </div>
+              {projects.map((project, index) => (
+                <div
+                  key={project.id}
+                  className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden animate-slide-up"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Project Image */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={project.image_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop"}
+                      alt={project.title}
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-passionate-black/20 group-hover:bg-passionate-red/20 transition-all duration-500"></div>
                     
+                    {/* Play Button Overlay */}
+                    {project.teaser_url && (
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a
+                          href={project.teaser_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-passionate-red/90 rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300"
+                        >
+                          <Play className="h-8 w-8 text-passionate-white fill-passionate-white" />
+                        </a>
+                      </div>
+                    )}
+
+                    {/* Status Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className={`px-3 py-1 text-xs font-syncopate tracking-wider text-passionate-white ${
+                        project.status === 'COMPLETED' ? 'bg-green-600' :
+                        project.status === 'IN_PROGRESS' ? 'bg-passionate-red' :
+                        project.status === 'CANCELLED' ? 'bg-gray-600' :
+                        'bg-passionate-red/70'
+                      }`}>
+                        {project.status?.replace('_', ' ') || 'PROJECT'}
+                      </span>
+                    </div>
+
+                    {/* Project Type */}
+                    {project.project_type && (
+                      <div className="absolute top-4 right-4">
+                        <span className="bg-passionate-black/70 px-2 py-1 text-xs font-syncopate tracking-wider text-passionate-white">
+                          {project.project_type}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Project Info */}
+                  <div className="p-6">
                     <h3 className="font-syncopate font-bold text-xl text-passionate-white mb-2 tracking-wider">
-                      {project.title.toUpperCase()}
+                      {project.title}
                     </h3>
                     
                     {project.artists && (
                       <p className="text-passionate-red text-sm mb-3 font-syncopate tracking-wider">
-                        BY {(project.artists.stage_name || project.artists.name).toUpperCase()}
+                        by {project.artists.stage_name || project.artists.name}
                       </p>
                     )}
                     
+                    <p className="text-passionate-white/70 mb-4 leading-relaxed line-clamp-3">
+                      {project.description || `${project.title} represents the cutting edge of underground music production.`}
+                    </p>
+
+                    {/* Release Date */}
                     {project.release_date && (
-                      <div className="flex items-center text-passionate-white/70 text-sm mb-3">
+                      <div className="flex items-center mb-4 text-passionate-white/50">
                         <Calendar className="h-4 w-4 mr-2" />
-                        RELEASING {format(new Date(project.release_date), 'MMM dd, yyyy').toUpperCase()}
+                        <span className="text-sm">
+                          Release: {new Date(project.release_date).toLocaleDateString()}
+                        </span>
                       </div>
                     )}
-                    
-                    {project.description && (
-                      <p className="text-passionate-white/60 text-sm mb-4 line-clamp-3">
-                        {project.description}
-                      </p>
-                    )}
-                    
-                    {project.teaser_url && (
-                      <a
-                        href={project.teaser_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-transparent border border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-4 py-2 tracking-wider transition-all duration-300 rounded-xl text-xs flex items-center space-x-2 w-fit"
-                      >
-                        <span>PREVIEW</span>
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    )}
+
+                    {/* Actions */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        {project.teaser_url && (
+                          <a
+                            href={project.teaser_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                          >
+                            <ExternalLink className="h-5 w-5" />
+                          </a>
+                        )}
+                      </div>
+                      
+                      <button className="bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white px-4 py-2 text-sm font-syncopate tracking-wider transition-all duration-300 border border-passionate-red">
+                        VIEW DETAILS
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-20">
-              <Clock className="h-16 w-16 text-passionate-red mx-auto mb-6" />
-              <h3 className="font-syncopate font-bold text-2xl text-passionate-white mb-4 tracking-wider">
-                NO PROJECTS ANNOUNCED YET
-              </h3>
-              <p className="text-passionate-white/70 max-w-md mx-auto">
-                WE'RE COOKING UP SOMETHING SPECIAL. STAY TUNED FOR EXCITING PROJECT ANNOUNCEMENTS!
-              </p>
+              <h3 className="font-syncopate text-2xl text-passionate-white mb-4">No Projects Yet</h3>
+              <p className="text-passionate-white/70">Exciting projects are in development. Stay tuned!</p>
             </div>
           )}
         </div>
