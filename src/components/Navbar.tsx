@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, LogOut, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,58 +8,87 @@ import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { user, profile, signOut, isAdmin, loading } = useAuth();
 
   const navLinks = [
-    { name: 'HOME', path: '/' },
-    { name: 'ARTISTS', path: '/artists' },
-    { name: 'RELEASES', path: '/releases' },
-    { name: 'EVENTS', path: '/events' },
-    { name: 'PROJECTS', path: '/projects' },
-    { name: 'SERVICES', path: '/services' },
-    { name: 'WHY US', path: '/why-us' },
-    { name: 'CONTACT', path: '/contact' },
+    { name: 'Home', path: '/' },
+    { name: 'Artists', path: '/artists' },
+    { name: 'Releases', path: '/releases' },
+    { name: 'Events', path: '/events' },
+    { name: 'Projects', path: '/projects' },
+    { name: 'Services', path: '/services' },
+    { name: 'Contact', path: '/contact' },
   ];
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-passionate-black/95 backdrop-blur-sm border-b border-passionate-gray/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+    <motion.nav 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled 
+          ? 'bg-passionate-black/90 backdrop-blur-xl border-b border-passionate-white/10' 
+          : 'bg-transparent'
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo - Minimal Icon Only */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative group"
           >
-            <Link 
-              to="/" 
-              className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-300"
-            >
-              <img 
-                src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
-                alt="Passionate Records Logo" 
-                className="h-12 w-12"
-              />
-              <span className="font-syncopate font-bold text-xl text-passionate-white tracking-wider">
-                PASSIONATE<span className="text-passionate-red">RECORDS</span>
-              </span>
+            <Link to="/" className="block">
+              <motion.div
+                className="w-10 h-10 bg-passionate-red rounded-full flex items-center justify-center relative overflow-hidden"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <motion.div
+                  className="w-4 h-4 bg-passionate-white rounded-full"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.8, 1]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div
+                  className="absolute inset-0 bg-passionate-red/20 rounded-full"
+                  animate={{ 
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 0, 0.5]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                />
+              </motion.div>
             </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <motion.div 
-            className="hidden lg:flex items-center space-x-8"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link, index) => (
               <motion.div
                 key={link.name}
@@ -69,74 +98,94 @@ const Navbar = () => {
               >
                 <Link
                   to={link.path}
-                  className={`font-syncopate font-bold text-sm tracking-wider transition-all duration-300 relative group ${
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${
                     isActive(link.path)
-                      ? 'text-passionate-red'
-                      : 'text-passionate-white hover:text-passionate-red'
+                      ? 'text-passionate-white bg-passionate-white/10'
+                      : 'text-passionate-white/70 hover:text-passionate-white hover:bg-passionate-white/5'
                   }`}
                 >
                   {link.name}
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-0.5 bg-passionate-red"
-                    initial={{ width: 0 }}
-                    animate={{ width: isActive(link.path) ? '100%' : 0 }}
-                    whileHover={{ width: '100%' }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  {isActive(link.path) && (
+                    <motion.div
+                      className="absolute bottom-0 left-1/2 w-1 h-1 bg-passionate-red rounded-full"
+                      layoutId="activeIndicator"
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      style={{ transform: 'translateX(-50%)' }}
+                    />
+                  )}
                 </Link>
               </motion.div>
             ))}
-            
-            {/* Authentication Section */}
-            <div className="flex items-center space-x-4 ml-8 pl-8 border-l border-passionate-gray/30">
-              {loading ? (
-                <div className="text-passionate-white/50 text-sm">Loading...</div>
-              ) : user ? (
-                <div className="flex items-center space-x-4">
-                  <span className="text-passionate-white/70 text-sm">
-                    Welcome, {profile?.full_name || user.email}
-                  </span>
-                  {isAdmin && (
-                    <Link
-                      to="/admin"
-                      className="flex items-center space-x-2 px-3 py-2 text-sm bg-passionate-red/20 text-passionate-red border border-passionate-red rounded hover:bg-passionate-red hover:text-passionate-white transition-all duration-300"
-                    >
-                      <Settings className="h-4 w-4" />
-                      <span>Admin</span>
-                    </Link>
-                  )}
-                  <Button
-                    onClick={signOut}
-                    variant="outline"
-                    size="sm"
-                    className="bg-transparent border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white"
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </Button>
+          </div>
+
+          {/* Auth Section */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {loading ? (
+              <div className="w-8 h-8 border-2 border-passionate-red/30 border-t-passionate-red rounded-full animate-spin" />
+            ) : user ? (
+              <div className="flex items-center space-x-3">
+                <div className="text-passionate-white/70 text-sm font-medium">
+                  {profile?.full_name || user.email}
                 </div>
-              ) : (
-                <Link
-                  to="/auth"
-                  className="flex items-center space-x-2 px-4 py-2 bg-passionate-red text-passionate-white font-syncopate text-sm tracking-wider hover:bg-passionate-red/80 transition-all duration-300"
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="p-2 bg-passionate-red/20 text-passionate-red rounded-full hover:bg-passionate-red hover:text-passionate-white transition-all duration-300"
+                  >
+                    <Settings className="h-4 w-4" />
+                  </Link>
+                )}
+                <Button
+                  onClick={signOut}
+                  variant="ghost"
+                  size="sm"
+                  className="text-passionate-white/70 hover:text-passionate-white hover:bg-passionate-white/10 rounded-full"
                 >
-                  <User className="h-4 w-4" />
-                  <span>SIGN IN</span>
-                </Link>
-              )}
-            </div>
-          </motion.div>
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <Link
+                to="/auth"
+                className="flex items-center space-x-2 px-6 py-2 bg-passionate-red text-passionate-white text-sm font-medium rounded-full hover:bg-passionate-red/80 transition-all duration-300"
+              >
+                <User className="h-4 w-4" />
+                <span>Sign In</span>
+              </Link>
+            )}
+          </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
-            <motion.button
-              onClick={toggleMenu}
-              className="text-passionate-white hover:text-passionate-red transition-colors duration-300"
-              whileTap={{ scale: 0.9 }}
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </motion.button>
-          </div>
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 text-passionate-white hover:bg-passionate-white/10 rounded-full transition-colors"
+            whileTap={{ scale: 0.9 }}
+          >
+            <AnimatePresence mode="wait">
+              {isOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={20} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu size={20} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
         </div>
 
         {/* Mobile Navigation */}
@@ -147,72 +196,70 @@ const Navbar = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden bg-passionate-black/90 backdrop-blur-sm border-t border-passionate-gray/20"
+              className="lg:hidden border-t border-passionate-white/10 mt-4 pt-4 pb-6 space-y-2"
             >
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 * index }}
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 * index }}
+                >
+                  <Link
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`block px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 ${
+                      isActive(link.path)
+                        ? 'text-passionate-white bg-passionate-red/20'
+                        : 'text-passionate-white/70 hover:text-passionate-white hover:bg-passionate-white/5'
+                    }`}
                   >
-                    <Link
-                      to={link.path}
-                      onClick={toggleMenu}
-                      className={`block px-3 py-2 font-syncopate font-bold text-sm tracking-wider transition-all duration-300 ${
-                        isActive(link.path)
-                          ? 'text-passionate-red bg-passionate-red/10'
-                          : 'text-passionate-white hover:text-passionate-red hover:bg-passionate-red/5'
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-                
-                {/* Mobile Authentication */}
-                <div className="pt-4 mt-4 border-t border-passionate-gray/30">
-                  {user ? (
-                    <div className="space-y-2">
-                      <div className="px-3 py-2 text-passionate-white/70 text-sm">
-                        Welcome, {profile?.full_name || user.email}
-                      </div>
-                      {isAdmin && (
-                        <Link
-                          to="/admin"
-                          onClick={toggleMenu}
-                          className="block px-3 py-2 text-passionate-red font-syncopate text-sm tracking-wider"
-                        >
-                          ADMIN DASHBOARD
-                        </Link>
-                      )}
-                      <button
-                        onClick={() => {
-                          signOut();
-                          toggleMenu();
-                        }}
-                        className="block w-full text-left px-3 py-2 text-passionate-red font-syncopate text-sm tracking-wider"
-                      >
-                        SIGN OUT
-                      </button>
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+              
+              {/* Mobile Auth */}
+              <div className="pt-4 mt-4 border-t border-passionate-white/10">
+                {user ? (
+                  <div className="space-y-2">
+                    <div className="px-4 py-2 text-passionate-white/70 text-sm">
+                      {profile?.full_name || user.email}
                     </div>
-                  ) : (
-                    <Link
-                      to="/auth"
-                      onClick={toggleMenu}
-                      className="block px-3 py-2 text-passionate-red font-syncopate text-sm tracking-wider"
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsOpen(false)}
+                        className="block px-4 py-3 text-passionate-red text-sm font-medium hover:bg-passionate-red/10 rounded-xl transition-all duration-300"
+                      >
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setIsOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-3 text-passionate-red text-sm font-medium hover:bg-passionate-red/10 rounded-xl transition-all duration-300"
                     >
-                      SIGN IN
-                    </Link>
-                  )}
-                </div>
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    to="/auth"
+                    onClick={() => setIsOpen(false)}
+                    className="block px-4 py-3 bg-passionate-red text-passionate-white text-sm font-medium rounded-xl text-center hover:bg-passionate-red/80 transition-all duration-300"
+                  >
+                    Sign In
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
