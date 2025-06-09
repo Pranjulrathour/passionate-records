@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import ImageUpload from '@/components/ui/image-upload';
 
 const ProjectManagement = () => {
   const [editingProject, setEditingProject] = useState<any>(null);
@@ -59,6 +60,8 @@ const ProjectManagement = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-projects'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
       setShowAddForm(false);
       toast({ title: "Project created successfully!" });
     },
@@ -78,6 +81,8 @@ const ProjectManagement = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-projects'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
       setEditingProject(null);
       toast({ title: "Project updated successfully!" });
     },
@@ -97,6 +102,8 @@ const ProjectManagement = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-projects'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
       toast({ title: "Project deleted successfully!" });
     },
     onError: (error: any) => {
@@ -122,7 +129,7 @@ const ProjectManagement = () => {
     };
 
     return (
-      <Card className="bg-passionate-gray/20 border-passionate-gray">
+      <Card className="bg-passionate-gray/20 border-passionate-gray mb-6">
         <CardHeader>
           <CardTitle className="text-passionate-white font-syncopate">
             {project ? 'Edit Project' : 'Add New Project'}
@@ -211,16 +218,12 @@ const ProjectManagement = () => {
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="image_url" className="text-passionate-white">Image URL</Label>
-              <Input
-                id="image_url"
-                value={formData.image_url || ''}
-                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
+            <ImageUpload
+              value={formData.image_url || ''}
+              onChange={(value) => setFormData({ ...formData, image_url: value })}
+              label="Project Image"
+              placeholder="Upload project cover image"
+            />
 
             <div>
               <Label htmlFor="teaser_url" className="text-passionate-white">Teaser URL</Label>

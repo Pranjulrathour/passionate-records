@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -11,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Plus, Edit, Trash2, Save, X, Instagram, Youtube, Music } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import ImageUpload from '@/components/ui/image-upload';
 
 const ArtistManagement = () => {
   const [editingArtist, setEditingArtist] = useState<any>(null);
@@ -194,16 +194,12 @@ const ArtistManagement = () => {
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="image_url" className="text-passionate-white">Profile Image URL</Label>
-              <Input
-                id="image_url"
-                value={formData.image_url || ''}
-                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                placeholder="https://example.com/artist-photo.jpg"
-              />
-            </div>
+            <ImageUpload
+              value={formData.image_url || ''}
+              onChange={(value) => setFormData({ ...formData, image_url: value })}
+              label="Profile Image"
+              placeholder="Upload artist profile image"
+            />
 
             {/* Social Media Integration Section */}
             <div className="space-y-4">
