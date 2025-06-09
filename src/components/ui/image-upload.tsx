@@ -3,33 +3,95 @@ import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { Upload, X, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 interface ImageUploadProps {
   value?: string;
   onChange: (value: string) => void;
   label: string;
   placeholder?: string;
+  bucketName?: string;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
   onChange,
   label,
-  placeholder = "Upload an image or enter URL"
+  placeholder = "Upload an image or enter URL",
+  bucketName = "artist-images"
 }) => {
   const [uploadMode, setUploadMode] = useState<'url' | 'file'>('url');
   const [preview, setPreview] = useState<string>(value || '');
+  const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadFile = async (file: File): Promise<string> => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+    const filePath = fileName;
+
+    const { error: uploadError } = await supabase.storage
+      .from(bucketName)
+      .upload(filePath, file);
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    const { data } = supabase.storage
+      .from(bucketName)
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      // For now, we'll create a blob URL for preview
-      // In a real app, you'd upload to your storage service
-      const blobUrl = URL.createObjectURL(file);
-      setPreview(blobUrl);
-      onChange(blobUrl);
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid file type",
+        description: "Please select an image file",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate file size (10MB max)
+    if (file.size > 10 * 1024 * 1024) {
+      toast({
+        title: "File too large",
+        description: "Please select an image smaller than 10MB",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setUploading(true);
+    
+    try {
+      const publicUrl = await uploadFile(file);
+      setPreview(publicUrl);
+      onChange(publicUrl);
+      
+      toast({
+        title: "Upload successful",
+        description: "Image has been uploaded successfully"
+      });
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Upload failed",
+        description: error.message || "Failed to upload image",
+        variant: "destructive"
+      });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -86,11 +148,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             type="file"
             accept="image/*"
             onChange={handleFileUpload}
+            disabled={uploading}
             className="bg-passionate-gray/30 border-passionate-gray text-passionate-white file:bg-passionate-red file:text-passionate-white file:border-0 file:rounded file:px-3 file:py-1"
           />
           <p className="text-passionate-white/50 text-xs">
             Supported formats: JPG, PNG, GIF, WebP (max 10MB)
           </p>
+          {uploading && (
+            <div className="flex items-center space-x-2 text-passionate-white/70">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="text-sm">Uploading...</span>
+            </div>
+          )}
         </div>
       )}
 
@@ -100,7 +169,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             src={preview}
             alt="Preview"
             className="w-32 h-32 object-cover rounded-lg border border-passionate-gray"
-            onError={() => setPreview('')}
+            onError={() => {
+              setPreview('');
+              toast({
+                title: "Image load error",
+                description: "Failed to load image preview",
+                variant: "destructive"
+              });
+            }}
           />
           <Button
             type="button"

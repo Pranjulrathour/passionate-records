@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -223,6 +222,7 @@ const ProjectManagement = () => {
               onChange={(value) => setFormData({ ...formData, image_url: value })}
               label="Project Image"
               placeholder="Upload project cover image"
+              bucketName="artist-images"
             />
 
             <div>
