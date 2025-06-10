@@ -183,6 +183,71 @@ export type Database = {
         }
         Relationships: []
       }
+      latest_releases: {
+        Row: {
+          artist_id: string | null
+          artist_name: string
+          audio_preview_url: string | null
+          cover_art_url: string | null
+          created_at: string
+          description: string | null
+          display_order: number
+          genre: string | null
+          id: string
+          is_featured: boolean
+          release_date: string | null
+          release_type: string
+          status: string
+          streaming_links: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          artist_id?: string | null
+          artist_name: string
+          audio_preview_url?: string | null
+          cover_art_url?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          genre?: string | null
+          id?: string
+          is_featured?: boolean
+          release_date?: string | null
+          release_type?: string
+          status?: string
+          streaming_links?: Json | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          artist_id?: string | null
+          artist_name?: string
+          audio_preview_url?: string | null
+          cover_art_url?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          genre?: string | null
+          id?: string
+          is_featured?: boolean
+          release_date?: string | null
+          release_type?: string
+          status?: string
+          streaming_links?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "latest_releases_artist_id_fkey"
+            columns: ["artist_id"]
+            isOneToOne: false
+            referencedRelation: "artists"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           created_at: string

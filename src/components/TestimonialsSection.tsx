@@ -14,7 +14,7 @@ const TestimonialsSection = () => {
     {
       name: "MAYA CHEN",
       role: "Hip-Hop Artist",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b108?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=150&h=150&fit=crop&crop=face",
       content: "Working with Passionate Records transformed my career. They understand the underground scene like no other label.",
       rating: 5
     },

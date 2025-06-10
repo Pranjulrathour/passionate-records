@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Send, Music, Upload } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const SubmitDemo = () => {
   const [formData, setFormData] = useState({
@@ -40,10 +41,20 @@ const SubmitDemo = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
     try {
-      // In production, this would submit to Supabase and Google Sheets
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Submit to Supabase
+      const { error } = await supabase
+        .from('demo_submissions')
+        .insert([{
+          artist_name: formData.name,
+          email: formData.email,
+          genre: formData.genre,
+          demo_link: formData.link,
+          message: formData.message,
+          status: 'pending'
+        }]);
+
+      if (error) throw error;
       
       toast({
         title: "Demo Submitted Successfully! 🔥",
@@ -58,10 +69,11 @@ const SubmitDemo = () => {
         link: '',
         message: ''
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Submission error:', error);
       toast({
         title: "Submission Failed",
-        description: "There was an error submitting your demo. Please try again.",
+        description: error.message || "There was an error submitting your demo. Please try again.",
         variant: "destructive"
       });
     } finally {

@@ -505,23 +505,23 @@ class App {
   ) {
     const defaultItems = [
       {
-        image: `https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800&h=600&fit=crop`,
+        image: `https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=600&fit=crop`,
         text: "Live Performance",
       },
       {
-        image: `https://images.unsplash.com/photo-1550560888-1009463ef168?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
+        image: `https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&h=600&fit=crop`,
         text: "Microphone Artist",
       },
       {
-        image: `https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=800&h=600&fit=crop`,
+        image: `https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop`,
         text: "Gray Suit Singer",
       },
       {
-        image: `https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&h=600&fit=crop`,
+        image: `https://images.unsplash.com/photo-1512733596533-7b00ccf8ebaf?w=800&h=600&fit=crop`,
         text: "Holding Microphone",
       },
       {
-        image: `https://plus.unsplash.com/premium_photo-1681074651819-e3a6ef2783b3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fHNpbmluZyUyMHBlcmZvcm1hbmNlfGVufDB8fDB8fHww`,
+        image: `https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop`,
         text: "Singing Performance",
       },
       {
@@ -533,11 +533,11 @@ class App {
         text: "Music Producer",
       },
       {
-        image: `https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop`,
+        image: `https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&h=600&fit=crop`,
         text: "Recording Artist",
       },
       {
-        image: `https://images.unsplash.com/photo-1539571696358-c4f3b4b23c0b?w=800&h=600&fit=crop`,
+        image: `https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800&h=600&fit=crop`,
         text: "Live Concert",
       },
       {

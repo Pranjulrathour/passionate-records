@@ -4,8 +4,10 @@ import Footer from '../components/Footer';
 import { Music2, Instagram, Youtube, ExternalLink } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 
 const Artists = () => {
+  const navigate = useNavigate();
   const { data: artists, isLoading } = useQuery({
     queryKey: ['artists'],
     queryFn: async () => {
@@ -65,7 +67,7 @@ const Artists = () => {
                   {/* Artist Image */}
                   <div className="relative overflow-hidden">
                     <img
-                      src={artist.image_url || "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop"}
+                      src={artist.image_url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjEyMTIxIi8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMTYwIiByPSI2MCIgZmlsbD0iIzQ0NDQ0NCIvPjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIzMDAiIHJ4PSIxMDAiIHJ5PSI2MCIgZmlsbD0iIzQ0NDQ0NCIvPjx0ZXh0IHg9IjIwMCIgeT0iMzUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNzc3Nzc3IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=="}
                       alt={artist.name}
                       className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
@@ -144,7 +146,10 @@ const Artists = () => {
                         )}
                       </div>
                       
-                      <button className="bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white px-4 py-2 text-sm font-syncopate tracking-wider transition-all duration-300 border border-passionate-red">
+                      <button 
+                        onClick={() => navigate(`/artists/${artist.id}`)}
+                        className="bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white px-4 py-2 text-sm font-syncopate tracking-wider transition-all duration-300 border border-passionate-red"
+                      >
                         VIEW PROFILE
                       </button>
                     </div>

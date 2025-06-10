@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useQueryClient } from '@tanstack/react-query';
@@ -6,11 +5,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Music, Calendar, FileText, LogOut, Loader2, AlertCircle } from 'lucide-react';
+import { Users, Music, Calendar, LogOut, Loader2, AlertCircle, Star } from 'lucide-react';
 import ArtistManagement from '@/components/admin/ArtistManagement';
 import EventManagement from '@/components/admin/EventManagement';
-import EnrollmentManagement from '@/components/admin/EnrollmentManagement';
 import ProjectManagement from '@/components/admin/ProjectManagement';
+import DemoSubmissionManagement from '@/components/admin/DemoSubmissionManagement';
+import LatestReleaseManagement from '@/components/admin/LatestReleaseManagement';
 
 const AdminDashboard = () => {
   const { profile, signOut, isAdmin, loading, user, profileError } = useAuth();
@@ -63,16 +63,16 @@ const AdminDashboard = () => {
       })
       .subscribe();
 
-    // Subscribe to enrollments changes
-    const enrollmentsChannel = supabase
-      .channel('enrollments-changes')
+    // Subscribe to demo submissions changes
+    const demoSubmissionsChannel = supabase
+      .channel('demo-submissions-changes')
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
-        table: 'artist_enrollments'
+        table: 'demo_submissions'
       }, () => {
-        console.log('Enrollments table changed, invalidating queries');
-        queryClient.invalidateQueries({ queryKey: ['enrollments'] });
+        console.log('Demo submissions table changed, invalidating queries');
+        queryClient.invalidateQueries({ queryKey: ['demo-submissions'] });
       })
       .subscribe();
 
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
       supabase.removeChannel(artistsChannel);
       supabase.removeChannel(projectsChannel);
       supabase.removeChannel(eventsChannel);
-      supabase.removeChannel(enrollmentsChannel);
+      supabase.removeChannel(demoSubmissionsChannel);
     };
   }, [isAdmin, queryClient]);
 
@@ -218,7 +218,7 @@ const AdminDashboard = () => {
 
       <div className="p-6">
         <Tabs defaultValue="artists" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-passionate-gray/20">
+          <TabsList className="grid w-full grid-cols-5 bg-passionate-gray/20">
             <TabsTrigger value="artists" className="text-passionate-white data-[state=active]:bg-passionate-red">
               <Users className="h-4 w-4 mr-2" />
               Artists
@@ -231,9 +231,13 @@ const AdminDashboard = () => {
               <Music className="h-4 w-4 mr-2" />
               Projects
             </TabsTrigger>
-            <TabsTrigger value="enrollments" className="text-passionate-white data-[state=active]:bg-passionate-red">
-              <FileText className="h-4 w-4 mr-2" />
-              Enrollments
+            <TabsTrigger value="releases" className="text-passionate-white data-[state=active]:bg-passionate-red">
+              <Star className="h-4 w-4 mr-2" />
+              Latest Releases
+            </TabsTrigger>
+            <TabsTrigger value="demos" className="text-passionate-white data-[state=active]:bg-passionate-red">
+              <Music className="h-4 w-4 mr-2" />
+              Demo Submissions
             </TabsTrigger>
           </TabsList>
 
@@ -249,8 +253,12 @@ const AdminDashboard = () => {
             <ProjectManagement />
           </TabsContent>
 
-          <TabsContent value="enrollments" className="space-y-6">
-            <EnrollmentManagement />
+          <TabsContent value="releases" className="space-y-6">
+            <LatestReleaseManagement />
+          </TabsContent>
+
+          <TabsContent value="demos" className="space-y-6">
+            <DemoSubmissionManagement />
           </TabsContent>
         </Tabs>
       </div>
