@@ -1,11 +1,13 @@
-
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const UpcomingEvents = () => {
+  const navigate = useNavigate();
+  
   const { data: events, isLoading } = useQuery({
     queryKey: ['upcoming-events'],
     queryFn: async () => {
@@ -78,7 +80,8 @@ const UpcomingEvents = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group bg-passionate-black border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden rounded-xl"
+              className="group bg-passionate-black border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden rounded-xl cursor-pointer"
+              onClick={() => navigate(`/events/${event.id}`)}
             >
               <div className="relative overflow-hidden">
                 <img
@@ -116,7 +119,13 @@ const UpcomingEvents = () => {
                 </p>
 
                 {event.ticket_url && (
-                  <Button className="w-full bg-passionate-red hover:bg-passionate-red/80">
+                  <Button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(event.ticket_url, '_blank');
+                    }}
+                    className="w-full bg-passionate-red hover:bg-passionate-red/80"
+                  >
                     <ExternalLink className="h-4 w-4 mr-2" />
                     GET TICKETS
                   </Button>
@@ -134,6 +143,7 @@ const UpcomingEvents = () => {
           className="text-center mt-12"
         >
           <Button
+            onClick={() => navigate('/events')}
             className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-3 rounded-xl transition-all duration-300"
           >
             VIEW ALL EVENTS

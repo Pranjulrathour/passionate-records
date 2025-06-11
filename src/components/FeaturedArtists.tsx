@@ -1,9 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Instagram, Youtube, ExternalLink } from 'lucide-react';
 
 const FeaturedArtists = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // Set up real-time subscription
@@ -92,8 +94,9 @@ const FeaturedArtists = () => {
           {featuredArtists.map((artist, index) => (
             <div
               key={artist.id}
-              className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden animate-slide-up"
+              className="group bg-passionate-gray/20 border border-passionate-gray hover:border-passionate-red transition-all duration-500 overflow-hidden animate-slide-up cursor-pointer"
               style={{ animationDelay: `${index * 100}ms` }}
+              onClick={() => navigate(`/artists/${artist.id}`)}
             >
               <div className="relative overflow-hidden">
                 <img
@@ -130,6 +133,7 @@ const FeaturedArtists = () => {
                         href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
                       >
                         <Instagram className="h-4 w-4" />
@@ -140,6 +144,7 @@ const FeaturedArtists = () => {
                         href={`https://youtube.com/@${artist.youtube_handle.replace('@', '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
                       >
                         <Youtube className="h-4 w-4" />
@@ -150,6 +155,7 @@ const FeaturedArtists = () => {
                         href={artist.spotify_url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
                       >
                         <ExternalLink className="h-4 w-4" />
@@ -157,13 +163,29 @@ const FeaturedArtists = () => {
                     )}
                   </div>
                   
-                  <button className="text-passionate-red hover:text-passionate-white text-sm font-syncopate tracking-wider transition-colors duration-300">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/artists/${artist.id}`);
+                    }}
+                    className="text-passionate-red hover:text-passionate-white text-sm font-syncopate tracking-wider transition-colors duration-300"
+                  >
                     VIEW →
                   </button>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Artists Button */}
+        <div className="text-center mt-12">
+          <button
+            onClick={() => navigate('/artists')}
+            className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-3 rounded-xl tracking-wider transition-all duration-300"
+          >
+            VIEW ALL ARTISTS
+          </button>
         </div>
       </div>
     </section>
