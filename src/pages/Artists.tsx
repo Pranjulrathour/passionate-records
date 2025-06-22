@@ -1,7 +1,7 @@
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Music2, Instagram, Youtube, ExternalLink } from 'lucide-react';
+import { Music2, ExternalLink } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
@@ -111,38 +111,18 @@ const Artists = () => {
                       {artist.bio || `${artist.name} is a talented artist pushing the boundaries of ${artist.genre?.toLowerCase() || 'music'}.`}
                     </p>
 
-                    {/* Social Links */}
+                    {/* Master Link */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                       <div className="flex items-center space-x-3 sm:space-x-4 justify-center sm:justify-start">
-                        {artist.instagram_handle && (
-                          <a
-                            href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
+                                            {artist.master_link && (
+                      <a
+                        href={artist.master_link.startsWith('http://') || artist.master_link.startsWith('https://') 
+                          ? artist.master_link 
+                          : `https://${artist.master_link}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
-                            aria-label="Instagram"
-                          >
-                            <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
-                          </a>
-                        )}
-                        {artist.youtube_handle && (
-                          <a
-                            href={`https://youtube.com/@${artist.youtube_handle.replace('@', '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
-                            aria-label="YouTube"
-                          >
-                            <Youtube className="h-4 w-4 sm:h-5 sm:w-5" />
-                          </a>
-                        )}
-                        {artist.spotify_url && (
-                          <a
-                            href={artist.spotify_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
-                            aria-label="Spotify"
+                            aria-label="Visit Artist Page"
                           >
                             <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
                           </a>

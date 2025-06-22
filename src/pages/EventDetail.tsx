@@ -18,10 +18,13 @@ import {
   Users
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { shareEvent } from '@/utils/shareUtils';
+import { useToast } from '@/hooks/use-toast';
 
 const EventDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { data: event, isLoading, error } = useQuery({
     queryKey: ['event', id],
@@ -88,16 +91,21 @@ const EventDetail = () => {
   const eventDateTime = formatDateTime(event.date_time);
   const isUpcoming = new Date(event.date_time) > new Date();
 
-  const shareEvent = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: event.title,
-        text: `Check out this event: ${event.title}`,
-        url: window.location.href,
+  const handleShareEvent = async () => {
+    try {
+      const success = await shareEvent(event.title, event.venue);
+      if (success) {
+        toast({
+          title: "Shared successfully!",
+          description: "The event link has been shared.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Share failed",
+        description: "Unable to share at this time. Please try again.",
+        variant: "destructive",
       });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      // You could add a toast notification here
     }
   };
 
@@ -226,7 +234,7 @@ const EventDetail = () => {
                   <div className="flex flex-wrap gap-4">
                     {event.ticket_url && (
                       <a
-                        href={event.ticket_url}
+                        href={event.ticket_url.startsWith('http://') || event.ticket_url.startsWith('https://') ? event.ticket_url : `https://${event.ticket_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 px-8 py-4 bg-passionate-red text-white rounded-full hover:bg-passionate-red/80 transition-colors font-semibold"
@@ -237,7 +245,7 @@ const EventDetail = () => {
                       </a>
                     )}
                     <Button
-                      onClick={shareEvent}
+                      onClick={handleShareEvent}
                       variant="outline"
                       className="flex items-center space-x-2 px-8 py-4 border-passionate-white/30 text-passionate-white hover:bg-passionate-white/10"
                     >

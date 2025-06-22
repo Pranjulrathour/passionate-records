@@ -22,9 +22,7 @@ interface ArtistFormData {
   bio: string;
   genre: GenreType;
   image_url: string;
-  instagram_handle: string;
-  youtube_handle: string;
-  spotify_url: string;
+  master_link: string;
   location: string;
   is_featured: boolean;
 }
@@ -62,9 +60,7 @@ const getInitialFormData = (): ArtistFormData => ({
   bio: '',
   genre: 'OTHER' as GenreType,
   image_url: '',
-  instagram_handle: '',
-  youtube_handle: '',
-  spotify_url: '',
+  master_link: '',
   location: '',
   is_featured: false
 });
@@ -199,9 +195,7 @@ const ArtistManagement = () => {
           bio: artist.bio || '',
           genre: artist.genre || 'OTHER' as GenreType,
           image_url: artist.image_url || '',
-          instagram_handle: artist.instagram_handle || '',
-          youtube_handle: artist.youtube_handle || '',
-          spotify_url: artist.spotify_url || '',
+          master_link: artist.master_link || '',
           location: artist.location || '',
           is_featured: artist.is_featured || false
         };
@@ -472,68 +466,24 @@ const ArtistManagement = () => {
               />
             </div>
 
-            {/* Social Media Links */}
-            <div className="space-y-4">
-              <h4 className="text-passionate-white font-syncopate text-lg">Social Media Integration</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="artist-instagram" className="text-passionate-white flex items-center">
-                    <Instagram className="h-4 w-4 mr-2 text-pink-500" />
-                    Instagram Handle
-                  </Label>
-                  <Input
-                    id="artist-instagram"
-                    name="artistInstagram"
-                    value={formData.instagram_handle}
-                    onChange={(e) => handleFieldChange('instagram_handle', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="@username (include the @ symbol)"
-                    autoComplete="username"
-                  />
-                  <p className="text-passionate-white/50 text-xs mt-1">
-                    Format: @username - This will create a direct link to their Instagram profile
-                  </p>
-                </div>
-
-                <div>
-                  <Label htmlFor="artist-youtube" className="text-passionate-white flex items-center">
-                    <Youtube className="h-4 w-4 mr-2 text-red-500" />
-                    YouTube Channel Handle
-                  </Label>
-                  <Input
-                    id="artist-youtube"
-                    name="artistYoutube"
-                    value={formData.youtube_handle}
-                    onChange={(e) => handleFieldChange('youtube_handle', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="@channelname or channel name"
-                    autoComplete="username"
-                  />
-                  <p className="text-passionate-white/50 text-xs mt-1">
-                    Format: @channelname or just the channel name - This will link to their YouTube channel
-                  </p>
-                </div>
-
-                <div>
-                  <Label htmlFor="artist-spotify" className="text-passionate-white flex items-center">
-                    <Music className="h-4 w-4 mr-2 text-green-500" />
-                    Spotify Artist Profile URL
-                  </Label>
-                  <Input
-                    id="artist-spotify"
-                    name="artistSpotify"
-                    value={formData.spotify_url}
-                    onChange={(e) => handleFieldChange('spotify_url', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="https://open.spotify.com/artist/..."
-                    autoComplete="url"
-                  />
-                  <p className="text-passionate-white/50 text-xs mt-1">
-                    Full Spotify artist profile URL - This will link directly to their Spotify page
-                  </p>
-                </div>
-              </div>
+            {/* Master Link */}
+            <div>
+              <Label htmlFor="artist-master-link" className="text-passionate-white flex items-center">
+                <Music className="h-4 w-4 mr-2 text-passionate-red" />
+                Master Link
+              </Label>
+              <Input
+                id="artist-master-link"
+                name="artistMasterLink"
+                value={formData.master_link}
+                onChange={(e) => handleFieldChange('master_link', e.target.value)}
+                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                placeholder="https://linktr.ee/artist or main social/music profile URL"
+                autoComplete="url"
+              />
+              <p className="text-passionate-white/50 text-xs mt-1">
+                Add the main link for this artist (Linktree, main social profile, or music platform)
+              </p>
             </div>
 
             {/* Featured Artist Toggle */}
@@ -553,10 +503,10 @@ const ArtistManagement = () => {
             </div>
 
             {/* Form Actions */}
-            <div className="flex space-x-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 type="submit" 
-                className="bg-passionate-red hover:bg-passionate-red/80"
+                className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -576,6 +526,7 @@ const ArtistManagement = () => {
                 onClick={handleCancel} 
                 variant="outline" 
                 disabled={isSubmitting}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
@@ -599,139 +550,148 @@ const ArtistManagement = () => {
 
   // Main component render
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24 lg:pb-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-syncopate text-passionate-white">Artist Management</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-2xl sm:text-3xl font-syncopate text-passionate-white">Artist Management</h2>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-passionate-red hover:bg-passionate-red/80"
+          className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="mr-2 h-4 w-4" />
           Add Artist
         </Button>
       </div>
 
       {/* Add Form */}
       {showAddForm && (
-        <ArtistForm
-          key="add-artist-form"
-          onSave={(data) => createArtistMutation.mutate(data)}
-          onCancel={() => setShowAddForm(false)}
-        />
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Add New Artist</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAddForm(false)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ArtistForm
+              onSave={(data) => createArtistMutation.mutate(data)}
+              onCancel={() => setShowAddForm(false)}
+            />
+          </CardContent>
+        </Card>
       )}
 
-      {/* Edit Form */}
-      {editingArtist && (
-        <ArtistForm
-          key={`edit-artist-form-${editingArtist.id}`}
-          artist={editingArtist}
-          onSave={(data) => updateArtistMutation.mutate({ id: editingArtist.id, ...data })}
-          onCancel={() => setEditingArtist(null)}
-        />
-      )}
-
-      {/* Artists List */}
-      <div className="grid gap-4">
+      {/* Artists Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {artists?.map((artist) => (
           <Card key={artist.id} className="bg-passionate-gray/20 border-passionate-gray">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <img
-                    {...createSafeImageProps(artist.image_url, artist.name, 'artist')}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                  <div>
-                    <h3 className="text-lg font-semibold text-passionate-white">
-                      {artist.name} {artist.stage_name && `(${artist.stage_name})`}
-                    </h3>
-                    <p className="text-passionate-white/70">{artist.genre} • {artist.location}</p>
-                    <div className="flex items-center space-x-3 mt-2">
-                      {artist.instagram_handle && (
-                        <a
-                          href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-pink-500 hover:text-pink-400"
-                        >
-                          <Instagram className="h-4 w-4" />
-                        </a>
-                      )}
-                      {artist.youtube_handle && (
-                        <a
-                          href={`https://youtube.com/@${artist.youtube_handle.replace('@', '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-red-500 hover:text-red-400"
-                        >
-                          <Youtube className="h-4 w-4" />
-                        </a>
-                      )}
-                      {artist.spotify_url && (
-                        <a
-                          href={artist.spotify_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-green-500 hover:text-green-400"
-                        >
-                          <Music className="h-4 w-4" />
-                        </a>
-                      )}
-                    </div>
-                    {artist.is_featured && (
-                      <span className="inline-block px-2 py-1 text-xs bg-passionate-red text-passionate-white rounded mt-2">
-                        Featured
-                      </span>
-                    )}
-                  </div>
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-passionate-white text-lg truncate" title={artist.name}>
+                    {artist.name}
+                  </CardTitle>
+                  <CardDescription className="text-passionate-white/70 truncate" title={artist.stage_name}>
+                    {artist.stage_name}
+                  </CardDescription>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex items-center space-x-2 flex-shrink-0">
                   <Button
-                    onClick={() => setEditingArtist(artist)}
                     variant="outline"
                     size="sm"
+                    onClick={() => setEditingArtist(artist)}
+                    className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 min-h-[40px] touch-manipulation"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button
-                    onClick={() => {
-                      if (window.confirm(`Are you sure you want to delete ${artist.name}?`)) {
-                        deleteArtistMutation.mutate(artist.id);
-                      }
-                    }}
                     variant="outline"
                     size="sm"
-                    className="text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
+                    onClick={() => deleteArtistMutation.mutate(artist.id)}
+                    className="border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white min-h-[40px] touch-manipulation"
+                    disabled={deleteArtistMutation.isPending}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {artist.image_url && (
+                <div className="flex justify-center">
+                  <img
+                    {...createSafeImageProps(artist.image_url, 'Artist image')}
+                    className="w-24 h-24 rounded-full object-cover"
+                  />
+                </div>
+              )}
+              <div className="space-y-2">
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Genre</p>
+                  <p className="text-passionate-white">{artist.genre}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Location</p>
+                  <p className="text-passionate-white">{artist.location || 'Not specified'}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Featured</p>
+                  <p className="text-passionate-white">{artist.is_featured ? 'Yes' : 'No'}</p>
+                </div>
+              </div>
+              
+              {artist.master_link && (
+                <div className="flex justify-center pt-2">
+                  <a
+                    href={artist.master_link.startsWith('http://') || artist.master_link.startsWith('https://') 
+                      ? artist.master_link 
+                      : `https://${artist.master_link}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-passionate-red hover:text-passionate-red/80 text-sm"
+                  >
+                    <Music className="h-4 w-4" />
+                    Visit Profile
+                  </a>
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
-
-        {/* Empty state */}
-        {!artists || artists.length === 0 ? (
-          <Card className="bg-passionate-gray/20 border-passionate-gray">
-            <CardContent className="p-8 text-center">
-              <Music className="h-16 w-16 text-passionate-gray mx-auto mb-4" />
-              <h3 className="text-passionate-white text-lg font-semibold mb-2">No Artists Yet</h3>
-              <p className="text-passionate-white/70 mb-4">
-                Start building your roster by adding your first artist.
-              </p>
-              <Button
-                onClick={() => setShowAddForm(true)}
-                className="bg-passionate-red hover:bg-passionate-red/80"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add First Artist
-              </Button>
-            </CardContent>
-          </Card>
-        ) : null}
       </div>
+
+      {/* Edit Form */}
+      {editingArtist && (
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Edit Artist</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setEditingArtist(null)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ArtistForm
+              artist={editingArtist}
+              onSave={(data) => updateArtistMutation.mutate({ id: editingArtist.id, ...data })}
+              onCancel={() => setEditingArtist(null)}
+            />
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

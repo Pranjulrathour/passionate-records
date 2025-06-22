@@ -23,7 +23,7 @@ type LatestReleaseFormData = {
   release_date: string;
   cover_art_url: string;
   audio_preview_url: string;
-  streaming_links: Record<string, string>;
+  master_link: string;
   is_featured: boolean;
   display_order: number;
   status: string;
@@ -64,7 +64,7 @@ const getInitialFormData = (): LatestReleaseFormData => ({
   release_date: '',
   cover_art_url: '',
   audio_preview_url: '',
-  streaming_links: {},
+  master_link: '',
   is_featured: true,
   display_order: 0,
   status: 'ACTIVE'
@@ -140,7 +140,7 @@ const LatestReleaseManagement = () => {
       
       const { error } = await supabase
         .from('latest_releases')
-        .insert([releaseData]);
+        .insert(releaseData);
       
       if (error) throw error;
     },
@@ -256,7 +256,7 @@ const LatestReleaseManagement = () => {
           release_date: release.release_date ? release.release_date.split('T')[0] : '',
           cover_art_url: release.cover_art_url || '',
           audio_preview_url: release.audio_preview_url || '',
-          streaming_links: release.streaming_links || {},
+          master_link: release.master_link || '',
           is_featured: release.is_featured ?? true,
           display_order: release.display_order || 0,
           status: release.status || 'ACTIVE'
@@ -352,13 +352,7 @@ const LatestReleaseManagement = () => {
     }, []);
 
     // Handle streaming link changes
-    const handleStreamingLinkChange = useCallback((platform: string, url: string) => {
-      const updatedLinks = { ...formData.streaming_links, [platform]: url };
-      if (!url.trim()) {
-        delete updatedLinks[platform];
-      }
-      handleFieldChange('streaming_links', updatedLinks);
-    }, [formData.streaming_links, handleFieldChange]);
+    // Streaming links functionality removed - now using single master_link field
 
     // Clear form state and localStorage
     const resetFormState = useCallback(() => {
@@ -585,59 +579,24 @@ const LatestReleaseManagement = () => {
               />
             </div>
 
-            {/* Streaming Links */}
+            {/* Master Link */}
             <div>
-              <Label className="text-passionate-white">Streaming Links</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                <div>
-                  <Label htmlFor="spotify-link" className="text-passionate-white/70 text-sm">Spotify</Label>
-                  <Input
-                    id="spotify-link"
-                    name="spotifyLink"
-                    value={formData.streaming_links?.spotify || ''}
-                    onChange={(e) => handleStreamingLinkChange('spotify', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="https://open.spotify.com/..."
-                    autoComplete="url"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="apple-music-link" className="text-passionate-white/70 text-sm">Apple Music</Label>
-                  <Input
-                    id="apple-music-link"
-                    name="appleMusicLink"
-                    value={formData.streaming_links?.apple || ''}
-                    onChange={(e) => handleStreamingLinkChange('apple', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="https://music.apple.com/..."
-                    autoComplete="url"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="youtube-link" className="text-passionate-white/70 text-sm">YouTube</Label>
-                  <Input
-                    id="youtube-link"
-                    name="youtubeLink"
-                    value={formData.streaming_links?.youtube || ''}
-                    onChange={(e) => handleStreamingLinkChange('youtube', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="https://youtube.com/watch?v=..."
-                    autoComplete="url"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="soundcloud-link" className="text-passionate-white/70 text-sm">SoundCloud</Label>
-                  <Input
-                    id="soundcloud-link"
-                    name="soundcloudLink"
-                    value={formData.streaming_links?.soundcloud || ''}
-                    onChange={(e) => handleStreamingLinkChange('soundcloud', e.target.value)}
-                    className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                    placeholder="https://soundcloud.com/..."
-                    autoComplete="url"
-                  />
-                </div>
-              </div>
+              <Label htmlFor="master-link" className="text-passionate-white flex items-center">
+                <Music className="h-4 w-4 mr-2 text-passionate-red" />
+                Master Link
+              </Label>
+              <Input
+                id="master-link"
+                name="masterLink"
+                value={formData.master_link}
+                onChange={(e) => handleFieldChange('master_link', e.target.value)}
+                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                placeholder="https://linktr.ee/release or main streaming platform URL"
+                autoComplete="url"
+              />
+              <p className="text-passionate-white/50 text-xs mt-1">
+                Add the main link for this release (Linktree, Spotify, Apple Music, etc.)
+              </p>
             </div>
 
             {/* Featured and Display Order */}
@@ -649,8 +608,9 @@ const LatestReleaseManagement = () => {
                   checked={formData.is_featured}
                   onChange={(e) => handleFieldChange('is_featured', e.target.checked)}
                   className="rounded border-passionate-gray"
+                  aria-describedby="is-featured-label"
                 />
-                <Label htmlFor="is-featured" className="text-passionate-white">Featured Release</Label>
+                <Label htmlFor="is-featured" id="is-featured-label" className="text-passionate-white">Featured Release</Label>
               </div>
               <div>
                 <Label htmlFor="display-order" className="text-passionate-white">Display Order</Label>
@@ -667,10 +627,10 @@ const LatestReleaseManagement = () => {
             </div>
 
             {/* Form Actions */}
-            <div className="flex space-x-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 type="submit" 
-                className="bg-passionate-red hover:bg-passionate-red/80"
+                className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -690,6 +650,7 @@ const LatestReleaseManagement = () => {
                 onClick={handleCancel} 
                 variant="outline" 
                 disabled={isSubmitting}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
@@ -713,135 +674,173 @@ const LatestReleaseManagement = () => {
 
   // Main component render
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24 lg:pb-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-syncopate text-passionate-white">Latest Releases Management</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-2xl sm:text-3xl font-syncopate text-passionate-white">Release Management</h2>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-passionate-red hover:bg-passionate-red/80"
+          className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="mr-2 h-4 w-4" />
           Add Release
         </Button>
       </div>
 
       {/* Add Form */}
       {showAddForm && (
-        <LatestReleaseForm
-          key="add-release-form"
-          onSave={(data) => createReleaseMutation.mutate(data)}
-          onCancel={() => setShowAddForm(false)}
-        />
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Add New Release</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAddForm(false)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <LatestReleaseForm
+              onSave={(data) => createReleaseMutation.mutate(data)}
+              onCancel={() => setShowAddForm(false)}
+            />
+          </CardContent>
+        </Card>
       )}
 
-      {/* Edit Form */}
-      {editingRelease && (
-        <LatestReleaseForm
-          key={`edit-release-form-${editingRelease.id}`}
-          release={editingRelease}
-          onSave={(data) => updateReleaseMutation.mutate({ id: editingRelease.id, ...data })}
-          onCancel={() => setEditingRelease(null)}
-        />
-      )}
-
-      {/* Releases List */}
-      <div className="grid gap-4">
+      {/* Releases Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {releases?.map((release) => (
           <Card key={release.id} className="bg-passionate-gray/20 border-passionate-gray">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <img
-                    {...createSafeImageProps(release.cover_art_url, release.title, 'release')}
-                    className="w-16 h-16 rounded-lg object-cover"
-                  />
-                  <div>
-                    <h3 className="text-lg font-semibold text-passionate-white">
-                      {release.title}
-                    </h3>
-                    <p className="text-passionate-white/70">
-                      by {release.artist_name} • {release.release_type}
-                    </p>
-                    <div className="flex items-center space-x-3 mt-1">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        release.status === 'ACTIVE' ? 'bg-green-600' :
-                        release.status === 'DRAFT' ? 'bg-yellow-600' :
-                        'bg-gray-600'
-                      }`}>
-                        {release.status}
-                      </span>
-                      {release.is_featured && (
-                        <span className="px-2 py-1 rounded text-xs bg-passionate-red">
-                          Featured
-                        </span>
-                      )}
-                      {release.genre && (
-                        <span className="text-passionate-white/50 text-sm">
-                          {release.genre.replace('_', ' ')}
-                        </span>
-                      )}
-                      {release.release_date && (
-                        <span className="text-passionate-white/50 text-sm">
-                          {new Date(release.release_date).getFullYear()}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-passionate-white text-lg truncate" title={release.title}>
+                    {release.title}
+                  </CardTitle>
+                  <CardDescription className="text-passionate-white/70 truncate" title={release.artist_name}>
+                    {release.artist_name}
+                  </CardDescription>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex items-center space-x-2 flex-shrink-0">
                   <Button
-                    onClick={() => updateOrderMutation.mutate({ id: release.id, newOrder: release.display_order - 1 })}
                     variant="outline"
                     size="sm"
-                    disabled={release.display_order <= 1}
+                                         onClick={() => moveUp(release.id, release.display_order)}
+                     disabled={updateReleaseMutation.isPending}
+                     className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 min-h-[40px] touch-manipulation"
                   >
                     <ArrowUp className="h-4 w-4" />
                   </Button>
                   <Button
-                    onClick={() => updateOrderMutation.mutate({ id: release.id, newOrder: release.display_order + 1 })}
                     variant="outline"
                     size="sm"
+                                         onClick={() => moveDown(release.id, release.display_order)}
+                     disabled={updateReleaseMutation.isPending}
+                     className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 min-h-[40px] touch-manipulation"
                   >
                     <ArrowDown className="h-4 w-4" />
                   </Button>
                   <Button
-                    onClick={() => setEditingRelease(release)}
                     variant="outline"
                     size="sm"
+                    onClick={() => setEditingRelease(release)}
+                    className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 min-h-[40px] touch-manipulation"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button
-                    onClick={() => deleteReleaseMutation.mutate(release.id)}
-                    variant="destructive"
+                    variant="outline"
                     size="sm"
+                    onClick={() => deleteReleaseMutation.mutate(release.id)}
+                    className="border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white min-h-[40px] touch-manipulation"
+                    disabled={deleteReleaseMutation.isPending}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {release.cover_art_url && (
+                <div className="flex justify-center">
+                  <img
+                    {...createSafeImageProps(release.cover_art_url, 'Release cover art')}
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                </div>
+              )}
+              <div className="space-y-2">
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Genre</p>
+                  <p className="text-passionate-white">{release.genre}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Type</p>
+                  <p className="text-passionate-white">{release.release_type}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Release Date</p>
+                  <p className="text-passionate-white">
+                    {release.release_date ? new Date(release.release_date).toLocaleDateString() : 'Not set'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Featured</p>
+                  <p className="text-passionate-white">{release.is_featured ? 'Yes' : 'No'}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Order</p>
+                  <p className="text-passionate-white">{release.display_order}</p>
+                </div>
+                {release.master_link && (
+                  <div className="pt-2">
+                    <p className="text-passionate-white/70 text-sm mb-2">Master Link</p>
+                    <a
+                      href={release.master_link.startsWith('http://') || release.master_link.startsWith('https://') 
+                        ? release.master_link 
+                        : `https://${release.master_link}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-passionate-red hover:text-passionate-red/80 text-sm"
+                    >
+                      <Music className="h-4 w-4" />
+                      Listen Now
+                    </a>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Empty State */}
-      {releases?.length === 0 && (
+      {/* Edit Form */}
+      {editingRelease && (
         <Card className="bg-passionate-gray/20 border-passionate-gray">
-          <CardContent className="p-12 text-center">
-            <Music className="h-12 w-12 mx-auto text-passionate-white/50 mb-4" />
-            <h3 className="text-lg font-semibold text-passionate-white mb-2">No releases yet</h3>
-            <p className="text-passionate-white/70 mb-4">
-              Start by adding your first featured release to showcase your latest music.
-            </p>
-            <Button
-              onClick={() => setShowAddForm(true)}
-              className="bg-passionate-red hover:bg-passionate-red/80"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add First Release
-            </Button>
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Edit Release</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setEditingRelease(null)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <LatestReleaseForm
+              release={editingRelease}
+              onSave={(data) => updateReleaseMutation.mutate({ id: editingRelease.id, ...data })}
+              onCancel={() => setEditingRelease(null)}
+            />
           </CardContent>
         </Card>
       )}

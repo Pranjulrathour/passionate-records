@@ -174,13 +174,13 @@ const DemoSubmissionManagement = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24 lg:pb-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-syncopate text-passionate-white">Demo Submissions</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-2xl sm:text-3xl font-syncopate text-passionate-white">Demo Submissions</h2>
         <Button
           onClick={exportToCSV}
-          className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white"
+          className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
           disabled={!submissions || submissions.length === 0}
         >
           <Download className="h-4 w-4 mr-2" />
@@ -189,44 +189,44 @@ const DemoSubmissionManagement = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <Card className="bg-passionate-gray/20 border-passionate-gray">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-passionate-white">{stats.total}</div>
-              <div className="text-passionate-white/70 text-sm">Total</div>
+              <div className="text-xl sm:text-2xl font-bold text-passionate-white">{stats.total}</div>
+              <div className="text-passionate-white/70 text-xs sm:text-sm">Total</div>
             </div>
           </CardContent>
         </Card>
         <Card className="bg-passionate-gray/20 border-passionate-gray">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-500">{stats.pending}</div>
-              <div className="text-passionate-white/70 text-sm">Pending</div>
+              <div className="text-xl sm:text-2xl font-bold text-yellow-500">{stats.pending}</div>
+              <div className="text-passionate-white/70 text-xs sm:text-sm">Pending</div>
             </div>
           </CardContent>
         </Card>
         <Card className="bg-passionate-gray/20 border-passionate-gray">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-500">{stats.under_review}</div>
-              <div className="text-passionate-white/70 text-sm">Under Review</div>
+              <div className="text-xl sm:text-2xl font-bold text-blue-500">{stats.under_review}</div>
+              <div className="text-passionate-white/70 text-xs sm:text-sm">Under Review</div>
             </div>
           </CardContent>
         </Card>
         <Card className="bg-passionate-gray/20 border-passionate-gray">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-500">{stats.approved}</div>
-              <div className="text-passionate-white/70 text-sm">Approved</div>
+              <div className="text-xl sm:text-2xl font-bold text-green-500">{stats.approved}</div>
+              <div className="text-passionate-white/70 text-xs sm:text-sm">Approved</div>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-passionate-gray/20 border-passionate-gray">
-          <CardContent className="p-4">
+        <Card className="bg-passionate-gray/20 border-passionate-gray col-span-2 sm:col-span-3 lg:col-span-1">
+          <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-red-500">{stats.rejected}</div>
-              <div className="text-passionate-white/70 text-sm">Rejected</div>
+              <div className="text-xl sm:text-2xl font-bold text-red-500">{stats.rejected}</div>
+              <div className="text-passionate-white/70 text-xs sm:text-sm">Rejected</div>
             </div>
           </CardContent>
         </Card>
@@ -235,21 +235,21 @@ const DemoSubmissionManagement = () => {
       {/* Filters */}
       <Card className="bg-passionate-gray/20 border-passionate-gray">
         <CardContent className="p-4">
-          <div className="flex flex-wrap gap-4 items-center">
-            <div className="flex items-center space-x-2">
-              <Search className="h-4 w-4 text-passionate-white/70" />
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 items-stretch sm:items-center">
+            <div className="flex items-center space-x-2 min-w-0 flex-1 sm:flex-none">
+              <Search className="h-4 w-4 text-passionate-white/70 flex-shrink-0" />
               <Input
                 placeholder="Search by artist, email, or genre..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-64 bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+                className="w-full sm:w-64 bg-passionate-gray/30 border-passionate-gray text-passionate-white min-h-[44px]"
               />
             </div>
             
             <div className="flex items-center space-x-2">
-              <Filter className="h-4 w-4 text-passionate-white/70" />
+              <Filter className="h-4 w-4 text-passionate-white/70 flex-shrink-0" />
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-36 bg-passionate-gray/30 border-passionate-gray text-passionate-white">
+                <SelectTrigger className="w-full sm:w-36 bg-passionate-gray/30 border-passionate-gray text-passionate-white min-h-[44px]">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -263,9 +263,9 @@ const DemoSubmissionManagement = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-              <Music className="h-4 w-4 text-passionate-white/70" />
+              <Music className="h-4 w-4 text-passionate-white/70 flex-shrink-0" />
               <Select value={genreFilter} onValueChange={setGenreFilter}>
-                <SelectTrigger className="w-40 bg-passionate-gray/30 border-passionate-gray text-passionate-white">
+                <SelectTrigger className="w-full sm:w-40 bg-passionate-gray/30 border-passionate-gray text-passionate-white min-h-[44px]">
                   <SelectValue placeholder="Genre" />
                 </SelectTrigger>
                 <SelectContent>
@@ -284,7 +284,7 @@ const DemoSubmissionManagement = () => {
               </Select>
             </div>
 
-            <div className="text-passionate-white/70 text-sm">
+            <div className="text-passionate-white/70 text-sm text-center sm:text-left">
               Showing {filteredSubmissions.length} of {submissions?.length || 0} submissions
             </div>
           </div>
@@ -298,16 +298,16 @@ const DemoSubmissionManagement = () => {
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[640px]">
               <thead>
                 <tr className="border-b border-passionate-gray">
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Date</th>
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Artist</th>
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Email</th>
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Genre</th>
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Demo</th>
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Status</th>
-                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium">Actions</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Date</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Artist</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Email</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Genre</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Demo</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Status</th>
+                  <th className="text-left py-3 px-4 text-passionate-white/70 font-medium whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -315,30 +315,31 @@ const DemoSubmissionManagement = () => {
                   <tr key={submission.id} className="border-b border-passionate-gray/30 hover:bg-passionate-gray/10">
                     <td className="py-4 px-4">
                       <div className="flex items-center space-x-2 text-passionate-white/70">
-                        <Calendar className="h-4 w-4" />
-                        <span className="text-sm">
+                        <Calendar className="h-4 w-4 flex-shrink-0" />
+                        <span className="text-sm whitespace-nowrap">
                           {new Date(submission.created_at).toLocaleDateString()}
                         </span>
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <div className="text-passionate-white font-medium">
+                      <div className="text-passionate-white font-medium max-w-[120px] truncate" title={submission.artist_name}>
                         {submission.artist_name}
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <div className="flex items-center space-x-2">
-                        <Mail className="h-4 w-4 text-passionate-white/70" />
+                      <div className="flex items-center space-x-2 max-w-[150px]">
+                        <Mail className="h-4 w-4 text-passionate-white/70 flex-shrink-0" />
                         <a 
                           href={`mailto:${submission.email}`}
-                          className="text-passionate-red hover:underline"
+                          className="text-passionate-red hover:underline truncate"
+                          title={submission.email}
                         >
                           {submission.email}
                         </a>
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <div className="text-passionate-white/70">
+                      <div className="text-passionate-white/70 max-w-[100px] truncate" title={submission.genre}>
                         {submission.genre}
                       </div>
                     </td>
@@ -347,14 +348,14 @@ const DemoSubmissionManagement = () => {
                         href={submission.demo_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-1 text-passionate-red hover:underline"
+                        className="flex items-center space-x-1 text-passionate-red hover:underline whitespace-nowrap"
                       >
-                        <ExternalLink className="h-4 w-4" />
+                        <ExternalLink className="h-4 w-4 flex-shrink-0" />
                         <span>Listen</span>
                       </a>
                     </td>
                     <td className="py-4 px-4">
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 whitespace-nowrap">
                         {getStatusIcon(submission.status || 'pending')}
                         {getStatusBadge(submission.status || 'pending')}
                       </div>
@@ -364,7 +365,7 @@ const DemoSubmissionManagement = () => {
                         value={submission.status || 'pending'}
                         onValueChange={(status) => updateStatusMutation.mutate({ id: submission.id, status })}
                       >
-                        <SelectTrigger className="w-32 bg-passionate-gray/30 border-passionate-gray text-passionate-white">
+                        <SelectTrigger className="w-32 bg-passionate-gray/30 border-passionate-gray text-passionate-white min-h-[44px] touch-manipulation whitespace-nowrap">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>

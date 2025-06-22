@@ -105,7 +105,7 @@ const EventManagement = () => {
       
       const { error } = await supabase
         .from('events')
-        .insert([eventData]);
+        .insert(eventData);
       
       if (error) throw error;
     },
@@ -333,129 +333,119 @@ const EventManagement = () => {
     }, [resetFormState, onCancel]);
 
     return (
-      <Card className="bg-passionate-gray/20 border-passionate-gray">
-        <CardHeader>
-          <CardTitle className="text-passionate-white font-syncopate">
-            {event ? 'Edit Event' : 'Add New Event'}
-          </CardTitle>
-          <CardDescription className="text-passionate-white/70">
-            {event ? 'Update event information and details' : 'Create a new event with complete information'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="event-title" className="text-passionate-white">Event Title *</Label>
-                <Input
-                  id="event-title"
-                  name="eventTitle"
-                  value={formData.title}
-                  onChange={(e) => handleFieldChange('title', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="Enter event title"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="event-venue" className="text-passionate-white">Venue *</Label>
-                <Input
-                  id="event-venue"
-                  name="eventVenue"
-                  value={formData.venue}
-                  onChange={(e) => handleFieldChange('venue', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="Enter venue name"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-            </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Basic Information */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="event-title" className="text-passionate-white">Event Title *</Label>
+            <Input
+              id="event-title"
+              name="eventTitle"
+              value={formData.title}
+              onChange={(e) => handleFieldChange('title', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+              placeholder="Enter event title"
+              autoComplete="off"
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="event-venue" className="text-passionate-white">Venue *</Label>
+            <Input
+              id="event-venue"
+              name="eventVenue"
+              value={formData.venue}
+              onChange={(e) => handleFieldChange('venue', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+              placeholder="Enter venue name"
+              autoComplete="off"
+              required
+            />
+          </div>
+        </div>
 
-            {/* Description */}
-            <div>
-              <Label htmlFor="event-description" className="text-passionate-white">Event Description</Label>
-              <Textarea
-                id="event-description"
-                name="eventDescription"
-                value={formData.description}
-                onChange={(e) => handleFieldChange('description', e.target.value)}
-                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                rows={4}
-                placeholder="Describe the event, performers, and what to expect..."
-                autoComplete="off"
-              />
-            </div>
+        {/* Description */}
+        <div>
+          <Label htmlFor="event-description" className="text-passionate-white">Event Description</Label>
+          <Textarea
+            id="event-description"
+            name="eventDescription"
+            value={formData.description}
+            onChange={(e) => handleFieldChange('description', e.target.value)}
+            className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+            rows={4}
+            placeholder="Describe the event, performers, and what to expect..."
+            autoComplete="off"
+          />
+        </div>
 
-            {/* Date/Time and Type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="event-datetime" className="text-passionate-white">Date & Time *</Label>
-                <Input
-                  id="event-datetime"
-                  name="eventDateTime"
-                  type="datetime-local"
-                  value={formData.date_time}
-                  onChange={(e) => handleFieldChange('date_time', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="event-type" className="text-passionate-white">Event Type</Label>
-                <Select 
-                  value={formData.event_type} 
-                  onValueChange={(value) => handleFieldChange('event_type', value)}
-                  name="eventType"
-                >
-                  <SelectTrigger id="event-type" className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="CONCERT">Concert</SelectItem>
-                    <SelectItem value="GIG">Gig</SelectItem>
-                    <SelectItem value="ALBUM_LAUNCH">Album Launch</SelectItem>
-                    <SelectItem value="MUSIC_VIDEO_PREMIERE">Music Video Premiere</SelectItem>
-                    <SelectItem value="OTHER">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+        {/* Date/Time and Type */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="event-datetime" className="text-passionate-white">Date & Time *</Label>
+            <Input
+              id="event-datetime"
+              name="eventDateTime"
+              type="datetime-local"
+              value={formData.date_time}
+              onChange={(e) => handleFieldChange('date_time', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="event-type" className="text-passionate-white">Event Type</Label>
+            <Select 
+              value={formData.event_type} 
+              onValueChange={(value) => handleFieldChange('event_type', value)}
+              name="eventType"
+            >
+              <SelectTrigger id="event-type" className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="CONCERT">Concert</SelectItem>
+                <SelectItem value="GIG">Gig</SelectItem>
+                <SelectItem value="ALBUM_LAUNCH">Album Launch</SelectItem>
+                <SelectItem value="MUSIC_VIDEO_PREMIERE">Music Video Premiere</SelectItem>
+                <SelectItem value="OTHER">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-            {/* Image Upload */}
-            <div>
-              <Label htmlFor="event-image" className="text-passionate-white">Event Image</Label>
-              <ImageUpload
-                value={formData.image_url}
-                onChange={handleImageUpload}
-                label="Event Poster/Image"
-                placeholder="Upload event image"
-                bucketName="event-images"
-                inputId="event-image"
-              />
-            </div>
+        {/* Image Upload */}
+        <div>
+          <Label htmlFor="event-image" className="text-passionate-white">Event Image</Label>
+          <ImageUpload
+            value={formData.image_url}
+            onChange={handleImageUpload}
+            label="Event Poster/Image"
+            placeholder="Upload event image"
+            bucketName="event-images"
+            inputId="event-image"
+          />
+        </div>
 
-            {/* Ticket URL */}
-            <div>
-              <Label htmlFor="event-ticket-url" className="text-passionate-white">Ticket URL</Label>
-              <Input
-                id="event-ticket-url"
-                name="eventTicketUrl"
-                value={formData.ticket_url}
-                onChange={(e) => handleFieldChange('ticket_url', e.target.value)}
-                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                placeholder="https://tickets.example.com/event"
-                autoComplete="url"
-              />
-            </div>
+        {/* Ticket URL */}
+        <div>
+          <Label htmlFor="event-ticket-url" className="text-passionate-white">Ticket URL</Label>
+          <Input
+            id="event-ticket-url"
+            name="eventTicketUrl"
+            value={formData.ticket_url}
+            onChange={(e) => handleFieldChange('ticket_url', e.target.value)}
+            className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+            placeholder="https://tickets.example.com/event"
+            autoComplete="url"
+          />
+        </div>
 
-            {/* Form Actions */}
-            <div className="flex space-x-2">
+                    {/* Form Actions */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 type="submit" 
-                className="bg-passionate-red hover:bg-passionate-red/80"
+                className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -475,14 +465,13 @@ const EventManagement = () => {
                 onClick={handleCancel} 
                 variant="outline" 
                 disabled={isSubmitting}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
             </div>
-          </form>
-        </CardContent>
-      </Card>
+      </form>
     );
   };
 
@@ -498,78 +487,142 @@ const EventManagement = () => {
 
   // Main component render
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24 lg:pb-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-syncopate text-passionate-white">Event Management</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-2xl sm:text-3xl font-syncopate text-passionate-white">Event Management</h2>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-passionate-red hover:bg-passionate-red/80"
+          className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="mr-2 h-4 w-4" />
           Add Event
         </Button>
       </div>
 
       {/* Add Form */}
       {showAddForm && (
-        <EventForm
-          key="add-event-form"
-          onSave={(data) => createEventMutation.mutate(data)}
-          onCancel={() => setShowAddForm(false)}
-        />
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Add New Event</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAddForm(false)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <EventForm
+              onSave={(data) => createEventMutation.mutate(data)}
+              onCancel={() => setShowAddForm(false)}
+            />
+          </CardContent>
+        </Card>
       )}
 
-      {/* Edit Form */}
-      {editingEvent && (
-        <EventForm
-          key={`edit-event-form-${editingEvent.id}`}
-          event={editingEvent}
-          onSave={(data) => updateEventMutation.mutate({ id: editingEvent.id, ...data })}
-          onCancel={() => setEditingEvent(null)}
-        />
-      )}
-
-      {/* Events List */}
-      <div className="grid gap-4">
+      {/* Events Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {events?.map((event) => (
           <Card key={event.id} className="bg-passionate-gray/20 border-passionate-gray">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <img
-                    {...createSafeImageProps(event.image_url, event.title, 'event')}
-                    className="w-16 h-16 rounded-lg object-cover"
-                  />
-                  <div>
-                    <h3 className="text-lg font-semibold text-passionate-white">
-                      {event.title}
-                    </h3>
-                    <p className="text-passionate-white/70">{event.venue} • {new Date(event.date_time).toLocaleDateString()}</p>
-                    <p className="text-passionate-white/50 text-sm">{event.event_type}</p>
-                  </div>
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-passionate-white text-lg truncate" title={event.title}>
+                    {event.title}
+                  </CardTitle>
+                  <CardDescription className="text-passionate-white/70 truncate" title={event.venue}>
+                    {event.venue}
+                  </CardDescription>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex items-center space-x-2 flex-shrink-0">
                   <Button
-                    onClick={() => setEditingEvent(event)}
                     variant="outline"
                     size="sm"
+                    onClick={() => setEditingEvent(event)}
+                    className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 min-h-[40px] touch-manipulation"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button
-                    onClick={() => deleteEventMutation.mutate(event.id)}
-                    variant="destructive"
+                    variant="outline"
                     size="sm"
+                    onClick={() => deleteEventMutation.mutate(event.id)}
+                    className="border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white min-h-[40px] touch-manipulation"
+                    disabled={deleteEventMutation.isPending}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {event.image_url && (
+                <div className="flex justify-center">
+                  <img
+                    {...createSafeImageProps(event.image_url, 'Event image')}
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                </div>
+              )}
+              <div className="space-y-2">
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Date & Time</p>
+                  <p className="text-passionate-white">
+                    {new Date(event.date_time).toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Type</p>
+                  <p className="text-passionate-white">{event.event_type}</p>
+                </div>
+                {event.ticket_url && (
+                  <div className="pt-2">
+                    <a
+                      href={event.ticket_url.startsWith('http://') || event.ticket_url.startsWith('https://') ? event.ticket_url : `https://${event.ticket_url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-passionate-red hover:text-passionate-red/80"
+                    >
+                      Tickets
+                    </a>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {/* Edit Form */}
+      {editingEvent && (
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Edit Event</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setEditingEvent(null)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <EventForm
+              event={editingEvent}
+              onSave={(data) => updateEventMutation.mutate({ id: editingEvent.id, ...data })}
+              onCancel={() => setEditingEvent(null)}
+            />
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

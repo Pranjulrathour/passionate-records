@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Instagram, Youtube, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 const FeaturedArtists = () => {
   const navigate = useNavigate();
@@ -128,31 +128,11 @@ const FeaturedArtists = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    {artist.instagram_handle && (
-                      <a
-                        href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
-                      >
-                        <Instagram className="h-4 w-4" />
-                      </a>
-                    )}
-                    {artist.youtube_handle && (
-                      <a
-                        href={`https://youtube.com/@${artist.youtube_handle.replace('@', '')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
-                      >
-                        <Youtube className="h-4 w-4" />
-                      </a>
-                    )}
-                    {artist.spotify_url && (
-                      <a
-                        href={artist.spotify_url}
+                                    {artist.master_link && (
+                  <a
+                    href={artist.master_link.startsWith('http://') || artist.master_link.startsWith('https://') 
+                      ? artist.master_link 
+                      : `https://${artist.master_link}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}

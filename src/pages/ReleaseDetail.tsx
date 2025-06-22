@@ -18,11 +18,14 @@ import {
   Heart
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { shareRelease } from '@/utils/shareUtils';
+import { useToast } from '@/hooks/use-toast';
 
 const ReleaseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   // Set up real-time subscription for release updates
   useEffect(() => {
@@ -93,6 +96,24 @@ const ReleaseDetail = () => {
   };
 
   const isReleased = release.release_date ? new Date(release.release_date) <= new Date() : false;
+
+  const handleShare = async () => {
+    try {
+      const success = await shareRelease(release.title, release.artist_name);
+      if (success) {
+        toast({
+          title: "Shared successfully!",
+          description: "The release link has been shared.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Share failed",
+        description: "Unable to share at this time. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-passionate-black">
@@ -188,14 +209,30 @@ const ReleaseDetail = () => {
                   <div className="flex flex-wrap gap-4">
                     {release.audio_preview_url && (
                       <a
-                        href={release.audio_preview_url}
+                        href={release.audio_preview_url.startsWith('http://') || release.audio_preview_url.startsWith('https://') 
+                          ? release.audio_preview_url 
+                          : `https://${release.audio_preview_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 px-8 py-4 bg-passionate-red text-white rounded-full hover:bg-passionate-red/80 transition-colors font-semibold"
                       >
                         <Play className="h-5 w-5" />
-                        <span>{isReleased ? 'Listen Now' : 'Listen to Teaser'}</span>
+                        <span>{isReleased ? 'Preview' : 'Listen to Teaser'}</span>
                         <ExternalLink className="h-4 w-4" />
+                      </a>
+                    )}
+                    
+                    {release.master_link && (
+                      <a
+                        href={release.master_link.startsWith('http://') || release.master_link.startsWith('https://') 
+                          ? release.master_link 
+                          : `https://${release.master_link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 px-8 py-4 bg-passionate-white text-passionate-black rounded-full hover:bg-passionate-white/90 transition-colors font-semibold"
+                      >
+                        <ExternalLink className="h-5 w-5" />
+                        <span>Listen Now</span>
                       </a>
                     )}
                     
@@ -208,6 +245,7 @@ const ReleaseDetail = () => {
                     </Button>
                     
                     <Button
+                      onClick={handleShare}
                       variant="outline"
                       className="flex items-center space-x-2 px-8 py-4 border-passionate-white/30 text-passionate-white hover:bg-passionate-white/10"
                     >
@@ -286,8 +324,8 @@ const ReleaseDetail = () => {
           </div>
         </section>
 
-        {/* Streaming Platforms */}
-        {(isReleased || release.streaming_links) && (
+        {/* Master Link */}
+        {release.master_link && (
           <section className="py-16 bg-passionate-gray/10">
             <div className="container mx-auto px-6">
               <motion.div
@@ -297,54 +335,21 @@ const ReleaseDetail = () => {
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
                 <h3 className="text-3xl font-syncopate text-passionate-white mb-8">
-                  {isReleased ? 'Listen On Your Favorite Platform' : 'Available On'}
+                  {isReleased ? 'Listen Now' : 'Preview Available'}
                 </h3>
                 <div className="flex flex-wrap justify-center gap-4">
-                  {release.streaming_links?.spotify && (
-                    <Button 
-                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
-                      onClick={() => window.open(release.streaming_links.spotify, '_blank')}
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Spotify
-                    </Button>
-                  )}
-                  {release.streaming_links?.apple && (
-                    <Button 
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3"
-                      onClick={() => window.open(release.streaming_links.apple, '_blank')}
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Apple Music
-                    </Button>
-                  )}
-                  {release.streaming_links?.youtube && (
-                    <Button 
-                      className="bg-red-600 hover:bg-red-700 text-white px-8 py-3"
-                      onClick={() => window.open(release.streaming_links.youtube, '_blank')}
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      YouTube Music
-                    </Button>
-                  )}
-                  {release.streaming_links?.soundcloud && (
-                    <Button 
-                      className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3"
-                      onClick={() => window.open(release.streaming_links.soundcloud, '_blank')}
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      SoundCloud
-                    </Button>
-                  )}
-                  {release.streaming_links?.bandcamp && (
-                    <Button 
-                      className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3"
-                      onClick={() => window.open(release.streaming_links.bandcamp, '_blank')}
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Bandcamp
-                    </Button>
-                  )}
+                  <Button 
+                    className="bg-passionate-red hover:bg-passionate-red/80 text-white px-8 py-3 font-semibold"
+                    onClick={() => window.open(
+                      release.master_link.startsWith('http://') || release.master_link.startsWith('https://') 
+                        ? release.master_link 
+                        : `https://${release.master_link}`, 
+                      '_blank'
+                    )}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    {isReleased ? 'Listen to Release' : 'Listen to Teaser'}
+                  </Button>
                 </div>
               </motion.div>
             </div>

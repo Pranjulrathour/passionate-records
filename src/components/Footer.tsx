@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6 hover:opacity-80 transition-opacity">
               <img 
-                src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
+                src="/assets/VSICS (1).png" 
                 alt="Passionate Records Logo" 
                 className="h-8 sm:h-10 w-8 sm:w-10"
               />
@@ -69,21 +69,7 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-            
-            <div className="mt-4 sm:mt-6">
-              <h5 className="font-syncopate font-bold text-passionate-white text-xs sm:text-sm mb-2 sm:mb-3 tracking-wider">
-                GENRES
-              </h5>
-              <ul className="space-y-1 sm:space-y-2">
-                {['ELECTRONIC', 'HIP-HOP', 'EXPERIMENTAL', 'AMBIENT', 'DUBSTEP'].map((genre) => (
-                  <li key={genre}>
-                    <span className="text-passionate-white/50 text-xs hover:text-passionate-red transition-colors cursor-pointer touch-manipulation">
-                      {genre}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+
           </div>
 
           {/* Contact & Social */}

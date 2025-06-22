@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Music, Send, User, Mail, Phone, Guitar, Globe, Instagram, Youtube, MessageSquare } from 'lucide-react';
+import { Music, Send, User, Mail, Phone, Guitar, Globe, ExternalLink, MessageSquare } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import Navbar from '@/components/Navbar';
@@ -15,9 +15,7 @@ const ArtistEnrollment = () => {
     phone: '',
     genre: 'OTHER' as const,
     expertise: '',
-    instagram_handle: '',
-    youtube_handle: '',
-    spotify_url: '',
+    master_link: '',
     portfolio_url: '',
     message: ''
   });
@@ -64,9 +62,7 @@ const ArtistEnrollment = () => {
         phone: '',
         genre: 'OTHER',
         expertise: '',
-        instagram_handle: '',
-        youtube_handle: '',
-        spotify_url: '',
+        master_link: '',
         portfolio_url: '',
         message: ''
       });
@@ -209,60 +205,26 @@ const ArtistEnrollment = () => {
                 </div>
               </div>
 
-              {/* Social Media Links */}
+              {/* Links */}
               <div className="space-y-6">
                 <h3 className="font-syncopate font-bold text-passionate-white text-lg tracking-wider">
-                  SOCIAL MEDIA & PORTFOLIO
+                  LINKS & PORTFOLIO
                 </h3>
                 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="instagram_handle" className="flex items-center text-passionate-white font-syncopate text-sm tracking-wider mb-2">
-                      <Instagram className="h-4 w-4 mr-2 text-passionate-red" />
-                      INSTAGRAM
-                    </label>
-                    <input
-                      type="text"
-                      id="instagram_handle"
-                      name="instagram_handle"
-                      value={formData.instagram_handle}
-                      onChange={handleInputChange}
-                      className="w-full bg-passionate-gray/20 border border-passionate-gray text-passionate-white px-4 py-3 rounded-lg focus:border-passionate-red focus:outline-none transition-colors"
-                      placeholder="@yourusername"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="youtube_handle" className="flex items-center text-passionate-white font-syncopate text-sm tracking-wider mb-2">
-                      <Youtube className="h-4 w-4 mr-2 text-passionate-red" />
-                      YOUTUBE
-                    </label>
-                    <input
-                      type="text"
-                      id="youtube_handle"
-                      name="youtube_handle"
-                      value={formData.youtube_handle}
-                      onChange={handleInputChange}
-                      className="w-full bg-passionate-gray/20 border border-passionate-gray text-passionate-white px-4 py-3 rounded-lg focus:border-passionate-red focus:outline-none transition-colors"
-                      placeholder="@yourchannel"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="spotify_url" className="flex items-center text-passionate-white font-syncopate text-sm tracking-wider mb-2">
-                      <Music className="h-4 w-4 mr-2 text-passionate-red" />
-                      SPOTIFY URL
+                    <label htmlFor="master_link" className="flex items-center text-passionate-white font-syncopate text-sm tracking-wider mb-2">
+                      <ExternalLink className="h-4 w-4 mr-2 text-passionate-red" />
+                      MAIN LINK
                     </label>
                     <input
                       type="url"
-                      id="spotify_url"
-                      name="spotify_url"
-                      value={formData.spotify_url}
+                      id="master_link"
+                      name="master_link"
+                      value={formData.master_link}
                       onChange={handleInputChange}
                       className="w-full bg-passionate-gray/20 border border-passionate-gray text-passionate-white px-4 py-3 rounded-lg focus:border-passionate-red focus:outline-none transition-colors"
-                      placeholder="https://open.spotify.com/artist/..."
+                      placeholder="Your main social media or music platform link"
                     />
                   </div>
 

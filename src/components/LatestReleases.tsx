@@ -2,11 +2,14 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Play, Calendar, ExternalLink } from 'lucide-react';
+import { Play, Calendar, ExternalLink, Share2 } from 'lucide-react';
+import { shareRelease } from '@/utils/shareUtils';
+import { useToast } from '@/hooks/use-toast';
 
 const LatestReleases = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   // Set up real-time subscription
   useEffect(() => {
@@ -42,6 +45,25 @@ const LatestReleases = () => {
     refetchOnWindowFocus: false,
     staleTime: 30000, // 30 seconds
   });
+
+  const handleShare = async (release: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      const success = await shareRelease(release.title, release.artist_name, `${window.location.origin}/releases/${release.id}`);
+      if (success) {
+        toast({
+          title: "Shared successfully!",
+          description: `"${release.title}" has been shared.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Share failed",
+        description: "Unable to share at this time. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -110,7 +132,9 @@ const LatestReleases = () => {
                 {release.audio_preview_url && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <a
-                      href={release.audio_preview_url}
+                      href={release.audio_preview_url.startsWith('http://') || release.audio_preview_url.startsWith('https://') 
+                        ? release.audio_preview_url 
+                        : `https://${release.audio_preview_url}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
@@ -165,15 +189,39 @@ const LatestReleases = () => {
                     )}
                     {release.audio_preview_url && (
                       <a
-                        href={release.audio_preview_url}
+                        href={release.audio_preview_url.startsWith('http://') || release.audio_preview_url.startsWith('https://') 
+                          ? release.audio_preview_url 
+                          : `https://${release.audio_preview_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
                         className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                        title="Listen to Teaser"
+                      >
+                        <Play className="h-4 w-4" />
+                      </a>
+                    )}
+                    {release.master_link && (
+                      <a
+                        href={release.master_link.startsWith('http://') || release.master_link.startsWith('https://') 
+                          ? release.master_link 
+                          : `https://${release.master_link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                        title="Listen Now"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
                     )}
+                    <button
+                      onClick={(e) => handleShare(release, e)}
+                      className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                      title="Share Release"
+                    >
+                      <Share2 className="h-4 w-4" />
+                    </button>
                   </div>
                   
                   <button 
@@ -183,7 +231,7 @@ const LatestReleases = () => {
                     }}
                     className="text-passionate-red hover:text-passionate-white text-sm font-syncopate tracking-wider transition-colors duration-300"
                   >
-                    LISTEN →
+                    VIEW →
                   </button>
                 </div>
               </div>

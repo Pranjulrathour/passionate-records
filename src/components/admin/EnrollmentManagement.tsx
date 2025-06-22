@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -65,17 +64,17 @@ const EnrollmentManagement = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-syncopate text-passionate-white">Artist Enrollment Management</h2>
+    <div className="space-y-6 pb-24 lg:pb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-xl sm:text-2xl font-syncopate text-passionate-white">Artist Enrollment Management</h2>
       </div>
 
       <div className="grid gap-4">
         {enrollments?.map((enrollment) => (
           <Card key={enrollment.id} className="bg-passionate-gray/20 border-passionate-gray">
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-passionate-white">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <CardTitle className="text-passionate-white text-lg sm:text-xl">
                   {enrollment.full_name} {enrollment.stage_name && `(${enrollment.stage_name})`}
                 </CardTitle>
                 <div className="flex items-center space-x-2">
@@ -85,10 +84,10 @@ const EnrollmentManagement = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-passionate-white/70 text-sm">Email</p>
-                  <p className="text-passionate-white">{enrollment.email}</p>
+                  <p className="text-passionate-white break-all">{enrollment.email}</p>
                 </div>
                 <div>
                   <p className="text-passionate-white/70 text-sm">Phone</p>
@@ -107,11 +106,26 @@ const EnrollmentManagement = () => {
               {enrollment.message && (
                 <div>
                   <p className="text-passionate-white/70 text-sm">Message</p>
-                  <p className="text-passionate-white">{enrollment.message}</p>
+                  <p className="text-passionate-white break-words">{enrollment.message}</p>
                 </div>
               )}
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {enrollment.master_link && (
+                  <div>
+                    <p className="text-passionate-white/70 text-sm">Main Link</p>
+                    <a 
+                      href={enrollment.master_link.startsWith('http://') || enrollment.master_link.startsWith('https://') 
+                        ? enrollment.master_link 
+                        : `https://${enrollment.master_link}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-passionate-red hover:underline break-all"
+                    >
+                      View Profile
+                    </a>
+                  </div>
+                )}
                 {enrollment.instagram_handle && (
                   <div>
                     <p className="text-passionate-white/70 text-sm">Instagram</p>
@@ -119,7 +133,7 @@ const EnrollmentManagement = () => {
                       href={`https://instagram.com/${enrollment.instagram_handle.replace('@', '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-passionate-red hover:underline"
+                      className="text-passionate-red hover:underline break-all"
                     >
                       {enrollment.instagram_handle}
                     </a>
@@ -132,7 +146,7 @@ const EnrollmentManagement = () => {
                       href={`https://youtube.com/@${enrollment.youtube_handle.replace('@', '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-passionate-red hover:underline"
+                      className="text-passionate-red hover:underline break-all"
                     >
                       {enrollment.youtube_handle}
                     </a>
@@ -160,31 +174,33 @@ const EnrollmentManagement = () => {
                     href={enrollment.portfolio_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-passionate-red hover:underline"
+                    className="text-passionate-red hover:underline break-all"
                   >
                     View Portfolio
                   </a>
                 </div>
               )}
 
-              <div className="flex items-center space-x-4 pt-4 border-t border-passionate-gray">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-4 border-t border-passionate-gray">
                 <p className="text-passionate-white/70 text-sm">Update Status:</p>
-                <Select
-                  value={enrollment.status || 'pending'}
-                  onValueChange={(status) => updateStatusMutation.mutate({ id: enrollment.id, status })}
-                >
-                  <SelectTrigger className="w-32 bg-passionate-gray/30 border-passionate-gray text-passionate-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="approved">Approved</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-passionate-white/50 text-xs">
-                  Applied: {new Date(enrollment.created_at).toLocaleDateString()}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 flex-1">
+                  <Select
+                    value={enrollment.status || 'pending'}
+                    onValueChange={(status) => updateStatusMutation.mutate({ id: enrollment.id, status })}
+                  >
+                    <SelectTrigger className="w-full sm:w-32 bg-passionate-gray/30 border-passionate-gray text-passionate-white min-h-[44px] touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="approved">Approved</SelectItem>
+                      <SelectItem value="rejected">Rejected</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-passionate-white/50 text-xs text-center sm:text-left">
+                    Applied: {new Date(enrollment.created_at).toLocaleDateString()}
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>

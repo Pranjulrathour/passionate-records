@@ -122,7 +122,8 @@ const UpcomingEvents = () => {
                   <Button 
                     onClick={(e) => {
                       e.stopPropagation();
-                      window.open(event.ticket_url, '_blank');
+                      const url = event.ticket_url.startsWith('http://') || event.ticket_url.startsWith('https://') ? event.ticket_url : `https://${event.ticket_url}`;
+                      window.open(url, '_blank');
                     }}
                     className="w-full bg-passionate-red hover:bg-passionate-red/80"
                   >

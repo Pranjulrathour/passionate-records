@@ -5,12 +5,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { shareRelease } from '@/utils/shareUtils';
+import { useToast } from '@/hooks/use-toast';
 
 const Releases = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState('all');
   const [hoveredRelease, setHoveredRelease] = useState<string | null>(null);
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   // Set up real-time subscription for releases
   useEffect(() => {
@@ -74,6 +77,25 @@ const Releases = () => {
   });
 
   const genreFilters = ['all', 'new', 'upcoming', 'electronic', 'hip_hop', 'house', 'techno'];
+
+  const handleShare = async (release: any, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    try {
+      const success = await shareRelease(release.title, release.artist_name, `${window.location.origin}/releases/${release.id}`);
+      if (success) {
+        toast({
+          title: "Shared successfully!",
+          description: `"${release.title}" has been shared.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Share failed",
+        description: "Unable to share at this time. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-passionate-black">
@@ -220,16 +242,32 @@ const Releases = () => {
                     VIEW DETAILS
                   </button>
                   
-                                          {featuredRelease.audio_preview_url && (
-                          <a
-                            href={featuredRelease.audio_preview_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300"
-                    >
-                      LISTEN NOW
-                    </a>
-                  )}
+                                                                <div className="flex flex-wrap gap-4">
+                    {featuredRelease.audio_preview_url && (
+                      <a
+                        href={featuredRelease.audio_preview_url.startsWith('http://') || featuredRelease.audio_preview_url.startsWith('https://') 
+                          ? featuredRelease.audio_preview_url 
+                          : `https://${featuredRelease.audio_preview_url}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300"
+                      >
+                        PREVIEW
+                      </a>
+                    )}
+                    {featuredRelease.master_link && (
+                      <a
+                        href={featuredRelease.master_link.startsWith('http://') || featuredRelease.master_link.startsWith('https://') 
+                          ? featuredRelease.master_link 
+                          : `https://${featuredRelease.master_link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300"
+                      >
+                        LISTEN NOW
+                      </a>
+                    )}
+                  </div>
                   
                   <div className="flex items-center space-x-3 ml-auto">
                     <button 
@@ -239,6 +277,7 @@ const Releases = () => {
                       <Heart className="h-5 w-5 text-passionate-white" />
                     </button>
                     <button 
+                      onClick={(e) => handleShare(featuredRelease, e)}
                       aria-label="Share release"
                       className="p-3 rounded-full bg-passionate-gray/20 hover:bg-passionate-red/20 border border-passionate-gray hover:border-passionate-red transition-all duration-300"
                     >
@@ -352,13 +391,30 @@ const Releases = () => {
                       </div>
                       
                       <div className="flex items-center space-x-2">
-                                              {release.audio_preview_url && (
-                        <a
-                          href={release.audio_preview_url}
+                        {release.audio_preview_url && (
+                          <a
+                            href={release.audio_preview_url.startsWith('http://') || release.audio_preview_url.startsWith('https://') 
+                              ? release.audio_preview_url 
+                              : `https://${release.audio_preview_url}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
                             className="p-2 rounded-full bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white transition-all duration-300"
+                            title="Listen to Teaser"
+                          >
+                            <Play className="h-4 w-4" />
+                          </a>
+                        )}
+                        {release.master_link && (
+                          <a
+                            href={release.master_link.startsWith('http://') || release.master_link.startsWith('https://') 
+                              ? release.master_link 
+                              : `https://${release.master_link}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-2 rounded-full bg-passionate-white/20 hover:bg-passionate-white text-passionate-white hover:text-passionate-black transition-all duration-300"
+                            title="Listen Now"
                           >
                             <ExternalLink className="h-4 w-4" />
                           </a>

@@ -353,147 +353,137 @@ const ProjectManagement = () => {
     }, [resetFormState, onCancel]);
 
     return (
-      <Card className="bg-passionate-gray/20 border-passionate-gray">
-        <CardHeader>
-          <CardTitle className="text-passionate-white font-syncopate">
-            {project ? 'Edit Project' : 'Add New Project'}
-          </CardTitle>
-          <CardDescription className="text-passionate-white/70">
-            {project ? 'Update project information and details' : 'Create a new project or release'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="project-title" className="text-passionate-white">Project Title *</Label>
-                <Input
-                  id="project-title"
-                  name="projectTitle"
-                  value={formData.title}
-                  onChange={(e) => handleFieldChange('title', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="Enter project title"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="project-type" className="text-passionate-white">Project Type</Label>
-                <Input
-                  id="project-type"
-                  name="projectType"
-                  value={formData.project_type}
-                  onChange={(e) => handleFieldChange('project_type', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="e.g., Album, Single, EP, Music Video"
-                  autoComplete="off"
-                />
-              </div>
-            </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Basic Information */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="project-title" className="text-passionate-white">Project Title *</Label>
+            <Input
+              id="project-title"
+              name="projectTitle"
+              value={formData.title}
+              onChange={(e) => handleFieldChange('title', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+              placeholder="Enter project title"
+              autoComplete="off"
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="project-type" className="text-passionate-white">Project Type</Label>
+            <Input
+              id="project-type"
+              name="projectType"
+              value={formData.project_type}
+              onChange={(e) => handleFieldChange('project_type', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+              placeholder="e.g., Album, Single, EP, Music Video"
+              autoComplete="off"
+            />
+          </div>
+        </div>
 
-            {/* Description */}
-            <div>
-              <Label htmlFor="project-description" className="text-passionate-white">Project Description</Label>
-              <Textarea
-                id="project-description"
-                name="projectDescription"
-                value={formData.description}
-                onChange={(e) => handleFieldChange('description', e.target.value)}
-                className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                rows={4}
-                placeholder="Describe the project, its concept, and what makes it special..."
-                autoComplete="off"
-              />
-            </div>
+        {/* Description */}
+        <div>
+          <Label htmlFor="project-description" className="text-passionate-white">Project Description</Label>
+          <Textarea
+            id="project-description"
+            name="projectDescription"
+            value={formData.description}
+            onChange={(e) => handleFieldChange('description', e.target.value)}
+            className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+            rows={4}
+            placeholder="Describe the project, its concept, and what makes it special..."
+            autoComplete="off"
+          />
+        </div>
 
-            {/* Status and Artist */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="project-status" className="text-passionate-white">Status</Label>
-                <Select 
-                  value={formData.status} 
-                  onValueChange={(value) => handleFieldChange('status', value)}
-                  name="projectStatus"
-                >
-                  <SelectTrigger id="project-status" className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="UPCOMING">Upcoming</SelectItem>
-                    <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                    <SelectItem value="COMPLETED">Completed</SelectItem>
-                    <SelectItem value="CANCELLED">Cancelled</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="project-artist" className="text-passionate-white">Artist</Label>
-                <Select 
-                  value={formData.artist_id} 
-                  onValueChange={(value) => handleFieldChange('artist_id', value)}
-                  name="projectArtist"
-                >
-                  <SelectTrigger id="project-artist" className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
-                    <SelectValue placeholder="Select an artist" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {artists?.map((artist) => (
-                      <SelectItem key={artist.id} value={artist.id}>
-                        {artist.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+        {/* Status and Artist */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="project-status" className="text-passionate-white">Status</Label>
+            <Select 
+              value={formData.status} 
+              onValueChange={(value) => handleFieldChange('status', value)}
+              name="projectStatus"
+            >
+              <SelectTrigger id="project-status" className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="UPCOMING">Upcoming</SelectItem>
+                <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
+                <SelectItem value="COMPLETED">Completed</SelectItem>
+                <SelectItem value="CANCELLED">Cancelled</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="project-artist" className="text-passionate-white">Artist</Label>
+            <Select 
+              value={formData.artist_id} 
+              onValueChange={(value) => handleFieldChange('artist_id', value)}
+              name="projectArtist"
+            >
+              <SelectTrigger id="project-artist" className="bg-passionate-gray/30 border-passionate-gray text-passionate-white">
+                <SelectValue placeholder="Select an artist" />
+              </SelectTrigger>
+              <SelectContent>
+                {artists?.map((artist) => (
+                  <SelectItem key={artist.id} value={artist.id}>
+                    {artist.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-            {/* Release Date */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="project-release-date" className="text-passionate-white">Release Date</Label>
-                <Input
-                  id="project-release-date"
-                  name="projectReleaseDate"
-                  type="date"
-                  value={formData.release_date}
-                  onChange={(e) => handleFieldChange('release_date', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                />
-              </div>
-              <div>
-                <Label htmlFor="project-teaser-url" className="text-passionate-white">Teaser URL</Label>
-                <Input
-                  id="project-teaser-url"
-                  name="projectTeaserUrl"
-                  value={formData.teaser_url}
-                  onChange={(e) => handleFieldChange('teaser_url', e.target.value)}
-                  className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
-                  placeholder="https://youtube.com/watch?v=..."
-                  autoComplete="url"
-                />
-              </div>
-            </div>
+        {/* Release Date */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="project-release-date" className="text-passionate-white">Release Date</Label>
+            <Input
+              id="project-release-date"
+              name="projectReleaseDate"
+              type="date"
+              value={formData.release_date}
+              onChange={(e) => handleFieldChange('release_date', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+            />
+          </div>
+          <div>
+            <Label htmlFor="project-teaser-url" className="text-passionate-white">Teaser URL</Label>
+            <Input
+              id="project-teaser-url"
+              name="projectTeaserUrl"
+              value={formData.teaser_url}
+              onChange={(e) => handleFieldChange('teaser_url', e.target.value)}
+              className="bg-passionate-gray/30 border-passionate-gray text-passionate-white"
+              placeholder="https://youtube.com/watch?v=..."
+              autoComplete="url"
+            />
+          </div>
+        </div>
 
-            {/* Image Upload */}
-            <div>
-              <Label htmlFor="project-image" className="text-passionate-white">Project Cover/Image</Label>
-              <ImageUpload
-                value={formData.image_url}
-                onChange={handleImageUpload}
-                label="Project Cover Art/Image"
-                placeholder="Upload project image"
-                bucketName="project-images"
-                inputId="project-image"
-              />
-            </div>
+        {/* Image Upload */}
+        <div>
+          <Label htmlFor="project-image" className="text-passionate-white">Project Cover/Image</Label>
+          <ImageUpload
+            value={formData.image_url}
+            onChange={handleImageUpload}
+            label="Project Cover Art/Image"
+            placeholder="Upload project image"
+            bucketName="project-images"
+            inputId="project-image"
+          />
+        </div>
 
-            {/* Form Actions */}
-            <div className="flex space-x-2">
+                    {/* Form Actions */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 type="submit" 
-                className="bg-passionate-red hover:bg-passionate-red/80"
+                className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -513,14 +503,13 @@ const ProjectManagement = () => {
                 onClick={handleCancel} 
                 variant="outline" 
                 disabled={isSubmitting}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
             </div>
-          </form>
-        </CardContent>
-      </Card>
+      </form>
     );
   };
 
@@ -536,94 +525,146 @@ const ProjectManagement = () => {
 
   // Main component render
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24 lg:pb-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-syncopate text-passionate-white">Project Management</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-2xl sm:text-3xl font-syncopate text-passionate-white">Project Management</h2>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-passionate-red hover:bg-passionate-red/80"
+          className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white w-full sm:w-auto min-h-[44px] touch-manipulation"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="mr-2 h-4 w-4" />
           Add Project
         </Button>
       </div>
 
       {/* Add Form */}
       {showAddForm && (
-        <ProjectForm
-          key="add-project-form"
-          onSave={(data) => createProjectMutation.mutate(data)}
-          onCancel={() => setShowAddForm(false)}
-        />
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Add New Project</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAddForm(false)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ProjectForm
+              onSave={(data) => createProjectMutation.mutate(data)}
+              onCancel={() => setShowAddForm(false)}
+            />
+          </CardContent>
+        </Card>
       )}
 
-      {/* Edit Form */}
-      {editingProject && (
-        <ProjectForm
-          key={`edit-project-form-${editingProject.id}`}
-          project={editingProject}
-          onSave={(data) => updateProjectMutation.mutate({ id: editingProject.id, ...data })}
-          onCancel={() => setEditingProject(null)}
-        />
-      )}
-
-      {/* Projects List */}
-      <div className="grid gap-4">
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {projects?.map((project) => (
           <Card key={project.id} className="bg-passionate-gray/20 border-passionate-gray">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <img
-                    {...createSafeImageProps(project.image_url, project.title, 'project')}
-                    className="w-16 h-16 rounded-lg object-cover"
-                  />
-                  <div>
-                    <h3 className="text-lg font-semibold text-passionate-white">
-                      {project.title}
-                    </h3>
-                    <p className="text-passionate-white/70">
-                      {project.project_type} • {project.artists?.name || 'No Artist'}
-                    </p>
-                    <div className="flex items-center space-x-3 mt-1">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        project.status === 'COMPLETED' ? 'bg-green-600' :
-                        project.status === 'IN_PROGRESS' ? 'bg-blue-600' :
-                        project.status === 'UPCOMING' ? 'bg-yellow-600' :
-                        'bg-gray-600'
-                      }`}>
-                        {project.status.replace('_', ' ')}
-                      </span>
-                      {project.release_date && (
-                        <span className="text-passionate-white/50 text-sm">
-                          {new Date(project.release_date).toLocaleDateString()}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-passionate-white text-lg truncate" title={project.title}>
+                    {project.title}
+                  </CardTitle>
+                  <CardDescription className="text-passionate-white/70 truncate" title={project.artists?.name}>
+                    {project.artists?.name}
+                  </CardDescription>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex items-center space-x-2 flex-shrink-0">
                   <Button
-                    onClick={() => setEditingProject(project)}
                     variant="outline"
                     size="sm"
+                    onClick={() => setEditingProject(project)}
+                    className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 min-h-[40px] touch-manipulation"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button
-                    onClick={() => deleteProjectMutation.mutate(project.id)}
-                    variant="destructive"
+                    variant="outline"
                     size="sm"
+                    onClick={() => deleteProjectMutation.mutate(project.id)}
+                    className="border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white min-h-[40px] touch-manipulation"
+                    disabled={deleteProjectMutation.isPending}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {project.image_url && (
+                <div className="flex justify-center">
+                  <img
+                    {...createSafeImageProps(project.image_url, 'Project image')}
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                </div>
+              )}
+              <div className="space-y-2">
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Type</p>
+                  <p className="text-passionate-white">{project.project_type}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Status</p>
+                  <p className="text-passionate-white">{project.status}</p>
+                </div>
+                <div>
+                  <p className="text-passionate-white/70 text-sm">Release Date</p>
+                  <p className="text-passionate-white">
+                    {project.release_date ? new Date(project.release_date).toLocaleDateString() : 'Not set'}
+                  </p>
+                </div>
+                {project.teaser_url && (
+                  <div className="pt-2">
+                    <a
+                      href={project.teaser_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-passionate-red hover:text-passionate-red/80"
+                    >
+                      Watch Teaser
+                    </a>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {/* Edit Form */}
+      {editingProject && (
+        <Card className="bg-passionate-gray/20 border-passionate-gray">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <CardTitle className="text-passionate-white">Edit Project</CardTitle>
+              <Button 
+                variant="outline" 
+                onClick={() => setEditingProject(null)}
+                className="border-passionate-gray text-passionate-white hover:bg-passionate-gray/20 w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancel
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ProjectForm
+              project={editingProject}
+              onSave={(data) => updateProjectMutation.mutate({ id: editingProject.id, ...data })}
+              onCancel={() => setEditingProject(null)}
+            />
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

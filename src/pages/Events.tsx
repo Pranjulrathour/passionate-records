@@ -205,7 +205,7 @@ const Events = () => {
                 <div className="flex flex-wrap gap-4">
                   {featuredEvent.ticket_url ? (
                     <a
-                      href={featuredEvent.ticket_url}
+                      href={featuredEvent.ticket_url.startsWith('http://') || featuredEvent.ticket_url.startsWith('https://') ? featuredEvent.ticket_url : `https://${featuredEvent.ticket_url}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300 red-glow flex items-center space-x-2"
@@ -367,7 +367,7 @@ const Events = () => {
                       <div className="flex items-center space-x-2">
                         {event.ticket_url && (
                           <a
-                            href={event.ticket_url}
+                            href={event.ticket_url.startsWith('http://') || event.ticket_url.startsWith('https://') ? event.ticket_url : `https://${event.ticket_url}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
@@ -387,7 +387,7 @@ const Events = () => {
                       
                       {event.ticket_url ? (
                         <a
-                          href={event.ticket_url}
+                          href={event.ticket_url.startsWith('http://') || event.ticket_url.startsWith('https://') ? event.ticket_url : `https://${event.ticket_url}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}

@@ -405,17 +405,34 @@ const Index = () => {
                         <span>LISTEN NOW</span>
                       </button>
                       
-                      {latestReleases[currentTrack].audio_preview_url && (
-                        <a
-                          href={latestReleases[currentTrack].audio_preview_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300 flex items-center space-x-3"
-                        >
-                          <ExternalLink className="h-5 w-5" />
-                          <span>PREVIEW</span>
-                        </a>
-                      )}
+                      <div className="flex flex-wrap gap-4">
+                        {latestReleases[currentTrack].audio_preview_url && (
+                          <a
+                            href={latestReleases[currentTrack].audio_preview_url.startsWith('http://') || latestReleases[currentTrack].audio_preview_url.startsWith('https://') 
+                              ? latestReleases[currentTrack].audio_preview_url 
+                              : `https://${latestReleases[currentTrack].audio_preview_url}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300 flex items-center space-x-3"
+                          >
+                            <Play className="h-5 w-5" />
+                            <span>PREVIEW</span>
+                          </a>
+                        )}
+                        {latestReleases[currentTrack].master_link && (
+                          <a
+                            href={latestReleases[currentTrack].master_link.startsWith('http://') || latestReleases[currentTrack].master_link.startsWith('https://') 
+                              ? latestReleases[currentTrack].master_link 
+                              : `https://${latestReleases[currentTrack].master_link}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-passionate-red hover:bg-passionate-red/80 text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300 flex items-center space-x-3"
+                          >
+                            <ExternalLink className="h-5 w-5" />
+                            <span>LISTEN NOW</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

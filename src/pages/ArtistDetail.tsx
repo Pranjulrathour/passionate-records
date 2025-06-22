@@ -9,19 +9,20 @@ import { Card, CardContent } from '@/components/ui/card';
 import { 
   ArrowLeft, 
   MapPin, 
-  Instagram, 
-  Youtube, 
   Music, 
   ExternalLink,
   Star,
   Calendar,
-  Headphones
+  Share2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { shareArtist } from '@/utils/shareUtils';
+import { useToast } from '@/hooks/use-toast';
 
 const ArtistDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { data: artist, isLoading, error } = useQuery({
     queryKey: ['artist', id],
@@ -82,6 +83,24 @@ const ArtistDetail = () => {
 
   const formatGenre = (genre: string) => {
     return genre.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  const handleShare = async () => {
+    try {
+      const success = await shareArtist(artist.name);
+      if (success) {
+        toast({
+          title: "Shared successfully!",
+          description: `${artist.name}'s profile has been shared.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Share failed",
+        description: "Unable to share at this time. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -172,44 +191,29 @@ const ArtistDetail = () => {
                     </p>
                   )}
 
-                  {/* Social Links */}
+                  {/* Action Buttons */}
                   <div className="flex flex-wrap gap-4">
-                    {artist.spotify_url && (
+                    {artist.master_link && (
                       <a
-                        href={artist.spotify_url}
+                        href={artist.master_link.startsWith('http://') || artist.master_link.startsWith('https://') 
+                          ? artist.master_link 
+                          : `https://${artist.master_link}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors"
+                        className="flex items-center space-x-2 px-6 py-3 bg-passionate-red text-white rounded-full hover:bg-passionate-red/80 transition-colors font-semibold"
                       >
-                        <Headphones className="h-4 w-4" />
-                        <span>Spotify</span>
                         <ExternalLink className="h-4 w-4" />
+                        <span>Visit Artist Page</span>
                       </a>
                     )}
-                    {artist.instagram_handle && (
-                      <a
-                        href={`https://instagram.com/${artist.instagram_handle}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full hover:from-purple-600 hover:to-pink-600 transition-colors"
-                      >
-                        <Instagram className="h-4 w-4" />
-                        <span>@{artist.instagram_handle}</span>
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
-                    {artist.youtube_handle && (
-                      <a
-                        href={`https://youtube.com/@${artist.youtube_handle}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
-                      >
-                        <Youtube className="h-4 w-4" />
-                        <span>@{artist.youtube_handle}</span>
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
+                    <Button
+                      onClick={handleShare}
+                      variant="outline"
+                      className="flex items-center space-x-2 px-6 py-3 border-passionate-white/30 text-passionate-white hover:bg-passionate-white/10"
+                    >
+                      <Share2 className="h-4 w-4" />
+                      <span>Share Artist</span>
+                    </Button>
                   </div>
                 </div>
               </motion.div>

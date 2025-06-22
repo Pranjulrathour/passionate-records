@@ -194,7 +194,7 @@ const AdminDashboard = () => {
         <div className="flex h-14 sm:h-16 items-center px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 sm:space-x-3">
             <img 
-              src="/lovable-uploads/2798045b-acfd-4e92-9275-b9b11607bbb4.png" 
+              src="/assets/VSICS (1).png" 
               alt="Passionate Records Logo" 
               className="h-6 w-6 sm:h-8 sm:w-8"
             />

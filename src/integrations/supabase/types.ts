@@ -11,11 +11,11 @@ export type Database = {
     Tables: {
       artist_enrollments: {
         Row: {
-          created_at: string
+          created_at: string | null
           email: string
           expertise: string | null
           full_name: string
-          genre: Database["public"]["Enums"]["genre_type"] | null
+          genre: string | null
           id: string
           instagram_handle: string | null
           message: string | null
@@ -27,11 +27,11 @@ export type Database = {
           youtube_handle: string | null
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           email: string
           expertise?: string | null
           full_name: string
-          genre?: Database["public"]["Enums"]["genre_type"] | null
+          genre?: string | null
           id?: string
           instagram_handle?: string | null
           message?: string | null
@@ -43,11 +43,11 @@ export type Database = {
           youtube_handle?: string | null
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           email?: string
           expertise?: string | null
           full_name?: string
-          genre?: Database["public"]["Enums"]["genre_type"] | null
+          genre?: string | null
           id?: string
           instagram_handle?: string | null
           message?: string | null
@@ -63,125 +63,281 @@ export type Database = {
       artists: {
         Row: {
           bio: string | null
-          created_at: string
-          genre: Database["public"]["Enums"]["genre_type"] | null
+          created_at: string | null
+          genre: string | null
           id: string
           image_url: string | null
-          instagram_handle: string | null
           is_featured: boolean | null
           location: string | null
+          master_link: string | null
           name: string
-          spotify_url: string | null
           stage_name: string | null
-          updated_at: string
-          youtube_handle: string | null
+          updated_at: string | null
         }
         Insert: {
           bio?: string | null
-          created_at?: string
-          genre?: Database["public"]["Enums"]["genre_type"] | null
+          created_at?: string | null
+          genre?: string | null
           id?: string
           image_url?: string | null
-          instagram_handle?: string | null
           is_featured?: boolean | null
           location?: string | null
+          master_link?: string | null
           name: string
-          spotify_url?: string | null
           stage_name?: string | null
-          updated_at?: string
-          youtube_handle?: string | null
+          updated_at?: string | null
         }
         Update: {
           bio?: string | null
-          created_at?: string
-          genre?: Database["public"]["Enums"]["genre_type"] | null
+          created_at?: string | null
+          genre?: string | null
           id?: string
           image_url?: string | null
-          instagram_handle?: string | null
           is_featured?: boolean | null
           location?: string | null
+          master_link?: string | null
           name?: string
-          spotify_url?: string | null
           stage_name?: string | null
-          updated_at?: string
-          youtube_handle?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
-      blogs: {
+      claims: {
         Row: {
-          author: string | null
-          content: string
-          created_at: string
-          excerpt: string | null
-          featured_image_url: string | null
+          beneficiaries_count: number | null
+          claim_type: string | null
+          claimant_id: string
+          claimed_at: string | null
+          created_at: string | null
+          delivered_at: string | null
+          delivery_location: string | null
+          donation_id: string
           id: string
-          published: boolean | null
-          title: string
-          updated_at: string
+          ngo_id: string | null
+          notes: string | null
+          picked_up_at: string | null
+          status: Database["public"]["Enums"]["claim_status"] | null
+          updated_at: string | null
+          volunteer_id: string | null
         }
         Insert: {
-          author?: string | null
-          content: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image_url?: string | null
+          beneficiaries_count?: number | null
+          claim_type?: string | null
+          claimant_id: string
+          claimed_at?: string | null
+          created_at?: string | null
+          delivered_at?: string | null
+          delivery_location?: string | null
+          donation_id: string
           id?: string
-          published?: boolean | null
-          title: string
-          updated_at?: string
+          ngo_id?: string | null
+          notes?: string | null
+          picked_up_at?: string | null
+          status?: Database["public"]["Enums"]["claim_status"] | null
+          updated_at?: string | null
+          volunteer_id?: string | null
         }
         Update: {
-          author?: string | null
-          content?: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image_url?: string | null
+          beneficiaries_count?: number | null
+          claim_type?: string | null
+          claimant_id?: string
+          claimed_at?: string | null
+          created_at?: string | null
+          delivered_at?: string | null
+          delivery_location?: string | null
+          donation_id?: string
           id?: string
-          published?: boolean | null
-          title?: string
-          updated_at?: string
+          ngo_id?: string | null
+          notes?: string | null
+          picked_up_at?: string | null
+          status?: Database["public"]["Enums"]["claim_status"] | null
+          updated_at?: string | null
+          volunteer_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "claims_claimant_id_fkey"
+            columns: ["claimant_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_donation_id_fkey"
+            columns: ["donation_id"]
+            isOneToOne: false
+            referencedRelation: "donations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_volunteer_id_fkey"
+            columns: ["volunteer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      donations: {
+        Row: {
+          claim_type: string | null
+          contact_phone: string | null
+          created_at: string | null
+          description: string | null
+          dietary_info: string[] | null
+          donor_id: string
+          expiry_hours: number
+          food_type: string
+          id: string
+          image_url: string | null
+          latitude: number | null
+          location: string
+          longitude: number | null
+          pickup_instructions: string | null
+          quantity: number
+          status: Database["public"]["Enums"]["donation_status"] | null
+          unit: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          claim_type?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          description?: string | null
+          dietary_info?: string[] | null
+          donor_id: string
+          expiry_hours: number
+          food_type: string
+          id?: string
+          image_url?: string | null
+          latitude?: number | null
+          location: string
+          longitude?: number | null
+          pickup_instructions?: string | null
+          quantity: number
+          status?: Database["public"]["Enums"]["donation_status"] | null
+          unit?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          claim_type?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          description?: string | null
+          dietary_info?: string[] | null
+          donor_id?: string
+          expiry_hours?: number
+          food_type?: string
+          id?: string
+          image_url?: string | null
+          latitude?: number | null
+          location?: string
+          longitude?: number | null
+          pickup_instructions?: string | null
+          quantity?: number
+          status?: Database["public"]["Enums"]["donation_status"] | null
+          unit?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       events: {
         Row: {
-          created_at: string
+          created_at: string | null
           date_time: string
           description: string | null
-          event_type: Database["public"]["Enums"]["event_type"] | null
+          event_type: string | null
           id: string
           image_url: string | null
           ticket_url: string | null
           title: string
-          updated_at: string
+          updated_at: string | null
           venue: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           date_time: string
           description?: string | null
-          event_type?: Database["public"]["Enums"]["event_type"] | null
+          event_type?: string | null
           id?: string
           image_url?: string | null
           ticket_url?: string | null
           title: string
-          updated_at?: string
+          updated_at?: string | null
           venue: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           date_time?: string
           description?: string | null
-          event_type?: Database["public"]["Enums"]["event_type"] | null
+          event_type?: string | null
           id?: string
           image_url?: string | null
           ticket_url?: string | null
           title?: string
-          updated_at?: string
+          updated_at?: string | null
           venue?: string
         }
         Relationships: []
+      }
+      impact: {
+        Row: {
+          carbon_footprint_reduced: number | null
+          created_at: string | null
+          deliveries_completed: number | null
+          id: string
+          meals_distributed: number | null
+          meals_donated: number | null
+          points: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          carbon_footprint_reduced?: number | null
+          created_at?: string | null
+          deliveries_completed?: number | null
+          id?: string
+          meals_distributed?: number | null
+          meals_donated?: number | null
+          points?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          carbon_footprint_reduced?: number | null
+          created_at?: string | null
+          deliveries_completed?: number | null
+          id?: string
+          meals_distributed?: number | null
+          meals_donated?: number | null
+          points?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "impact_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       latest_releases: {
         Row: {
@@ -189,54 +345,54 @@ export type Database = {
           artist_name: string
           audio_preview_url: string | null
           cover_art_url: string | null
-          created_at: string
+          created_at: string | null
           description: string | null
-          display_order: number
+          display_order: number | null
           genre: string | null
           id: string
-          is_featured: boolean
+          is_featured: boolean | null
+          master_link: string | null
           release_date: string | null
-          release_type: string
-          status: string
-          streaming_links: Json | null
+          release_type: string | null
+          status: string | null
           title: string
-          updated_at: string
+          updated_at: string | null
         }
         Insert: {
           artist_id?: string | null
           artist_name: string
           audio_preview_url?: string | null
           cover_art_url?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          display_order?: number
+          display_order?: number | null
           genre?: string | null
           id?: string
-          is_featured?: boolean
+          is_featured?: boolean | null
+          master_link?: string | null
           release_date?: string | null
-          release_type?: string
-          status?: string
-          streaming_links?: Json | null
+          release_type?: string | null
+          status?: string | null
           title: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Update: {
           artist_id?: string | null
           artist_name?: string
           audio_preview_url?: string | null
           cover_art_url?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          display_order?: number
+          display_order?: number | null
           genre?: string | null
           id?: string
-          is_featured?: boolean
+          is_featured?: boolean | null
+          master_link?: string | null
           release_date?: string | null
-          release_type?: string
-          status?: string
-          streaming_links?: Json | null
+          release_type?: string | null
+          status?: string | null
           title?: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -245,33 +401,102 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "artists"
             referencedColumns: ["id"]
-          }
+          },
         ]
+      }
+      notifications: {
+        Row: {
+          action_url: string | null
+          created_at: string
+          description: string | null
+          id: string
+          read: boolean
+          related_entity_id: string | null
+          related_entity_type: string | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          action_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          read?: boolean
+          related_entity_id?: string | null
+          related_entity_type?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          action_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          read?: boolean
+          related_entity_id?: string | null
+          related_entity_type?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
-          created_at: string
-          email: string | null
+          address: string | null
+          created_at: string | null
+          email: string
+          first_name: string | null
           full_name: string | null
           id: string
-          role: string | null
-          updated_at: string
+          last_name: string | null
+          latitude: number | null
+          longitude: number | null
+          organization_name: string | null
+          phone: string | null
+          profile_image_url: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string | null
+          verified: boolean | null
         }
         Insert: {
-          created_at?: string
-          email?: string | null
+          address?: string | null
+          created_at?: string | null
+          email: string
+          first_name?: string | null
           full_name?: string | null
           id: string
-          role?: string | null
-          updated_at?: string
+          last_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          organization_name?: string | null
+          phone?: string | null
+          profile_image_url?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          verified?: boolean | null
         }
         Update: {
-          created_at?: string
-          email?: string | null
+          address?: string | null
+          created_at?: string | null
+          email?: string
+          first_name?: string | null
           full_name?: string | null
           id?: string
-          role?: string | null
-          updated_at?: string
+          last_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          organization_name?: string | null
+          phone?: string | null
+          profile_image_url?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+          verified?: boolean | null
         }
         Relationships: []
       }
@@ -329,72 +554,112 @@ export type Database = {
         Row: {
           album_art_url: string | null
           artist_name: string
-          created_at: string
+          created_at: string | null
           description: string | null
-          genre: Database["public"]["Enums"]["genre_type"] | null
+          genre: string | null
           id: string
           release_date: string | null
           teaser_url: string | null
           title: string
-          updated_at: string
+          updated_at: string | null
         }
         Insert: {
           album_art_url?: string | null
           artist_name: string
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          genre?: Database["public"]["Enums"]["genre_type"] | null
+          genre?: string | null
           id?: string
           release_date?: string | null
           teaser_url?: string | null
           title: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Update: {
           album_art_url?: string | null
           artist_name?: string
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          genre?: Database["public"]["Enums"]["genre_type"] | null
+          genre?: string | null
           id?: string
           release_date?: string | null
           teaser_url?: string | null
           title?: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
     }
     Views: {
-      [_ in never]: never
+      claims_with_profiles: {
+        Row: {
+          beneficiaries_count: number | null
+          claimant_id: string | null
+          claimed_at: string | null
+          created_at: string | null
+          delivered_at: string | null
+          delivery_location: string | null
+          donation_id: string | null
+          id: string | null
+          ngo_first_name: string | null
+          ngo_id: string | null
+          ngo_last_name: string | null
+          ngo_organization_name: string | null
+          notes: string | null
+          picked_up_at: string | null
+          status: Database["public"]["Enums"]["claim_status"] | null
+          updated_at: string | null
+          volunteer_first_name: string | null
+          volunteer_id: string | null
+          volunteer_last_name: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claims_claimant_id_fkey"
+            columns: ["claimant_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_donation_id_fkey"
+            columns: ["donation_id"]
+            isOneToOne: false
+            referencedRelation: "donations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_volunteer_id_fkey"
+            columns: ["volunteer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
-      is_admin: {
-        Args: { _user_id: string }
-        Returns: boolean
+      make_user_admin: {
+        Args: { user_email: string }
+        Returns: string
       }
     }
     Enums: {
-      event_type:
-        | "CONCERT"
-        | "GIG"
-        | "ALBUM_LAUNCH"
-        | "MUSIC_VIDEO_PREMIERE"
-        | "OTHER"
-      genre_type:
-        | "HIP_HOP"
-        | "RAP"
-        | "ELECTRONIC"
-        | "INDIE_POP"
-        | "ALTERNATIVE_ROCK"
-        | "TRAP"
-        | "SYNTHWAVE"
-        | "PUNK_ROCK"
-        | "EXPERIMENTAL"
-        | "RNB"
-        | "SOUL"
-        | "OTHER"
-      project_status: "UPCOMING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
+      claim_status: "claimed" | "picked_up" | "delivered" | "cancelled"
+      donation_status:
+        | "submitted"
+        | "claimed"
+        | "picked_up"
+        | "delivered"
+        | "cancelled"
+      user_role: "donor" | "ngo" | "volunteer" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -510,28 +775,15 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      event_type: [
-        "CONCERT",
-        "GIG",
-        "ALBUM_LAUNCH",
-        "MUSIC_VIDEO_PREMIERE",
-        "OTHER",
+      claim_status: ["claimed", "picked_up", "delivered", "cancelled"],
+      donation_status: [
+        "submitted",
+        "claimed",
+        "picked_up",
+        "delivered",
+        "cancelled",
       ],
-      genre_type: [
-        "HIP_HOP",
-        "RAP",
-        "ELECTRONIC",
-        "INDIE_POP",
-        "ALTERNATIVE_ROCK",
-        "TRAP",
-        "SYNTHWAVE",
-        "PUNK_ROCK",
-        "EXPERIMENTAL",
-        "RNB",
-        "SOUL",
-        "OTHER",
-      ],
-      project_status: ["UPCOMING", "IN_PROGRESS", "COMPLETED", "CANCELLED"],
+      user_role: ["donor", "ngo", "volunteer", "admin"],
     },
   },
 } as const
