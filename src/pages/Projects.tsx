@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Calendar, Play, ExternalLink, Folder, Users, Clock, TrendingUp, Star, Filter, ArrowRight, Music2, Zap } from 'lucide-react';
+import { Calendar, Play, ExternalLink, Folder, Users, Clock, TrendingUp, Star, ArrowRight, Music2, Zap } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useState } from 'react';
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Projects = () => {
   const navigate = useNavigate();
-  const [filter, setFilter] = useState('all');
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   const { data: projects, isLoading } = useQuery({
@@ -47,15 +46,7 @@ const Projects = () => {
     );
   }
 
-  const filteredProjects = projects?.filter(project => {
-    if (filter === 'all') return true;
-    if (filter === 'completed') return project.status === 'COMPLETED';
-    if (filter === 'in_progress') return project.status === 'IN_PROGRESS';
-    if (filter === 'upcoming') return project.status === 'PLANNED';
-    return project.project_type?.toLowerCase() === filter;
-  }) || [];
-
-  const statusFilters = ['all', 'completed', 'in_progress', 'upcoming', 'album', 'single', 'ep', 'collaboration'];
+  const filteredProjects = projects || [];
   const featuredProject = projects?.[0];
   const otherProjects = filteredProjects.slice(1);
 
@@ -271,32 +262,7 @@ const Projects = () => {
         </section>
       )}
 
-      {/* Filter Section */}
-      <section className="py-8 border-t border-passionate-gray/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center space-x-8 mb-8">
-            <div className="flex items-center space-x-2 text-passionate-white/60">
-              <Filter className="h-5 w-5" />
-              <span className="font-syncopate text-sm tracking-wider">FILTER PROJECTS</span>
-            </div>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {statusFilters.map((filterOption) => (
-              <button
-                key={filterOption}
-                onClick={() => setFilter(filterOption)}
-                className={`px-6 py-3 rounded-full font-syncopate text-sm tracking-wider transition-all duration-300 ${
-                  filter === filterOption
-                    ? 'bg-passionate-red text-passionate-white red-glow'
-                    : 'bg-passionate-gray/20 text-passionate-white/70 hover:bg-passionate-red/20 hover:text-passionate-white border border-passionate-gray hover:border-passionate-red'
-                }`}
-              >
-                {filterOption.replace('_', ' ').toUpperCase()}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Projects Grid */}
       <section className="py-20">

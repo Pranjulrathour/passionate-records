@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Calendar, MapPin, ExternalLink, Clock, Users, Music, Ticket, Star, Filter, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, ExternalLink, Clock, Users, Music, Ticket, Star, ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useState } from 'react';
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Events = () => {
   const navigate = useNavigate();
-  const [filter, setFilter] = useState('all');
   const [hoveredEvent, setHoveredEvent] = useState<string | null>(null);
 
   const { data: events, isLoading } = useQuery({
@@ -46,12 +45,7 @@ const Events = () => {
   const upcomingEvents = events?.filter(event => new Date(event.date_time) > now) || [];
   const pastEvents = events?.filter(event => new Date(event.date_time) <= now) || [];
   
-  const filteredUpcomingEvents = upcomingEvents.filter(event => {
-    if (filter === 'all') return true;
-    return event.event_type?.toLowerCase() === filter;
-  });
-
-  const eventTypes = ['all', 'concert', 'festival', 'showcase', 'workshop'];
+  const filteredUpcomingEvents = upcomingEvents;
   const featuredEvent = upcomingEvents[0];
 
   return (
@@ -236,34 +230,7 @@ const Events = () => {
         </section>
       )}
 
-      {/* Filter Section */}
-      {upcomingEvents.length > 0 && (
-        <section className="py-8 border-t border-passionate-gray/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center space-x-8 mb-8">
-              <div className="flex items-center space-x-2 text-passionate-white/60">
-                <Filter className="h-5 w-5" />
-                <span className="font-syncopate text-sm tracking-wider">FILTER EVENTS</span>
-              </div>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              {eventTypes.map((eventType) => (
-                <button
-                  key={eventType}
-                  onClick={() => setFilter(eventType)}
-                  className={`px-6 py-3 rounded-full font-syncopate text-sm tracking-wider transition-all duration-300 ${
-                    filter === eventType
-                      ? 'bg-passionate-red text-passionate-white red-glow'
-                      : 'bg-passionate-gray/20 text-passionate-white/70 hover:bg-passionate-red/20 hover:text-passionate-white border border-passionate-gray hover:border-passionate-red'
-                  }`}
-                >
-                  {eventType.replace('_', ' ').toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+
 
       {/* Upcoming Events */}
       {filteredUpcomingEvents.length > 0 && (

@@ -10,7 +10,6 @@ import { useToast } from '@/hooks/use-toast';
 
 const Releases = () => {
   const navigate = useNavigate();
-  const [filter, setFilter] = useState('all');
   const [hoveredRelease, setHoveredRelease] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -69,14 +68,7 @@ const Releases = () => {
   const featuredRelease = releases?.[0];
   const otherReleases = releases?.slice(1) || [];
 
-  const filteredReleases = otherReleases.filter(release => {
-    if (filter === 'all') return true;
-    if (filter === 'new') return new Date(release.release_date) <= new Date();
-    if (filter === 'upcoming') return new Date(release.release_date) > new Date();
-    return release.genre?.toLowerCase() === filter;
-  });
-
-  const genreFilters = ['all', 'new', 'upcoming', 'electronic', 'hip_hop', 'house', 'techno'];
+  const filteredReleases = otherReleases;
 
   const handleShare = async (release: any, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -291,26 +283,7 @@ const Releases = () => {
         </section>
       )}
 
-      {/* Filter Tabs */}
-      <section className="py-8 border-t border-passionate-gray/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            {genreFilters.map((filterOption) => (
-              <button
-                key={filterOption}
-                onClick={() => setFilter(filterOption)}
-                className={`px-6 py-3 rounded-full font-syncopate text-sm tracking-wider transition-all duration-300 ${
-                  filter === filterOption
-                    ? 'bg-passionate-red text-passionate-white red-glow'
-                    : 'bg-passionate-gray/20 text-passionate-white/70 hover:bg-passionate-red/20 hover:text-passionate-white border border-passionate-gray hover:border-passionate-red'
-                }`}
-              >
-                {filterOption.replace('_', ' ').toUpperCase()}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Releases Grid */}
       <section className="py-20">
