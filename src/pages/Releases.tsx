@@ -80,7 +80,7 @@ const Releases = () => {
       <Navbar />
       
       {/* Hero Header with Gradient Background */}
-      <section className="relative pt-24 pb-20 overflow-hidden">
+      <section className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 passionate-gradient">
           <div className="absolute inset-0 opacity-20">
@@ -90,39 +90,39 @@ const Releases = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main Title */}
-          <div className="mb-8 animate-slide-up">
-            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-8xl text-passionate-white mb-6 tracking-wider text-center">
+          <div className="mb-6 sm:mb-8 animate-slide-up">
+            <h1 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-passionate-white mb-4 sm:mb-6 tracking-wider text-center leading-tight">
               LATEST<br/>
-              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-shadow-red inline-block">RELEASES</span>
+              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl text-shadow-red inline-block mt-2 sm:mt-0">RELEASES</span>
             </h1>
-            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-8"></div>
+            <div className="w-20 sm:w-24 lg:w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-6 sm:mb-8"></div>
           </div>
           
           {/* Subtitle */}
-          <p className="text-xl sm:text-2xl text-passionate-white/80 max-w-4xl mx-auto mb-12 leading-relaxed animate-fade-in">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 max-w-3xl lg:max-w-4xl mx-auto mb-8 sm:mb-10 lg:mb-12 leading-relaxed animate-fade-in">
             DISCOVER THE FRESHEST SOUNDS FROM OUR UNDERGROUND COLLECTIVE.
-            <span className="block text-passionate-red font-syncopate text-sm tracking-widest mt-2">
+            <span className="block text-passionate-red font-syncopate text-xs sm:text-sm tracking-widest mt-2">
               EXPERIENCE THE PASSION • FEEL THE BEAT • JOIN THE MOVEMENT
             </span>
           </p>
           
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '200ms' }}>
+          <div className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-xl sm:max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '200ms' }}>
             <div className="text-center">
-              <div className="text-3xl font-syncopate font-bold text-passionate-red">{releases?.length || 0}</div>
-              <div className="text-sm text-passionate-white/60 font-syncopate tracking-wider">TOTAL RELEASES</div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">{releases?.length || 0}</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">TOTAL RELEASES</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-syncopate font-bold text-passionate-red">
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">
                 {releases?.filter(r => new Date(r.release_date) <= new Date()).length || 0}
               </div>
-              <div className="text-sm text-passionate-white/60 font-syncopate tracking-wider">OUT NOW</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">OUT NOW</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-syncopate font-bold text-passionate-red">
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">
                 {releases?.filter(r => new Date(r.release_date) > new Date()).length || 0}
               </div>
-              <div className="text-sm text-passionate-white/60 font-syncopate tracking-wider">COMING SOON</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">COMING SOON</div>
             </div>
           </div>
         </div>

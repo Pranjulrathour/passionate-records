@@ -74,7 +74,7 @@ const Projects = () => {
       <Navbar />
       
       {/* Hero Header */}
-      <section className="relative pt-24 pb-20 overflow-hidden">
+      <section className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 passionate-gradient">
           <div className="absolute inset-0 opacity-20">
@@ -84,45 +84,45 @@ const Projects = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main Title */}
-          <div className="mb-8 animate-slide-up">
-            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-8xl text-passionate-white mb-6 tracking-wider text-center">
+          <div className="mb-6 sm:mb-8 animate-slide-up">
+            <h1 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-passionate-white mb-4 sm:mb-6 tracking-wider text-center leading-tight">
               OUR<br/>
-              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-shadow-red inline-block">PROJECTS</span>
+              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl text-shadow-red inline-block mt-2 sm:mt-0">PROJECTS</span>
             </h1>
-            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-8"></div>
+            <div className="w-20 sm:w-24 lg:w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-6 sm:mb-8"></div>
           </div>
           
           {/* Subtitle */}
-          <p className="text-xl sm:text-2xl text-passionate-white/80 max-w-4xl mx-auto mb-12 leading-relaxed animate-fade-in">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 max-w-3xl lg:max-w-4xl mx-auto mb-8 sm:mb-10 lg:mb-12 leading-relaxed animate-fade-in">
             EXPLORE OUR LATEST MUSICAL ENDEAVORS AND GROUNDBREAKING COLLABORATIONS.
-            <span className="block text-passionate-red font-syncopate text-sm tracking-widest mt-2">
+            <span className="block text-passionate-red font-syncopate text-xs sm:text-sm tracking-widest mt-2">
               INNOVATE • CREATE • INSPIRE
             </span>
           </p>
           
           {/* Project Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto animate-slide-up" style={{ animationDelay: '200ms' }}>
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-sm sm:max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '200ms' }}>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-syncopate font-bold text-passionate-red">{projects?.length || 0}</div>
-              <div className="text-xs text-passionate-white/60 font-syncopate tracking-wider">TOTAL PROJECTS</div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">{projects?.length || 0}</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">TOTAL PROJECTS</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-syncopate font-bold text-passionate-red">
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">
                 {projects?.filter(p => p.status === 'COMPLETED').length || 0}
               </div>
-              <div className="text-xs text-passionate-white/60 font-syncopate tracking-wider">COMPLETED</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">COMPLETED</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-syncopate font-bold text-passionate-red">
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">
                 {projects?.filter(p => p.status === 'IN_PROGRESS').length || 0}
               </div>
-              <div className="text-xs text-passionate-white/60 font-syncopate tracking-wider">IN PROGRESS</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">IN PROGRESS</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-syncopate font-bold text-passionate-red">
+              <div className="text-xl sm:text-2xl lg:text-3xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">
                 {projects?.filter(p => p.project_type === 'COLLABORATION').length || 0}
               </div>
-              <div className="text-xs text-passionate-white/60 font-syncopate tracking-wider">COLLABS</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">COLLABS</div>
             </div>
           </div>
         </div>

@@ -154,115 +154,115 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section - Ultra Modern */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20">
         {/* Animated Background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 passionate-gradient"></div>
           <div className="absolute inset-0 bg-gradient-to-br from-passionate-red/10 via-transparent to-passionate-red/5"></div>
           
-          {/* Floating Elements */}
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-passionate-red/20 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-passionate-red/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-passionate-white/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }}></div>
+          {/* Floating Elements - Hidden on mobile for performance */}
+          <div className="hidden sm:block absolute top-1/4 left-1/4 w-32 h-32 bg-passionate-red/20 rounded-full blur-3xl animate-float"></div>
+          <div className="hidden sm:block absolute bottom-1/4 right-1/4 w-48 h-48 bg-passionate-red/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="hidden sm:block absolute top-1/2 left-1/3 w-24 h-24 bg-passionate-white/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }}></div>
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main Hero Content */}
-          <div className="mb-12 animate-slide-up">
-            <div className="inline-flex items-center space-x-2 bg-passionate-red/10 backdrop-blur-sm border border-passionate-red/30 rounded-full px-6 py-3 mb-8">
+          <div className="mb-8 sm:mb-12 animate-slide-up">
+            <div className="inline-flex items-center space-x-2 bg-passionate-red/10 backdrop-blur-sm border border-passionate-red/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8">
               <div className="w-2 h-2 bg-passionate-red rounded-full animate-pulse"></div>
-              <span className="text-passionate-white font-syncopate text-sm tracking-wider">LIVE FROM THE UNDERGROUND</span>
+              <span className="text-passionate-white font-syncopate text-xs sm:text-sm tracking-wider">LIVE FROM THE UNDERGROUND</span>
             </div>
             
-            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-9xl text-passionate-white mb-8 tracking-wider leading-none">
+            <h1 className="font-syncopate font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-passionate-white mb-6 sm:mb-8 tracking-wider leading-none">
               PASSIONATE
               <span className="block text-transparent bg-gradient-to-r from-passionate-red via-passionate-white to-passionate-red bg-clip-text text-shadow-red">
                 RECORDS
               </span>
             </h1>
             
-            <p className="text-xl sm:text-2xl text-passionate-white/80 max-w-4xl mx-auto mb-12 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 max-w-2xl sm:max-w-3xl lg:max-w-4xl mx-auto mb-8 sm:mb-12 leading-relaxed">
               WHERE UNDERGROUND MEETS INNOVATION. DISCOVER THE FUTURE OF MUSIC WITH OUR COLLECTIVE OF 
-              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl font-syncopate"> PASSIONATE ARTISTS</span>.
+              <span className="bg-passionate-red text-passionate-white px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl font-syncopate text-sm sm:text-base lg:text-xl"> PASSIONATE ARTISTS</span>.
             </p>
           </div>
           
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div className="flex flex-col gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 animate-fade-in max-w-sm mx-auto sm:max-w-none sm:flex-row" style={{ animationDelay: '0.5s' }}>
             <button
               onClick={() => navigate('/releases')}
-              className="group bg-passionate-red hover:bg-passionate-red/80 text-passionate-white font-syncopate font-bold px-10 py-5 rounded-2xl tracking-wider transition-all duration-300 red-glow hover:scale-105 flex items-center space-x-3"
+              className="group bg-passionate-red hover:bg-passionate-red/80 text-passionate-white font-syncopate font-bold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl tracking-wider transition-all duration-300 red-glow hover:scale-105 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center touch-manipulation min-h-[44px]"
             >
-              <Play className="h-6 w-6 fill-current" />
-              <span>EXPLORE MUSIC</span>
-              <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform duration-300" />
+              <Play className="h-5 w-5 sm:h-6 sm:w-6 fill-current" />
+              <span className="text-sm sm:text-base">EXPLORE MUSIC</span>
+              <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
             
             <button
               onClick={() => navigate('/artists')}
-              className="group bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-10 py-5 rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-3"
+              className="group bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center touch-manipulation min-h-[44px]"
             >
-              <Users className="h-6 w-6" />
-              <span>MEET ARTISTS</span>
+              <Users className="h-5 w-5 sm:h-6 sm:w-6" />
+              <span className="text-sm sm:text-base">MEET ARTISTS</span>
             </button>
             
             <button
               onClick={() => navigate('/submit-demo')}
-              className="group bg-passionate-white/10 backdrop-blur-sm border border-passionate-white/20 text-passionate-white hover:bg-passionate-white hover:text-passionate-black font-syncopate font-bold px-10 py-5 rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-3"
+              className="group bg-passionate-white/10 backdrop-blur-sm border border-passionate-white/20 text-passionate-white hover:bg-passionate-white hover:text-passionate-black font-syncopate font-bold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center touch-manipulation min-h-[44px]"
             >
-              <Download className="h-6 w-6" />
-              <span>SUBMIT DEMO</span>
+              <Download className="h-5 w-5 sm:h-6 sm:w-6" />
+              <span className="text-sm sm:text-base">SUBMIT DEMO</span>
             </button>
           </div>
           
           {/* Live Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '1s' }}>
+          <div className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-sm sm:max-w-xl lg:max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '1s' }}>
             <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-4xl font-syncopate font-bold text-passionate-red mb-2">{stats?.artists || 0}+</div>
-              <div className="text-sm text-passionate-white/60 font-syncopate tracking-wider">ARTISTS</div>
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">{stats?.artists || 0}+</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">ARTISTS</div>
             </div>
             <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-4xl font-syncopate font-bold text-passionate-red mb-2">{stats?.releases || 0}+</div>
-              <div className="text-sm text-passionate-white/60 font-syncopate tracking-wider">RELEASES</div>
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">{stats?.releases || 0}+</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">RELEASES</div>
             </div>
             <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-4xl font-syncopate font-bold text-passionate-red mb-2">{stats?.events || 0}+</div>
-              <div className="text-sm text-passionate-white/60 font-syncopate tracking-wider">EVENTS</div>
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-syncopate font-bold text-passionate-red mb-1 sm:mb-2">{stats?.events || 0}+</div>
+              <div className="text-xs sm:text-sm text-passionate-white/60 font-syncopate tracking-wider">EVENTS</div>
             </div>
           </div>
         </div>
         
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-passionate-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-passionate-red rounded-full mt-2 animate-pulse"></div>
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-passionate-white/30 rounded-full flex justify-center" aria-label="Scroll down">
+            <div className="w-1 h-2 sm:h-3 bg-passionate-red rounded-full mt-1 sm:mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
       {/* Featured Artists Section - Modern Grid */}
       {featuredArtists && featuredArtists.length > 0 && (
-        <section className="py-32 bg-passionate-black relative">
+        <section className="py-20 sm:py-24 lg:py-32 bg-passionate-black relative">
           <div className="absolute inset-0 bg-gradient-to-b from-passionate-gray/5 to-transparent"></div>
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center space-x-3 mb-6">
-                <div className="w-12 h-0.5 bg-passionate-red"></div>
-                <span className="text-passionate-red font-syncopate text-sm tracking-widest">FEATURED</span>
-                <div className="w-12 h-0.5 bg-passionate-red"></div>
+            <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+              <div className="inline-flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+                <div className="w-8 sm:w-12 h-0.5 bg-passionate-red"></div>
+                <span className="text-passionate-red font-syncopate text-xs sm:text-sm tracking-widest">FEATURED</span>
+                <div className="w-8 sm:w-12 h-0.5 bg-passionate-red"></div>
               </div>
               
-              <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-6 tracking-wider">
-                OUR <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">ARTISTS</span>
+              <h2 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white mb-4 sm:mb-6 tracking-wider leading-tight">
+                OUR <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl">ARTISTS</span>
               </h2>
               
-              <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg lg:text-xl text-passionate-white/70 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed">
                 Meet the visionaries reshaping the underground music scene. Featuring our top artists and latest additions to the collective.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {featuredArtists.map((artist, index) => (
                 <div
                   key={artist.id}
@@ -274,15 +274,19 @@ const Index = () => {
                     <img
                       src={artist.image_url || "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop"}
                       alt={artist.name}
-                      className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-64 sm:h-72 lg:h-80 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-passionate-black via-transparent to-transparent"></div>
                     
                     {/* Floating Play Button */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-                      <div className="bg-passionate-red/90 backdrop-blur-sm rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                        <Play className="h-8 w-8 text-passionate-white fill-current" />
-                      </div>
+                      <button 
+                        className="bg-passionate-red/90 backdrop-blur-sm rounded-full p-3 sm:p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300 touch-manipulation"
+                        aria-label={`Play ${artist.name} music`}
+                        onClick={() => navigate(`/artists/${artist.id}`)}
+                      >
+                        <Play className="h-6 w-6 sm:h-8 sm:w-8 text-passionate-white fill-current" />
+                      </button>
                     </div>
                     
                     {/* Genre Badge */}
@@ -304,8 +308,8 @@ const Index = () => {
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="font-syncopate font-bold text-xl text-passionate-white mb-2 tracking-wider group-hover:text-passionate-red transition-colors duration-300">
+                  <div className="p-4 sm:p-6">
+                    <h3 className="font-syncopate font-bold text-lg sm:text-xl text-passionate-white mb-2 tracking-wider group-hover:text-passionate-red transition-colors duration-300">
                       {artist.stage_name || artist.name}
                     </h3>
                     
@@ -313,7 +317,7 @@ const Index = () => {
                       {artist.location || 'Underground Scene'}
                     </p>
 
-                    <button className="w-full bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white py-3 rounded-xl font-syncopate text-sm tracking-wider transition-all duration-300 border border-passionate-red">
+                    <button className="w-full bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white py-2.5 sm:py-3 rounded-xl font-syncopate text-xs sm:text-sm tracking-wider transition-all duration-300 border border-passionate-red touch-manipulation min-h-[44px]">
                       VIEW PROFILE
                     </button>
                   </div>
@@ -321,13 +325,13 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="text-center mt-16">
+            <div className="text-center mt-12 sm:mt-16">
               <button
                 onClick={() => navigate('/artists')}
-                className="group bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-12 py-4 rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-3 mx-auto"
+                className="group bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 sm:px-10 lg:px-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-2 sm:space-x-3 mx-auto touch-manipulation min-h-[44px]"
               >
-                <span>DISCOVER ALL ARTISTS</span>
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <span className="text-sm sm:text-base">DISCOVER ALL ARTISTS</span>
+                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
           </div>
@@ -336,30 +340,30 @@ const Index = () => {
 
       {/* Latest Releases Section - Interactive Player */}
       {latestReleases && latestReleases.length > 0 && (
-        <section className="py-32 bg-gradient-to-br from-passionate-gray/10 to-passionate-black relative">
+        <section className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-passionate-gray/10 to-passionate-black relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center space-x-3 mb-6">
-                <div className="w-12 h-0.5 bg-passionate-red"></div>
-                <span className="text-passionate-red font-syncopate text-sm tracking-widest">FRESH DROPS</span>
-                <div className="w-12 h-0.5 bg-passionate-red"></div>
+            <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+              <div className="inline-flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+                <div className="w-8 sm:w-12 h-0.5 bg-passionate-red"></div>
+                <span className="text-passionate-red font-syncopate text-xs sm:text-sm tracking-widest">FRESH DROPS</span>
+                <div className="w-8 sm:w-12 h-0.5 bg-passionate-red"></div>
               </div>
               
-              <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-6 tracking-wider">
-                LATEST <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">RELEASES</span>
+              <h2 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white mb-4 sm:mb-6 tracking-wider leading-tight">
+                LATEST <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl">RELEASES</span>
               </h2>
               
-              <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg lg:text-xl text-passionate-white/70 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed">
                 Experience the raw energy and passion of our latest musical creations from the underground collective.
               </p>
             </div>
 
             {/* Featured Release Player */}
             {latestReleases[currentTrack] && (
-              <div className="bg-passionate-gray/10 backdrop-blur-sm border border-passionate-gray/20 rounded-3xl p-8 mb-16 relative overflow-hidden">
+              <div className="bg-passionate-gray/10 backdrop-blur-sm border border-passionate-gray/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-12 sm:mb-16 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-passionate-red/5 to-transparent"></div>
                 
-                <div className="relative grid lg:grid-cols-2 gap-12 items-center">
+                <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
                   <div className="relative group">
                     <img
                       src={latestReleases[currentTrack].cover_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop"}

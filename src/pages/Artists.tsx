@@ -40,24 +40,24 @@ const Artists = () => {
       <Navbar />
       
       {/* Header */}
-      <section className="pt-24 pb-12 passionate-gradient">
+      <section className="pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-10 lg:pb-12 passionate-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-syncopate font-bold text-5xl sm:text-6xl text-passionate-white mb-6 tracking-wider animate-slide-up">
+          <h1 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white mb-4 sm:mb-6 tracking-wider animate-slide-up leading-tight">
             OUR
-            <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl"> ARTISTS</span>
+            <span className="block sm:inline bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl mt-2 sm:mt-0 sm:ml-2"> ARTISTS</span>
           </h1>
-          <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
-          <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto animate-fade-in">
+          <div className="w-16 sm:w-20 lg:w-24 h-1 bg-passionate-red mx-auto mb-4 sm:mb-6"></div>
+          <p className="text-base sm:text-lg md:text-xl text-passionate-white/70 max-w-2xl lg:max-w-3xl mx-auto animate-fade-in leading-relaxed">
             Meet the visionaries, rebels, and dreamers who define the sound of tomorrow. Each artist brings their unique passion to our underground collective.
           </p>
         </div>
       </section>
 
       {/* Artists Grid */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {artists && artists.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {artists.map((artist, index) => (
                 <div
                   key={artist.id}
@@ -69,7 +69,7 @@ const Artists = () => {
                     <img
                       src={artist.image_url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjEyMTIxIi8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMTYwIiByPSI2MCIgZmlsbD0iIzQ0NDQ0NCIvPjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIzMDAiIHJ4PSIxMDAiIHJ5PSI2MCIgZmlsbD0iIzQ0NDQ0NCIvPjx0ZXh0IHg9IjIwMCIgeT0iMzUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNzc3Nzc3IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=="}
                       alt={artist.name}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-passionate-black/20 group-hover:bg-passionate-red/20 transition-all duration-500"></div>
                     
@@ -98,30 +98,31 @@ const Artists = () => {
                   </div>
 
                   {/* Artist Info */}
-                  <div className="p-6">
-                    <h3 className="font-syncopate font-bold text-xl text-passionate-white mb-2 tracking-wider">
+                  <div className="p-4 sm:p-6">
+                    <h3 className="font-syncopate font-bold text-lg sm:text-xl text-passionate-white mb-2 tracking-wider leading-tight">
                       {artist.stage_name || artist.name}
                     </h3>
                     
-                    <p className="text-passionate-red text-sm mb-3 font-syncopate tracking-wider">
+                    <p className="text-passionate-red text-xs sm:text-sm mb-3 font-syncopate tracking-wider">
                       {artist.location || 'Underground'}
                     </p>
                     
-                    <p className="text-passionate-white/70 mb-4 leading-relaxed line-clamp-3">
+                    <p className="text-passionate-white/70 text-sm sm:text-base mb-4 leading-relaxed line-clamp-3">
                       {artist.bio || `${artist.name} is a talented artist pushing the boundaries of ${artist.genre?.toLowerCase() || 'music'}.`}
                     </p>
 
                     {/* Social Links */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+                      <div className="flex items-center space-x-3 sm:space-x-4 justify-center sm:justify-start">
                         {artist.instagram_handle && (
                           <a
                             href={`https://instagram.com/${artist.instagram_handle.replace('@', '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
+                            aria-label="Instagram"
                           >
-                            <Instagram className="h-5 w-5" />
+                            <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
                           </a>
                         )}
                         {artist.youtube_handle && (
@@ -129,9 +130,10 @@ const Artists = () => {
                             href={`https://youtube.com/@${artist.youtube_handle.replace('@', '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
+                            aria-label="YouTube"
                           >
-                            <Youtube className="h-5 w-5" />
+                            <Youtube className="h-4 w-4 sm:h-5 sm:w-5" />
                           </a>
                         )}
                         {artist.spotify_url && (
@@ -139,16 +141,17 @@ const Artists = () => {
                             href={artist.spotify_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300"
+                            className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
+                            aria-label="Spotify"
                           >
-                            <ExternalLink className="h-5 w-5" />
+                            <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
                           </a>
                         )}
                       </div>
                       
                       <button 
                         onClick={() => navigate(`/artists/${artist.id}`)}
-                        className="bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white px-4 py-2 text-sm font-syncopate tracking-wider transition-all duration-300 border border-passionate-red"
+                        className="bg-passionate-red/20 hover:bg-passionate-red text-passionate-red hover:text-passionate-white px-3 sm:px-4 py-2 text-xs sm:text-sm font-syncopate tracking-wider transition-all duration-300 border border-passionate-red rounded touch-manipulation w-full sm:w-auto"
                       >
                         VIEW PROFILE
                       </button>

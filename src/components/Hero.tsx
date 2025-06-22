@@ -115,57 +115,57 @@ const Hero = () => {
           </div>
 
           {/* Revolutionary Main Heading */}
-          <div className="mb-8 animate-slide-up">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-passionate-white mb-6 leading-[0.85] tracking-tight">
-              <span className="block bg-gradient-to-r from-passionate-white via-passionate-white to-passionate-red bg-clip-text text-transparent mb-4">
+          <div className="mb-6 sm:mb-8 animate-slide-up">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-passionate-white mb-4 sm:mb-6 leading-[0.9] sm:leading-[0.85] tracking-tight">
+              <span className="block bg-gradient-to-r from-passionate-white via-passionate-white to-passionate-red bg-clip-text text-transparent mb-2 sm:mb-4">
                 IGNITE THE
               </span>
-              <span className="bg-passionate-red text-passionate-white px-6 py-3 rounded-2xl font-syncopate relative inline-block transform hover:scale-105 transition-all duration-300 shadow-2xl">
+              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 lg:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-syncopate relative inline-block transform hover:scale-105 transition-all duration-300 shadow-2xl text-sm sm:text-base lg:text-xl">
                 UNDERGROUND
-                <div className="absolute -bottom-3 left-0 right-0 h-2 bg-gradient-to-r from-passionate-red via-passionate-red/50 to-transparent rounded-full"></div>
-                <div className="absolute inset-0 bg-passionate-red/20 rounded-2xl blur-xl"></div>
+                <div className="absolute -bottom-1 sm:-bottom-3 left-0 right-0 h-1 sm:h-2 bg-gradient-to-r from-passionate-red via-passionate-red/50 to-transparent rounded-full"></div>
+                <div className="absolute inset-0 bg-passionate-red/20 rounded-xl sm:rounded-2xl blur-xl"></div>
               </span>
             </h1>
           </div>
 
           {/* Dynamic Rotating Subtitle */}
-          <div className="mb-8 h-20 flex items-center justify-center animate-slide-up" style={{animationDelay: '0.2s'}}>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl text-passionate-white/90 font-syncopate tracking-wider transition-all duration-1000 transform">
+          <div className="mb-6 sm:mb-8 h-12 sm:h-16 lg:h-20 flex items-center justify-center animate-slide-up" style={{animationDelay: '0.2s'}}>
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-passionate-white/90 font-syncopate tracking-wider transition-all duration-1000 transform text-center">
               {rotatingTexts[currentTextIndex]}
             </h2>
           </div>
 
           {/* Enhanced Description with Floating Elements */}
-          <div className="mb-12 animate-slide-up" style={{animationDelay: '0.4s'}}>
-            <p className="text-lg sm:text-xl lg:text-2xl text-passionate-white/80 mb-4 max-w-4xl mx-auto leading-relaxed">
-              Where <span className="bg-passionate-red text-passionate-white px-3 py-1 rounded-lg font-semibold">passion meets innovation</span> in music creation
+          <div className="mb-8 sm:mb-10 lg:mb-12 animate-slide-up" style={{animationDelay: '0.4s'}}>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 mb-3 sm:mb-4 max-w-3xl lg:max-w-4xl mx-auto leading-relaxed text-center">
+              Where <span className="bg-passionate-red text-passionate-white px-2 sm:px-3 py-1 rounded-md sm:rounded-lg font-semibold text-sm sm:text-base lg:text-lg">passion meets innovation</span> in music creation
             </p>
-            <p className="text-md sm:text-lg text-passionate-white/60 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-passionate-white/60 max-w-2xl lg:max-w-3xl mx-auto text-center">
               Join thousands of visionary artists revolutionizing the underground music scene
             </p>
           </div>
 
           {/* Advanced CTA Section with Glassmorphism */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-20 animate-slide-up" style={{animationDelay: '0.6s'}}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 mb-12 sm:mb-16 lg:mb-20 animate-slide-up" style={{animationDelay: '0.6s'}}>
             <Link
               to="/submit-demo"
-              className="group relative px-12 py-6 bg-passionate-red text-passionate-white font-bold text-lg rounded-2xl hover:bg-passionate-red/90 transition-all duration-500 transform hover:scale-110 hover:shadow-2xl shadow-xl overflow-hidden"
+              className="group relative px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 bg-passionate-red text-passionate-white font-bold text-sm sm:text-base lg:text-lg rounded-xl sm:rounded-2xl hover:bg-passionate-red/90 transition-all duration-500 transform hover:scale-105 sm:hover:scale-110 hover:shadow-2xl shadow-xl overflow-hidden w-full sm:w-auto touch-manipulation"
             >
-              <div className="flex items-center space-x-4">
-                <Play className="w-7 h-7 group-hover:scale-125 transition-transform duration-300" />
+              <div className="flex items-center justify-center space-x-2 sm:space-x-3 lg:space-x-4">
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 lg:w-7 lg:h-7 group-hover:scale-125 transition-transform duration-300" />
                 <span className="font-syncopate tracking-wider">START YOUR JOURNEY</span>
-                <ArrowRight className="w-7 h-7 group-hover:translate-x-2 transition-transform duration-300" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-7 lg:h-7 group-hover:translate-x-2 transition-transform duration-300" />
               </div>
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-passionate-red/0 via-passionate-white/10 to-passionate-red/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute inset-0 rounded-2xl bg-passionate-red/30 blur-2xl group-hover:blur-3xl transition-all duration-500 -z-10"></div>
+              <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-passionate-red/0 via-passionate-white/10 to-passionate-red/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-passionate-red/30 blur-2xl group-hover:blur-3xl transition-all duration-500 -z-10"></div>
             </Link>
             
             <Link
               to="/explore"
-              className="group flex items-center space-x-3 px-10 py-5 border-2 border-passionate-white/40 text-passionate-white hover:border-passionate-red hover:bg-passionate-red/10 rounded-2xl transition-all duration-500 backdrop-blur-xl bg-passionate-black/20"
+              className="group flex items-center justify-center space-x-2 sm:space-x-3 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 border-2 border-passionate-white/40 text-passionate-white hover:border-passionate-red hover:bg-passionate-red/10 rounded-xl sm:rounded-2xl transition-all duration-500 backdrop-blur-xl bg-passionate-black/20 w-full sm:w-auto touch-manipulation"
             >
-              <Music className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-              <span className="font-syncopate font-semibold tracking-wider">EXPLORE MUSIC</span>
+              <Music className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 group-hover:rotate-12 transition-transform duration-300" />
+              <span className="font-syncopate font-semibold tracking-wider text-sm sm:text-base">EXPLORE MUSIC</span>
             </Link>
           </div>
 
