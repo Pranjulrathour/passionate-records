@@ -71,7 +71,7 @@ const StatsSection = () => {
           className="text-center mb-16"
         >
           <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-            OUR <span className="text-passionate-red">IMPACT</span>
+            OUR <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">IMPACT</span>
           </h2>
           <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
         </motion.div>

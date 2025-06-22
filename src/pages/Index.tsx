@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Play, Download, TrendingUp, Users, Music, Calendar, ArrowRight, ExternalLink, Star, Headphones } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -10,19 +10,84 @@ const Index = () => {
   const navigate = useNavigate();
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const queryClient = useQueryClient();
 
-  // Fetch featured data
+  // Set up real-time subscriptions for home page data
+  useEffect(() => {
+    // Artists real-time subscription
+    const artistsChannel = supabase
+      .channel('home-artists-realtime')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'artists'
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['featured-artists-home'] });
+      })
+      .subscribe();
+
+    // Releases real-time subscription
+    const releasesChannel = supabase
+      .channel('home-releases-realtime')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'latest_releases'
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['latest-releases-home'] });
+      })
+      .subscribe();
+
+    // Events real-time subscription
+    const eventsChannel = supabase
+      .channel('home-events-realtime')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'events'
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['upcoming-events-home'] });
+        queryClient.invalidateQueries({ queryKey: ['stats'] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(artistsChannel);
+      supabase.removeChannel(releasesChannel);
+      supabase.removeChannel(eventsChannel);
+    };
+  }, [queryClient]);
+
+  // Fetch featured and recent artists for home page
   const { data: featuredArtists } = useQuery({
     queryKey: ['featured-artists-home'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // First, get featured artists
+      const { data: featured, error: featuredError } = await supabase
         .from('artists')
         .select('*')
         .eq('is_featured', true)
-        .order('created_at', { ascending: false })
-        .limit(4);
-      if (error) throw error;
-      return data;
+        .order('created_at', { ascending: false });
+      
+      if (featuredError) throw featuredError;
+      
+      // If we have fewer than 4 featured artists, supplement with recent ones
+      if (!featured || featured.length < 4) {
+        const { data: recent, error: recentError } = await supabase
+          .from('artists')
+          .select('*')
+          .eq('is_featured', false)
+          .order('created_at', { ascending: false })
+          .limit(4 - (featured?.length || 0));
+        
+        if (recentError) throw recentError;
+        
+        // Combine featured and recent artists
+        const combined = [...(featured || []), ...(recent || [])];
+        return combined.slice(0, 4);
+      }
+      
+      return featured.slice(0, 4);
     }
   });
 
@@ -30,13 +95,16 @@ const Index = () => {
     queryKey: ['latest-releases-home'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('upcoming_albums')
+        .from('latest_releases')
         .select('*')
-        .order('release_date', { ascending: false })
+        .eq('status', 'ACTIVE')
+        .order('display_order', { ascending: true })
         .limit(6);
       if (error) throw error;
       return data;
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 30000, // 30 seconds
   });
 
   const { data: upcomingEvents } = useQuery({
@@ -58,7 +126,7 @@ const Index = () => {
     queryFn: async () => {
       const [artistsRes, releasesRes, eventsRes] = await Promise.all([
         supabase.from('artists').select('id', { count: 'exact', head: true }),
-        supabase.from('upcoming_albums').select('id', { count: 'exact', head: true }),
+        supabase.from('latest_releases').select('id', { count: 'exact', head: true }).eq('status', 'ACTIVE'),
         supabase.from('events').select('id', { count: 'exact', head: true })
       ]);
       
@@ -67,7 +135,9 @@ const Index = () => {
         releases: releasesRes.count || 0,
         events: eventsRes.count || 0
       };
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 60000, // 1 minute
   });
 
   useEffect(() => {
@@ -113,7 +183,7 @@ const Index = () => {
             
             <p className="text-xl sm:text-2xl text-passionate-white/80 max-w-4xl mx-auto mb-12 leading-relaxed">
               WHERE UNDERGROUND MEETS INNOVATION. DISCOVER THE FUTURE OF MUSIC WITH OUR COLLECTIVE OF 
-              <span className="text-passionate-red font-syncopate"> PASSIONATE ARTISTS</span>.
+              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl font-syncopate"> PASSIONATE ARTISTS</span>.
             </p>
           </div>
           
@@ -184,11 +254,11 @@ const Index = () => {
               </div>
               
               <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-6 tracking-wider">
-                OUR <span className="text-passionate-red">ARTISTS</span>
+                OUR <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">ARTISTS</span>
               </h2>
               
               <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto">
-                Meet the visionaries reshaping the underground music scene with their unique sound and unwavering passion.
+                Meet the visionaries reshaping the underground music scene. Featuring our top artists and latest additions to the collective.
               </p>
             </div>
 
@@ -219,6 +289,17 @@ const Index = () => {
                     <div className="absolute top-6 left-6">
                       <span className="bg-passionate-black/60 backdrop-blur-sm border border-passionate-red/30 px-3 py-2 rounded-full text-xs font-syncopate tracking-wider text-passionate-white">
                         {artist.genre || 'ARTIST'}
+                      </span>
+                    </div>
+                    
+                    {/* Featured/New Badge */}
+                    <div className="absolute top-6 right-6">
+                      <span className={`${
+                        artist.is_featured 
+                          ? 'bg-passionate-red/80 border-passionate-red' 
+                          : 'bg-passionate-white/80 border-passionate-white text-passionate-black'
+                      } backdrop-blur-sm border px-2 py-1 rounded-full text-xs font-syncopate tracking-wider`}>
+                        {artist.is_featured ? 'FEATURED' : 'NEW'}
                       </span>
                     </div>
                   </div>
@@ -265,7 +346,7 @@ const Index = () => {
               </div>
               
               <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-6 tracking-wider">
-                LATEST <span className="text-passionate-red">RELEASES</span>
+                LATEST <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">RELEASES</span>
               </h2>
               
               <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto">
@@ -281,7 +362,7 @@ const Index = () => {
                 <div className="relative grid lg:grid-cols-2 gap-12 items-center">
                   <div className="relative group">
                     <img
-                      src={latestReleases[currentTrack].album_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop"}
+                      src={latestReleases[currentTrack].cover_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop"}
                       alt={latestReleases[currentTrack].title}
                       className="w-full aspect-square object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
                     />
@@ -320,9 +401,9 @@ const Index = () => {
                         <span>LISTEN NOW</span>
                       </button>
                       
-                      {latestReleases[currentTrack].teaser_url && (
+                      {latestReleases[currentTrack].audio_preview_url && (
                         <a
-                          href={latestReleases[currentTrack].teaser_url}
+                          href={latestReleases[currentTrack].audio_preview_url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300 flex items-center space-x-3"
@@ -348,7 +429,7 @@ const Index = () => {
                 >
                   <div className="relative overflow-hidden">
                     <img
-                      src={release.album_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop"}
+                      src={release.cover_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop"}
                       alt={release.title}
                       className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
@@ -417,7 +498,7 @@ const Index = () => {
               </div>
               
               <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-6 tracking-wider">
-                UPCOMING <span className="text-passionate-red">EVENTS</span>
+                UPCOMING <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">EVENTS</span>
               </h2>
               
               <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto">
@@ -495,7 +576,7 @@ const Index = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-8 tracking-wider">
-              JOIN THE <span className="text-passionate-red">UNDERGROUND</span>
+              JOIN THE <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">UNDERGROUND</span>
             </h2>
             
             <p className="text-xl text-passionate-white/80 mb-12 leading-relaxed">

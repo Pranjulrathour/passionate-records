@@ -70,9 +70,9 @@ const Events = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main Title */}
           <div className="mb-8 animate-slide-up">
-            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-8xl text-passionate-white mb-6 tracking-wider">
-              LIVE
-              <span className="block text-passionate-red text-shadow-red">EVENTS</span>
+            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-8xl text-passionate-white mb-6 tracking-wider text-center">
+              LIVE<br/>
+              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-shadow-red inline-block">EVENTS</span>
             </h1>
             <div className="w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-8"></div>
           </div>
@@ -117,7 +117,7 @@ const Events = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-                NEXT <span className="text-passionate-red">EVENT</span>
+                NEXT <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">EVENT</span>
               </h2>
               <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
             </div>
@@ -270,7 +270,7 @@ const Events = () => {
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-syncopate font-bold text-3xl text-passionate-white mb-12 tracking-wider text-center">
-              UPCOMING <span className="text-passionate-red">EVENTS</span>
+              UPCOMING <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">EVENTS</span>
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -414,7 +414,7 @@ const Events = () => {
         <section className="py-20 border-t border-passionate-gray/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-syncopate font-bold text-3xl text-passionate-white mb-12 tracking-wider text-center">
-              PAST <span className="text-passionate-red">EVENTS</span>
+              PAST <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">EVENTS</span>
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

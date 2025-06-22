@@ -43,7 +43,7 @@ const AboutSection = () => {
           className="text-center mb-16"
         >
           <h2 className="font-syncopate font-bold text-4xl md:text-5xl text-passionate-white mb-6 tracking-wider">
-            WHY CHOOSE <span className="text-passionate-red">PASSIONATE RECORDS</span>
+            WHY CHOOSE <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">PASSIONATE RECORDS</span>
           </h2>
           <div className="w-24 h-1 bg-passionate-red mx-auto mb-8"></div>
           <p className="text-passionate-white/70 text-lg max-w-3xl mx-auto leading-relaxed">

@@ -147,6 +147,11 @@ const LatestReleaseManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-latest-releases'] });
       queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases-home'] });
+      queryClient.invalidateQueries({ queryKey: ['releases'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      // Invalidate individual release pages
+      queryClient.invalidateQueries({ queryKey: ['release'] });
       setShowAddForm(false);
       toast({ title: "Release created successfully!" });
     },
@@ -168,6 +173,11 @@ const LatestReleaseManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-latest-releases'] });
       queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases-home'] });
+      queryClient.invalidateQueries({ queryKey: ['releases'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      // Invalidate individual release pages
+      queryClient.invalidateQueries({ queryKey: ['release'] });
       setEditingRelease(null);
       toast({ title: "Release updated successfully!" });
     },
@@ -189,6 +199,11 @@ const LatestReleaseManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-latest-releases'] });
       queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases-home'] });
+      queryClient.invalidateQueries({ queryKey: ['releases'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      // Invalidate individual release pages
+      queryClient.invalidateQueries({ queryKey: ['release'] });
       toast({ title: "Release deleted successfully!" });
     },
     onError: (error: any) => {
@@ -209,6 +224,8 @@ const LatestReleaseManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-latest-releases'] });
       queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
+      queryClient.invalidateQueries({ queryKey: ['latest-releases-home'] });
+      queryClient.invalidateQueries({ queryKey: ['releases'] });
     }
   });
 

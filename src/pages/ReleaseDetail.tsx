@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -21,14 +22,37 @@ import { motion } from 'framer-motion';
 const ReleaseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Set up real-time subscription for release updates
+  useEffect(() => {
+    if (!id) return;
+
+    const releaseChannel = supabase
+      .channel(`release-${id}-realtime`)
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'latest_releases',
+        filter: `id=eq.${id}`
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['release', id] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(releaseChannel);
+    };
+  }, [id, queryClient]);
 
   const { data: release, isLoading, error } = useQuery({
     queryKey: ['release', id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('upcoming_albums')
+        .from('latest_releases')
         .select('*')
         .eq('id', id)
+        .eq('status', 'ACTIVE')
         .single();
       
       if (error) throw error;
@@ -102,7 +126,7 @@ const ReleaseDetail = () => {
               >
                 <div className="relative">
                   <img
-                    src={release.album_art_url || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop'}
+                    src={release.cover_art_url || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop'}
                     alt={release.title}
                     className="w-full aspect-square object-cover rounded-2xl shadow-2xl"
                   />
@@ -162,9 +186,9 @@ const ReleaseDetail = () => {
 
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-4">
-                    {release.teaser_url && (
+                    {release.audio_preview_url && (
                       <a
-                        href={release.teaser_url}
+                        href={release.audio_preview_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 px-8 py-4 bg-passionate-red text-white rounded-full hover:bg-passionate-red/80 transition-colors font-semibold"
@@ -239,6 +263,18 @@ const ReleaseDetail = () => {
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-3 mb-4">
                     <Download className="h-6 w-6 text-passionate-red" />
+                    <h3 className="text-xl font-bold text-passionate-white">Release Type</h3>
+                  </div>
+                  <p className="text-passionate-white/80 text-lg">
+                    {release.release_type || 'Single'}
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-passionate-gray/20 border-passionate-gray">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Download className="h-6 w-6 text-passionate-red" />
                     <h3 className="text-xl font-bold text-passionate-white">Status</h3>
                   </div>
                   <p className="text-passionate-white/80 text-lg">
@@ -251,7 +287,7 @@ const ReleaseDetail = () => {
         </section>
 
         {/* Streaming Platforms */}
-        {isReleased && (
+        {(isReleased || release.streaming_links) && (
           <section className="py-16 bg-passionate-gray/10">
             <div className="container mx-auto px-6">
               <motion.div
@@ -261,21 +297,54 @@ const ReleaseDetail = () => {
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
                 <h3 className="text-3xl font-syncopate text-passionate-white mb-8">
-                  Listen On Your Favorite Platform
+                  {isReleased ? 'Listen On Your Favorite Platform' : 'Available On'}
                 </h3>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
-                    Spotify
-                  </Button>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3">
-                    Apple Music
-                  </Button>
-                  <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3">
-                    SoundCloud
-                  </Button>
-                  <Button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3">
-                    YouTube Music
-                  </Button>
+                  {release.streaming_links?.spotify && (
+                    <Button 
+                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
+                      onClick={() => window.open(release.streaming_links.spotify, '_blank')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Spotify
+                    </Button>
+                  )}
+                  {release.streaming_links?.apple && (
+                    <Button 
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3"
+                      onClick={() => window.open(release.streaming_links.apple, '_blank')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Apple Music
+                    </Button>
+                  )}
+                  {release.streaming_links?.youtube && (
+                    <Button 
+                      className="bg-red-600 hover:bg-red-700 text-white px-8 py-3"
+                      onClick={() => window.open(release.streaming_links.youtube, '_blank')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      YouTube Music
+                    </Button>
+                  )}
+                  {release.streaming_links?.soundcloud && (
+                    <Button 
+                      className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3"
+                      onClick={() => window.open(release.streaming_links.soundcloud, '_blank')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      SoundCloud
+                    </Button>
+                  )}
+                  {release.streaming_links?.bandcamp && (
+                    <Button 
+                      className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3"
+                      onClick={() => window.open(release.streaming_links.bandcamp, '_blank')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Bandcamp
+                    </Button>
+                  )}
                 </div>
               </motion.div>
             </div>

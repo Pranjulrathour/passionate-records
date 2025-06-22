@@ -15,7 +15,7 @@ const LatestReleases = () => {
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
-        table: 'upcoming_albums'
+        table: 'latest_releases'
       }, () => {
         queryClient.invalidateQueries({ queryKey: ['latest-releases'] });
       })
@@ -30,9 +30,10 @@ const LatestReleases = () => {
     queryKey: ['latest-releases'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('upcoming_albums')
+        .from('latest_releases')
         .select('*')
-        .order('release_date', { ascending: false })
+        .eq('status', 'ACTIVE')
+        .order('display_order', { ascending: true })
         .limit(6);
       
       if (error) throw error;
@@ -48,7 +49,7 @@ const LatestReleases = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-              LATEST <span className="text-passionate-red">RELEASES</span>
+              LATEST <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">RELEASES</span>
             </h2>
             <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
           </div>
@@ -64,7 +65,7 @@ const LatestReleases = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-              LATEST <span className="text-passionate-red">RELEASES</span>
+              LATEST <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">RELEASES</span>
             </h2>
             <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
           </div>
@@ -81,7 +82,7 @@ const LatestReleases = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider animate-slide-up">
-            LATEST <span className="text-passionate-red">RELEASES</span>
+            LATEST <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">RELEASES</span>
           </h2>
           <div className="w-24 h-1 bg-passionate-red mx-auto animate-fade-in"></div>
           <p className="text-passionate-white/70 mt-6 max-w-2xl mx-auto animate-fade-in">
@@ -99,17 +100,17 @@ const LatestReleases = () => {
             >
               <div className="relative overflow-hidden">
                 <img
-                  src={release.album_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop"}
+                  src={release.cover_art_url || "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop"}
                   alt={release.title}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-passionate-black/40 group-hover:bg-passionate-red/20 transition-all duration-500"></div>
                 
                 {/* Play Button */}
-                {release.teaser_url && (
+                {release.audio_preview_url && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <a
-                      href={release.teaser_url}
+                      href={release.audio_preview_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
@@ -162,9 +163,9 @@ const LatestReleases = () => {
                         </span>
                       </div>
                     )}
-                    {release.teaser_url && (
+                    {release.audio_preview_url && (
                       <a
-                        href={release.teaser_url}
+                        href={release.audio_preview_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}

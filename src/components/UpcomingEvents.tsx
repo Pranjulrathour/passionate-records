@@ -41,7 +41,7 @@ const UpcomingEvents = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-              UPCOMING <span className="text-passionate-red">EVENTS</span>
+              UPCOMING <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">EVENTS</span>
             </h2>
             <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
           </div>
@@ -64,7 +64,7 @@ const UpcomingEvents = () => {
           className="text-center mb-16"
         >
           <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider animate-slide-up">
-            UPCOMING <span className="text-passionate-red">EVENTS</span>
+            UPCOMING <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">EVENTS</span>
           </h2>
           <div className="w-24 h-1 bg-passionate-red mx-auto animate-fade-in"></div>
           <p className="text-passionate-white/70 mt-6 max-w-2xl mx-auto animate-fade-in">

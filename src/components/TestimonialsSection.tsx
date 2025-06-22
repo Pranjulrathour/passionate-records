@@ -38,7 +38,7 @@ const TestimonialsSection = () => {
           className="text-center mb-16"
         >
           <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-            WHAT ARTISTS <span className="text-passionate-red">SAY</span>
+            WHAT ARTISTS <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">SAY</span>
           </h2>
           <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
           <p className="text-passionate-white/70 mt-6 max-w-2xl mx-auto">

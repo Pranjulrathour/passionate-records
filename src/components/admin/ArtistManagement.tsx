@@ -545,9 +545,9 @@ const ArtistManagement = () => {
                 onCheckedChange={(checked) => handleFieldChange('is_featured', checked)}
               />
               <div>
-                <Label htmlFor="artist-featured" className="text-passionate-white font-medium">Featured Artist</Label>
+                <Label htmlFor="artist-featured" className="text-passionate-white font-medium">⭐ Featured Artist</Label>
                 <p className="text-passionate-white/70 text-sm">
-                  Featured artists appear on the homepage and get priority placement
+                  Featured artists appear prominently on the homepage. New artists will also appear on the homepage automatically as "NEW" until you have enough featured artists.
                 </p>
               </div>
             </div>

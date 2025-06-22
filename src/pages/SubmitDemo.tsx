@@ -90,7 +90,7 @@ const SubmitDemo = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-syncopate font-bold text-5xl sm:text-6xl text-passionate-white mb-6 tracking-wider animate-slide-up">
             SUBMIT YOUR
-            <span className="text-passionate-red"> DEMO</span>
+            <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl"> DEMO</span>
           </h1>
           <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
           <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto animate-fade-in">
@@ -218,7 +218,7 @@ const SubmitDemo = () => {
             <div className="space-y-8 animate-slide-up">
               {/* Guidelines */}
               <div className="bg-passionate-gray/20 border border-passionate-gray p-6">
-                <h3 className="font-syncopate font-bold text-passionate-red text-lg mb-4 tracking-wider">
+                <h3 className="font-syncopate font-bold bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-lg mb-4 tracking-wider inline-block">
                   SUBMISSION GUIDELINES
                 </h3>
                 <ul className="space-y-3 text-passionate-white/70">
@@ -239,7 +239,7 @@ const SubmitDemo = () => {
 
               {/* What We Look For */}
               <div className="bg-passionate-gray/20 border border-passionate-gray p-6">
-                <h3 className="font-syncopate font-bold text-passionate-red text-lg mb-4 tracking-wider">
+                <h3 className="font-syncopate font-bold bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-lg mb-4 tracking-wider inline-block">
                   WHAT WE LOOK FOR
                 </h3>
                 <ul className="space-y-2 text-passionate-white/70">
@@ -253,7 +253,7 @@ const SubmitDemo = () => {
 
               {/* Contact */}
               <div className="bg-passionate-gray/20 border border-passionate-gray p-6">
-                <h3 className="font-syncopate font-bold text-passionate-red text-lg mb-4 tracking-wider">
+                <h3 className="font-syncopate font-bold bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-lg mb-4 tracking-wider inline-block">
                   DIRECT CONTACT
                 </h3>
                 <p className="text-passionate-white/70 mb-4">

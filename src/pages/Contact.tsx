@@ -13,7 +13,7 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-syncopate font-bold text-5xl sm:text-6xl text-passionate-white mb-6 tracking-wider animate-slide-up">
             GET IN
-            <span className="text-passionate-red"> TOUCH</span>
+            <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl"> TOUCH</span>
           </h1>
           <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
           <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto animate-fade-in">
@@ -86,7 +86,7 @@ const Contact = () => {
           <div className="text-center animate-fade-in">
             <h2 className="font-syncopate font-bold text-3xl text-passionate-white mb-8 tracking-wider">
               FOLLOW THE
-              <span className="text-passionate-red"> MOVEMENT</span>
+              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl"> MOVEMENT</span>
             </h2>
             
             <div className="flex justify-center space-x-8 mb-12">

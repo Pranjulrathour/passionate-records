@@ -1,27 +1,49 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Play, ExternalLink, Calendar, Music2, Disc, Download, Heart, Share2, Clock, TrendingUp } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Releases = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState('all');
   const [hoveredRelease, setHoveredRelease] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  // Set up real-time subscription for releases
+  useEffect(() => {
+    const releasesChannel = supabase
+      .channel('releases-realtime')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'latest_releases'
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ['releases'] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(releasesChannel);
+    };
+  }, [queryClient]);
   
   const { data: releases, isLoading } = useQuery({
     queryKey: ['releases'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('upcoming_albums')
+        .from('latest_releases')
         .select('*')
-        .order('created_at', { ascending: false });
+        .eq('status', 'ACTIVE')
+        .order('display_order', { ascending: true });
       
       if (error) throw error;
       return data;
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 30000, // 30 seconds
   });
 
   if (isLoading) {
@@ -69,9 +91,9 @@ const Releases = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main Title */}
           <div className="mb-8 animate-slide-up">
-            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-8xl text-passionate-white mb-6 tracking-wider">
-              LATEST
-              <span className="block text-passionate-red text-shadow-red">RELEASES</span>
+            <h1 className="font-syncopate font-bold text-6xl sm:text-7xl lg:text-8xl text-passionate-white mb-6 tracking-wider text-center">
+              LATEST<br/>
+              <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl text-shadow-red inline-block">RELEASES</span>
             </h1>
             <div className="w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-8"></div>
           </div>
@@ -112,7 +134,7 @@ const Releases = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-                FEATURED <span className="text-passionate-red">RELEASE</span>
+                FEATURED <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">RELEASE</span>
               </h2>
               <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
             </div>
@@ -122,7 +144,7 @@ const Releases = () => {
               <div className="relative group">
                 <div className="relative overflow-hidden rounded-2xl">
                   <img
-                    src={featuredRelease.album_art_url || "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop"}
+                    src={featuredRelease.cover_art_url || "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop"}
                     alt={featuredRelease.title}
                     className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700"
                   />
@@ -198,9 +220,9 @@ const Releases = () => {
                     VIEW DETAILS
                   </button>
                   
-                  {featuredRelease.teaser_url && (
-                    <a
-                      href={featuredRelease.teaser_url}
+                                          {featuredRelease.audio_preview_url && (
+                          <a
+                            href={featuredRelease.audio_preview_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-8 py-4 rounded-xl tracking-wider transition-all duration-300"
@@ -268,7 +290,7 @@ const Releases = () => {
                   {/* Album Art */}
                   <div className="relative overflow-hidden">
                     <img
-                      src={release.album_art_url || "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop"}
+                      src={release.cover_art_url || "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop"}
                       alt={release.title}
                       className="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-700"
                     />
@@ -330,9 +352,9 @@ const Releases = () => {
                       </div>
                       
                       <div className="flex items-center space-x-2">
-                        {release.teaser_url && (
-                          <a
-                            href={release.teaser_url}
+                                              {release.audio_preview_url && (
+                        <a
+                          href={release.audio_preview_url}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}

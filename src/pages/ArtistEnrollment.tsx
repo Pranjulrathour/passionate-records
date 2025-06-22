@@ -87,7 +87,7 @@ const ArtistEnrollment = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="font-syncopate font-bold text-4xl sm:text-5xl text-passionate-white mb-6 tracking-wider">
-              JOIN THE <span className="text-passionate-red">PASSIONATE</span> FAMILY
+              JOIN THE <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">PASSIONATE</span> FAMILY
             </h1>
             <div className="w-24 h-1 bg-passionate-red mx-auto mb-6"></div>
             <p className="text-xl text-passionate-white/70 max-w-3xl mx-auto leading-relaxed">
