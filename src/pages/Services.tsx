@@ -1,15 +1,15 @@
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Music, Mic, Camera, Users, Headphones, Sparkles } from 'lucide-react';
+import { Music, Mic, Camera, Users, Headphones, Sparkles, UserCheck } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
       icon: Music,
-      title: "MUSIC PRODUCTION",
-      description: "PROFESSIONAL RECORDING, MIXING, AND MASTERING SERVICES WITH STATE-OF-THE-ART EQUIPMENT.",
-      features: ["PROFESSIONAL RECORDING", "MIXING & MASTERING", "ARRANGEMENT", "SOUND DESIGN"]
+      title: "PRODUCTION",
+      description: "COMPREHENSIVE MUSIC PRODUCTION AND VIDEO SERVICES FROM RECORDING TO VISUAL STORYTELLING.",
+      features: ["PROFESSIONAL RECORDING", "MIXING & MASTERING", "MUSIC VIDEO PRODUCTION", "CINEMATOGRAPHY", "POST-PRODUCTION", "SOUND DESIGN"]
     },
     {
       icon: Mic,
@@ -18,10 +18,10 @@ const Services = () => {
       features: ["VOCAL COACHING", "PERFORMANCE TRAINING", "BRAND DEVELOPMENT", "CAREER GUIDANCE"]
     },
     {
-      icon: Camera,
-      title: "MUSIC VIDEOS",
-      description: "CREATIVE MUSIC VIDEO PRODUCTION FROM CONCEPT TO FINAL CUT WITH CINEMATIC QUALITY.",
-      features: ["CONCEPT DEVELOPMENT", "CINEMATOGRAPHY", "POST-PRODUCTION", "VISUAL EFFECTS"]
+      icon: UserCheck,
+      title: "ARTIST MANAGEMENT",
+      description: "FULL-SERVICE ARTIST MANAGEMENT TO HANDLE YOUR CAREER WHILE YOU FOCUS ON CREATING MUSIC.",
+      features: ["CAREER STRATEGY", "BOOKING & SCHEDULING", "CONTRACT NEGOTIATION", "INDUSTRY CONNECTIONS"]
     },
     {
       icon: Users,

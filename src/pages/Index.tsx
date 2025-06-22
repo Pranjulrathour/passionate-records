@@ -171,19 +171,16 @@ const Index = () => {
           <div className="mb-8 sm:mb-12 animate-slide-up">
             <div className="inline-flex items-center space-x-2 bg-passionate-red/10 backdrop-blur-sm border border-passionate-red/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8">
               <div className="w-2 h-2 bg-passionate-red rounded-full animate-pulse"></div>
-              <span className="text-passionate-white font-syncopate text-xs sm:text-sm tracking-wider">LIVE FROM THE UNDERGROUND</span>
+              <span className="text-passionate-white font-syncopate text-xs sm:text-sm tracking-wider">LIVE</span>
             </div>
             
             <h1 className="font-syncopate font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-passionate-white mb-6 sm:mb-8 tracking-wider leading-none">
               PASSIONATE
-              <span className="block text-transparent bg-gradient-to-r from-passionate-red via-passionate-white to-passionate-red bg-clip-text text-shadow-red">
-                RECORDS
-              </span>
+              <span className="block bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl inline-block">RECORDS</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 max-w-2xl sm:max-w-3xl lg:max-w-4xl mx-auto mb-8 sm:mb-12 leading-relaxed">
-              WHERE UNDERGROUND MEETS INNOVATION. DISCOVER THE FUTURE OF MUSIC WITH OUR COLLECTIVE OF 
-              <span className="bg-passionate-red text-passionate-white px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl font-syncopate text-sm sm:text-base lg:text-xl"> PASSIONATE ARTISTS</span>.
+              WHERE UNDERGROUND MEETS INNOVATION. DISCOVER THE FUTURE OF MUSIC WITH OUR COLLECTIVE OF PASSIONATE ARTISTS.
             </p>
           </div>
           
@@ -198,13 +195,7 @@ const Index = () => {
               <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
             
-            <button
-              onClick={() => navigate('/artists')}
-              className="group bg-transparent border-2 border-passionate-red text-passionate-red hover:bg-passionate-red hover:text-passionate-white font-syncopate font-bold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl tracking-wider transition-all duration-300 hover:scale-105 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center touch-manipulation min-h-[44px]"
-            >
-              <Users className="h-5 w-5 sm:h-6 sm:w-6" />
-              <span className="text-sm sm:text-base">MEET ARTISTS</span>
-            </button>
+
             
             <button
               onClick={() => navigate('/submit-demo')}
@@ -232,12 +223,7 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-passionate-white/30 rounded-full flex justify-center" aria-label="Scroll down">
-            <div className="w-1 h-2 sm:h-3 bg-passionate-red rounded-full mt-1 sm:mt-2 animate-pulse"></div>
-          </div>
-        </div>
+
       </section>
 
       {/* Featured Artists Section - Modern Grid */}
@@ -375,6 +361,7 @@ const Index = () => {
                       <button
                         onClick={() => setIsPlaying(!isPlaying)}
                         className="bg-passionate-red/90 backdrop-blur-sm rounded-full p-6 hover:scale-110 transition-all duration-300 red-glow"
+                        aria-label={isPlaying ? "Pause music" : "Play music"}
                       >
                         <Play className="h-12 w-12 text-passionate-white fill-current" />
                       </button>
@@ -597,7 +584,7 @@ const Index = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-8 tracking-wider">
-              JOIN THE <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">UNDERGROUND</span>
+              JOIN THE <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">HOOD</span>
             </h2>
             
             <p className="text-xl text-passionate-white/80 mb-12 leading-relaxed">
