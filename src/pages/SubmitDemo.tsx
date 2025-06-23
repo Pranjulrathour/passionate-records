@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -261,10 +260,13 @@ const SubmitDemo = () => {
                 </p>
                 <div className="space-y-2">
                   <p className="text-passionate-white">
-                    <strong>Email:</strong> demos@passionaterecords.com
+                    <strong>Email:</strong> glossdigitalentertainment@gmail.com
                   </p>
                   <p className="text-passionate-white">
-                    <strong>WhatsApp:</strong> +91 98765 43210
+                    <strong>Phone:</strong> +91 73177 63969
+                  </p>
+                  <p className="text-passionate-white">
+                    <strong>WhatsApp:</strong> +91 94524 42318
                   </p>
                 </div>
               </div>

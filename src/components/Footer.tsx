@@ -1,5 +1,4 @@
-
-import { Music, Instagram, Youtube, Twitter, Mail, Phone } from 'lucide-react';
+import { Music, Instagram, Youtube, Facebook, Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -81,21 +80,29 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
               <a
-                href="mailto:info@passionaterecords.com"
+                href="mailto:glossdigitalentertainment@gmail.com"
                 className="flex items-center space-x-2 sm:space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-xs sm:text-sm touch-manipulation"
               >
                 <Mail className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-                <span className="break-all">INFO@PASSIONATERECORDS.COM</span>
+                <span className="break-all">GLOSSDIGITALENTERTAINMENT@GMAIL.COM</span>
               </a>
               <a
-                href="tel:+919876543210"
+                href="tel:+917317763969"
                 className="flex items-center space-x-2 sm:space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-xs sm:text-sm touch-manipulation"
               >
                 <Phone className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>+91 73177 63969</span>
+              </a>
+              <a
+                href="tel:+919452442318"
+                className="flex items-center space-x-2 sm:space-x-3 text-passionate-white/70 hover:text-passionate-red transition-colors duration-300 text-xs sm:text-sm touch-manipulation"
+              >
+                <Phone className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span>+91 94524 42318</span>
               </a>
               <div className="text-passionate-white/50 text-xs">
-                <p>MUMBAI, INDIA</p>
+                <p>54E/10 DABOULI PHASE 2</p>
+                <p>KANPUR, UTTAR PRADESH</p>
                 <p>MON-FRI 10AM-6PM IST</p>
               </div>
             </div>
@@ -107,7 +114,7 @@ const Footer = () => {
               </h5>
               <div className="flex space-x-3 sm:space-x-4">
                 <a
-                  href="https://instagram.com/passionaterecords"
+                  href="https://www.instagram.com/passionaterecords.in/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
@@ -116,22 +123,22 @@ const Footer = () => {
                   <Instagram className="h-5 w-5 sm:h-6 sm:w-6" />
                 </a>
                 <a
-                  href="https://youtube.com/@passionaterecords"
+                  href="https://www.facebook.com/harsh.dixit.735507"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5 sm:h-6 sm:w-6" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@PASSIONATE_RECORDS"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
                   aria-label="YouTube"
                 >
                   <Youtube className="h-5 w-5 sm:h-6 sm:w-6" />
-                </a>
-                <a
-                  href="https://twitter.com/passionate_rec"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-passionate-white/50 hover:text-passionate-red transition-colors duration-300 touch-manipulation"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="h-5 w-5 sm:h-6 sm:w-6" />
                 </a>
               </div>
             </div>

@@ -1,7 +1,6 @@
-
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Mail, Phone, MapPin, Instagram, Youtube, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Youtube, Facebook } from 'lucide-react';
 
 const Contact = () => {
   return (
@@ -37,10 +36,10 @@ const Contact = () => {
                   For business inquiries and partnerships
                 </p>
                 <a
-                  href="mailto:info@passionaterecords.com"
+                  href="mailto:glossdigitalentertainment@gmail.com"
                   className="text-passionate-red hover:text-passionate-red-dark transition-colors text-sm sm:text-base break-all touch-manipulation"
                 >
-                  info@passionaterecords.com
+                  glossdigitalentertainment@gmail.com
                 </a>
               </div>
             </div>
@@ -55,12 +54,20 @@ const Contact = () => {
                 <p className="text-passionate-white/70 mb-3 sm:mb-4 text-sm sm:text-base">
                   Available Mon-Fri, 10AM-6PM IST
                 </p>
-                <a
-                  href="tel:+919876543210"
-                  className="text-passionate-red hover:text-passionate-red-dark transition-colors text-sm sm:text-base touch-manipulation"
-                >
-                  +91 98765 43210
-                </a>
+                <div className="space-y-2">
+                  <a
+                    href="tel:+917317763969"
+                    className="block text-passionate-red hover:text-passionate-red-dark transition-colors text-sm sm:text-base touch-manipulation"
+                  >
+                    +91 73177 63969
+                  </a>
+                  <a
+                    href="tel:+919452442318"
+                    className="block text-passionate-red hover:text-passionate-red-dark transition-colors text-sm sm:text-base touch-manipulation"
+                  >
+                    +91 94524 42318
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -72,10 +79,11 @@ const Contact = () => {
                   VISIT US
                 </h3>
                 <p className="text-passionate-white/70 mb-3 sm:mb-4 text-sm sm:text-base">
-                  Underground Studios
+                  Our Office Location
                 </p>
                 <address className="text-passionate-red not-italic text-sm sm:text-base">
-                  Mumbai, Maharashtra<br />
+                  54E/10 Dabouli Phase 2<br />
+                  Kanpur, Uttar Pradesh<br />
                   India
                 </address>
               </div>
@@ -91,7 +99,7 @@ const Contact = () => {
             
             <div className="flex justify-center space-x-6 sm:space-x-8 mb-8 sm:mb-12">
               <a
-                href="https://instagram.com/passionaterecords"
+                href="https://www.instagram.com/passionaterecords.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center space-y-2 touch-manipulation"
@@ -105,7 +113,7 @@ const Contact = () => {
               </a>
 
               <a
-                href="https://youtube.com/@passionaterecords"
+                href="https://www.youtube.com/@PASSIONATE_RECORDS"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center space-y-2 touch-manipulation"
@@ -119,16 +127,16 @@ const Contact = () => {
               </a>
 
               <a
-                href="https://twitter.com/passionate_rec"
+                href="https://www.facebook.com/harsh.dixit.735507"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center space-y-2 touch-manipulation"
               >
                 <div className="bg-passionate-gray/20 border border-passionate-gray p-3 sm:p-4 group-hover:border-passionate-red group-hover:bg-passionate-red/10 transition-all duration-300 rounded-lg sm:rounded-xl">
-                  <Twitter className="h-6 w-6 sm:h-8 sm:w-8 text-passionate-white group-hover:text-passionate-red transition-colors" />
+                  <Facebook className="h-6 w-6 sm:h-8 sm:w-8 text-passionate-white group-hover:text-passionate-red transition-colors" />
                 </div>
                 <span className="text-passionate-white/70 group-hover:text-passionate-red transition-colors text-xs sm:text-sm font-syncopate tracking-wider">
-                  TWITTER
+                  FACEBOOK
                 </span>
               </a>
             </div>
