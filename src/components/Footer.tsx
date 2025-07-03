@@ -20,7 +20,7 @@ const Footer = () => {
             </Link>
             
             <p className="text-passionate-white/70 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed max-w-md">
-              INDIA'S PREMIER UNDERGROUND MUSIC LABEL. WE DISCOVER, DEVELOP, AND PROMOTE THE MOST PASSIONATE ARTISTS 
+              INDIA'S PREMIUM MUSIC LABEL. WE DISCOVER, DEVELOP, AND PROMOTE THE MOST PASSIONATE ARTISTS 
               ACROSS ELECTRONIC, HIP-HOP, EXPERIMENTAL, AND AVANT-GARDE GENRES.
             </p>
 
