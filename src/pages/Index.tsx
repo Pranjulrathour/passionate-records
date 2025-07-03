@@ -176,7 +176,7 @@ const Index = () => {
             
             <h1 className="font-syncopate font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-passionate-white mb-6 sm:mb-8 tracking-wider leading-none">
               PASSIONATE
-              <span className="block bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl inline-block">RECORDS</span>
+              <span className="block bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 inline-block">RECORDS</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 max-w-2xl sm:max-w-3xl lg:max-w-4xl mx-auto mb-8 sm:mb-12 leading-relaxed">
@@ -240,7 +240,7 @@ const Index = () => {
               </div>
               
               <h2 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white mb-4 sm:mb-6 tracking-wider leading-tight">
-                OUR <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl">ARTISTS</span>
+                OUR <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2">ARTISTS</span>
               </h2>
               
               <p className="text-base sm:text-lg lg:text-xl text-passionate-white/70 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed">
@@ -336,7 +336,7 @@ const Index = () => {
               </div>
               
               <h2 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white mb-4 sm:mb-6 tracking-wider leading-tight">
-                LATEST <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl">RELEASES</span>
+                LATEST <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2">RELEASES</span>
               </h2>
               
               <p className="text-base sm:text-lg lg:text-xl text-passionate-white/70 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed">
@@ -584,7 +584,7 @@ const Index = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-syncopate font-bold text-5xl lg:text-6xl text-passionate-white mb-8 tracking-wider">
-              JOIN THE <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">HOOD</span>
+              JOIN THE <span className="bg-passionate-red text-passionate-white px-4 py-2">HOOD</span>
             </h2>
             
             <p className="text-xl text-passionate-white/80 mb-12 leading-relaxed">

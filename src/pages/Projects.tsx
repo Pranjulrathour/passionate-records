@@ -78,7 +78,7 @@ const Projects = () => {
           <div className="mb-6 sm:mb-8 animate-slide-up">
             <h1 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-passionate-white mb-4 sm:mb-6 tracking-wider text-center leading-tight">
               OUR<br/>
-              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl text-shadow-red inline-block mt-2 sm:mt-0">PROJECTS</span>
+              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 text-shadow-red inline-block mt-2 sm:mt-0">PROJECTS</span>
             </h1>
             <div className="w-20 sm:w-24 lg:w-32 h-1 bg-gradient-to-r from-transparent via-passionate-red to-transparent mx-auto mb-6 sm:mb-8"></div>
           </div>
@@ -125,7 +125,7 @@ const Projects = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="font-syncopate font-bold text-4xl text-passionate-white mb-4 tracking-wider">
-                FEATURED <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">PROJECT</span>
+                FEATURED <span className="bg-passionate-red text-passionate-white px-4 py-2">PROJECT</span>
               </h2>
               <div className="w-24 h-1 bg-passionate-red mx-auto"></div>
             </div>

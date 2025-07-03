@@ -184,7 +184,40 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
+      },
+      demo_submissions: {
+        Row: {
+          id: string
+          created_at: string
+          artist_name: string
+          email: string
+          genre: string
+          demo_link: string
+          message: string | null
+          status: string | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          artist_name: string
+          email: string
+          genre: string
+          demo_link: string
+          message?: string | null
+          status?: string | null
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          artist_name?: string
+          email?: string
+          genre?: string
+          demo_link?: string
+          message?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      },
       donations: {
         Row: {
           claim_type: string | null
@@ -653,6 +686,7 @@ export type Database = {
     }
     Enums: {
       claim_status: "claimed" | "picked_up" | "delivered" | "cancelled"
+      project_status: "upcoming" | "active" | "completed" | "cancelled"
       donation_status:
         | "submitted"
         | "claimed"

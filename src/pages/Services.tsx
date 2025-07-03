@@ -52,7 +52,7 @@ const Services = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-syncopate font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-passionate-white mb-4 sm:mb-6 tracking-wider animate-slide-up leading-tight">
             OUR
-            <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl block sm:inline mt-2 sm:mt-0"> SERVICES</span>
+            <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 py-1 sm:py-2 block sm:inline mt-2 sm:mt-0"> SERVICES</span>
           </h1>
           <div className="w-16 sm:w-20 lg:w-24 h-1 bg-passionate-red mx-auto mb-4 sm:mb-6"></div>
           <p className="text-base sm:text-lg md:text-xl text-passionate-white/70 max-w-2xl lg:max-w-3xl mx-auto animate-fade-in leading-relaxed">

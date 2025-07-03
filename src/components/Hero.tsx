@@ -120,7 +120,7 @@ const Hero = () => {
               <span className="block bg-gradient-to-r from-passionate-white via-passionate-white to-passionate-red bg-clip-text text-transparent mb-2 sm:mb-4">
                 IGNITE THE
               </span>
-              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 lg:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-syncopate relative inline-block transform hover:scale-105 transition-all duration-300 shadow-2xl text-sm sm:text-base lg:text-xl">
+              <span className="bg-passionate-red text-passionate-white px-3 sm:px-4 lg:px-6 py-2 sm:py-3 font-syncopate relative inline-block transform hover:scale-105 transition-all duration-300 shadow-2xl text-sm sm:text-base lg:text-xl">
                 UNDERGROUND
                 <div className="absolute -bottom-1 sm:-bottom-3 left-0 right-0 h-1 sm:h-2 bg-gradient-to-r from-passionate-red via-passionate-red/50 to-transparent rounded-full"></div>
                 <div className="absolute inset-0 bg-passionate-red/20 rounded-xl sm:rounded-2xl blur-xl"></div>
@@ -138,7 +138,7 @@ const Hero = () => {
           {/* Enhanced Description with Floating Elements */}
           <div className="mb-8 sm:mb-10 lg:mb-12 animate-slide-up" style={{animationDelay: '0.4s'}}>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-passionate-white/80 mb-3 sm:mb-4 max-w-3xl lg:max-w-4xl mx-auto leading-relaxed text-center">
-              Where <span className="bg-passionate-red text-passionate-white px-2 sm:px-3 py-1 rounded-md sm:rounded-lg font-semibold text-sm sm:text-base lg:text-lg">passion meets innovation</span> in music creation
+              Where <span className="bg-passionate-red text-passionate-white px-2 sm:px-3 py-1 font-semibold text-sm sm:text-base lg:text-lg">passion meets innovation</span> in music creation
             </p>
             <p className="text-sm sm:text-base md:text-lg text-passionate-white/60 max-w-2xl lg:max-w-3xl mx-auto text-center">
               Join thousands of visionary artists revolutionizing the underground music scene
@@ -242,7 +242,7 @@ const Hero = () => {
         <div className="relative w-full animate-slide-up" style={{animationDelay: '1.2s'}}>
           <div className="text-center mb-12">
             <h3 className="text-3xl font-syncopate font-bold text-passionate-white mb-4 tracking-wider">
-              FEATURED <span className="bg-passionate-red text-passionate-white px-4 py-2 rounded-xl">ARTISTS</span>
+              FEATURED <span className="bg-passionate-red text-passionate-white px-4 py-2">ARTISTS</span>
             </h3>
             <p className="text-passionate-white/60">Discover the voices shaping tomorrow's sound</p>
           </div>
